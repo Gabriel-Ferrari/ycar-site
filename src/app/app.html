@@ -1,17 +1,14 @@
-<!-- Shell provisório da Etapa 1 — substituído pelos componentes de seção na Etapa 2 -->
-<main class="section">
-  <div class="container">
-    <p class="overline">{{ hero.overline }}</p>
-    <h1>{{ hero.titulo }}</h1>
-    <p>{{ hero.subtitulo }}</p>
-    <p>
-      <a
-        class="btn btn--primary"
-        [href]="linkWhatsApp(hero.ctaPrimario.mensagem)"
-        target="_blank"
-        rel="noopener"
-        >{{ hero.ctaPrimario.rotulo }}</a
-      >
-    </p>
-  </div>
+<app-header />
+<main>
+  <app-hero />
+  <app-stats />
+  <app-services />
+  <app-differentials />
+  <app-vehicle />
+  <app-steps />
+  <app-testimonials />
+  <app-coverage />
+  <app-contact />
 </main>
+<app-footer />
+<app-whatsapp-fab />
