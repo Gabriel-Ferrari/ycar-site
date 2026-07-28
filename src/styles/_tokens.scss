@@ -1,0 +1,58 @@
+// Design tokens — fonte única: docs/PRD.md §6 (paleta Grafite & Ouro)
+// Contraste AA verificado: texto/fundo ≈ 17:1 · secundário ≈ 6,6:1 · ouro/fundo ≈ 7,9:1
+
+:root {
+  /* ---- Cor ---- */
+  --color-bg: #0e0e10;
+  --color-surface: #17171a;
+  --color-surface-2: #1e1e22;
+  --color-accent: #c9a227;
+  --color-accent-hover: #e0b93e;
+  --color-accent-press: #a8871f;
+  --color-text: #f2f0eb;
+  --color-text-2: #9b978f;
+  --color-border: rgba(242, 240, 235, 0.08);
+  --overlay-hero: linear-gradient(
+    180deg,
+    rgba(14, 14, 16, 0.25) 0%,
+    rgba(14, 14, 16, 0.88) 100%
+  );
+
+  /* ---- Tipografia ---- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --text-hero: clamp(2.75rem, 7vw, 5rem);
+  --text-h2: clamp(2rem, 4.5vw, 3rem);
+  --text-h3: clamp(1.25rem, 2.5vw, 1.5rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-overline: 0.8125rem;
+  --leading-tight: 1.1;
+  --leading-body: 1.6;
+
+  /* ---- Espaçamento (base 8px) ---- */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-section: clamp(5rem, 12vh, 8rem);
+  --container-max: 72rem;
+
+  /* ---- Forma ---- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-pill: 999px;
+
+  /* ---- Sombra (estática por estado — nunca animada continuamente) ---- */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-cta: 0 4px 16px rgba(201, 162, 39, 0.25);
+
+  /* ---- Movimento ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 200ms;
+  --duration-base: 500ms;
+  --duration-slow: 700ms;
+}
