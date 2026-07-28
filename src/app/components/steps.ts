@@ -1,18 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MENSAGEM_PADRAO, PASSOS, linkWhatsApp } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
   selector: 'app-steps',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RevealOnScroll],
   template: `
     <section class="steps section" aria-labelledby="steps-titulo">
       <div class="container">
-        <p class="overline">Como funciona</p>
-        <h2 class="section-titulo" id="steps-titulo">Simples assim</h2>
+        <p class="overline reveal" appReveal>Como funciona</p>
+        <h2 class="section-titulo reveal" id="steps-titulo" appReveal [revealDelay]="80">
+          Simples assim
+        </h2>
 
         <ol class="passos">
           @for (passo of passos; track passo.titulo) {
-            <li class="passo">
+            <li class="passo reveal" appReveal [revealDelay]="$index * 120">
               <span class="passo__numero tabular" aria-hidden="true">
                 0{{ $index + 1 }}
               </span>

@@ -1,21 +1,31 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SERVICOS, linkWhatsApp } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
 @Component({
   selector: 'app-services',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, RevealOnScroll],
   template: `
     <section class="section" id="servicos" aria-labelledby="servicos-titulo">
       <div class="container">
-        <p class="overline">Portfólio</p>
-        <h2 class="section-titulo" id="servicos-titulo">Serviços</h2>
-        <p class="section-sub">Do transfer pontual ao contrato mensal — sempre com nota fiscal.</p>
+        <p class="overline reveal" appReveal>Portfólio</p>
+        <h2 class="section-titulo reveal" id="servicos-titulo" appReveal [revealDelay]="80">
+          Serviços
+        </h2>
+        <p class="section-sub reveal" appReveal [revealDelay]="160">
+          Do transfer pontual ao contrato mensal — sempre com nota fiscal.
+        </p>
 
         <div class="cards">
           @for (servico of servicos; track servico.titulo) {
-            <article class="card" [class.card--destaque]="servico.destaque">
+            <article
+              class="card reveal"
+              [class.card--destaque]="servico.destaque"
+              appReveal
+              [revealDelay]="$index * 90"
+            >
               <app-icon class="card__icone" [name]="icone(servico.icone)" [size]="32" />
               <h3 class="card__titulo">{{ servico.titulo }}</h3>
               <p class="card__descricao">{{ servico.descricao }}</p>
@@ -49,6 +59,7 @@ import { Icon, IconName } from './icon';
     }
 
     .card {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -62,9 +73,25 @@ import { Icon, IconName } from './icon';
         background-color var(--duration-fast) var(--ease-out);
     }
 
+    /* Elevação via pseudo-elemento com opacity — box-shadow nunca é animada */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--duration-fast) var(--ease-out);
+    }
+
     .card:hover {
       transform: translateY(-4px);
       background: var(--color-surface-2);
+    }
+
+    .card:hover::after {
+      opacity: 1;
     }
 
     .card--destaque {

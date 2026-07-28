@@ -1,15 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MENSAGEM_PADRAO, VEICULOS, linkWhatsApp } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
   selector: 'app-vehicle',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RevealOnScroll],
   template: `
     <section class="section" id="veiculo" aria-labelledby="veiculo-titulo">
       <div class="container veiculo">
-        <div class="veiculo__texto">
+        <div class="veiculo__texto reveal" appReveal>
           <p class="overline">Veículo</p>
-          <h2 class="section-titulo" id="veiculo-titulo">O carro que chega na porta</h2>
+          <h2 class="section-titulo reveal" id="veiculo-titulo" appReveal [revealDelay]="80">
+            O carro que chega na porta
+          </h2>
           @for (veiculo of veiculos; track veiculo.nome) {
             <h3 class="veiculo__nome">{{ veiculo.nome }} {{ veiculo.ano }}</h3>
             <p class="veiculo__descricao">{{ veiculo.descricao }}</p>
@@ -28,8 +32,10 @@ import { MENSAGEM_PADRAO, VEICULOS, linkWhatsApp } from '../content/site-content
           <!-- PROVISÓRIO: placeholders nas proporções finais (4:3) — Etapa 5 troca por NgOptimizedImage -->
           @for (foto of fotos; track foto.src) {
             <div
-              class="veiculo__foto"
+              class="veiculo__foto reveal-scale"
               [class.veiculo__foto--principal]="$first"
+              appReveal
+              [revealDelay]="$index * 120"
               role="img"
               [attr.aria-label]="foto.alt + ' (foto em breve)'"
             ></div>

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  inject,
+} from '@angular/core';
 import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
 import { Icon } from './icon';
 
@@ -32,22 +39,41 @@ import { Icon } from './icon';
       background: var(--color-accent);
       color: var(--color-bg);
       box-shadow: var(--shadow-cta);
-      transition:
-        background-color var(--duration-fast) var(--ease-out),
-        transform var(--duration-fast) var(--ease-out);
     }
 
     .fab:hover {
       background: var(--color-accent-hover);
-      transform: translateY(-2px);
     }
 
     .fab:active {
       background: var(--color-accent-press);
-      transform: translateY(0);
     }
   `,
 })
 export class WhatsappFab {
   protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
+
+  private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    // FAB entra depois que o hero sai de cena (transform/opacity via CSS global .fab)
+    afterNextRender(() => {
+      const fab = this.el.nativeElement.querySelector('.fab');
+      const hero = document.getElementById('inicio');
+      if (!fab) {
+        return;
+      }
+      if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        fab.classList.add('fab--visivel');
+        return;
+      }
+      const io = new IntersectionObserver(
+        (entradas) => fab.classList.toggle('fab--visivel', !entradas[0].isIntersecting),
+        { threshold: 0 },
+      );
+      io.observe(hero);
+      this.destroyRef.onDestroy(() => io.disconnect());
+    });
+  }
 }

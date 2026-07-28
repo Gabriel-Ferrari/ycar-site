@@ -1,16 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ESTATISTICAS } from '../content/site-content';
+import { CountUp } from '../directives/count-up';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
   selector: 'app-stats',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CountUp, RevealOnScroll],
   template: `
     <section class="stats" aria-label="Números da YCar">
       <div class="container stats__grid">
         @for (item of estatisticas; track item.rotulo) {
-          <div class="stats__item">
-            <!-- Valor final prerenderizado; count-up (Etapa 4) anima a partir do data-alvo -->
-            <span class="stats__valor tabular" [attr.data-alvo]="item.valor">
+          <div class="stats__item reveal" appReveal [revealDelay]="$index * 90">
+            <!-- Valor final prerenderizado; count-up anima quando 50% visível -->
+            <span
+              class="stats__valor tabular"
+              [appCountUp]="item.valor"
+              [countUpSufixo]="item.sufixo ?? ''"
+            >
               {{ item.valor }}{{ item.sufixo ?? '' }}
             </span>
             <span class="stats__rotulo">{{ item.rotulo }}</span>

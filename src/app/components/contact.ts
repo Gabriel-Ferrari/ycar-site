@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CONTATO, MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon } from './icon';
 
 @Component({
   selector: 'app-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, RevealOnScroll],
   template: `
     <section class="contato section" id="contato" aria-labelledby="contato-titulo">
-      <div class="container contato__inner">
+      <div class="container contato__inner reveal" appReveal>
         <p class="overline">Contato</p>
         <h2 class="section-titulo" id="contato-titulo">Fale com a YCar</h2>
         <p class="contato__sub">Resposta direta de quem dirige.</p>
@@ -56,6 +57,12 @@ import { Icon } from './icon';
     .section-titulo {
       font-size: var(--text-h2);
       margin-block: var(--space-1) var(--space-2);
+    }
+
+    /* Título centralizado → linha decorativa também centralizada */
+    .section-titulo::after {
+      inset-inline: 0;
+      margin-inline: auto;
     }
 
     .contato__sub {

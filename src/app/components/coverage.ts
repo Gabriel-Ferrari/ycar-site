@@ -1,21 +1,24 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AREA_ATENDIMENTO } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon } from './icon';
 
 @Component({
   selector: 'app-coverage',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, RevealOnScroll],
   template: `
     <section class="section" id="area" aria-labelledby="area-titulo">
       <div class="container area">
-        <div>
+        <div class="reveal" appReveal>
           <p class="overline">Área de atendimento</p>
-          <h2 class="section-titulo" id="area-titulo">{{ area.titulo }}</h2>
+          <h2 class="section-titulo reveal" id="area-titulo" appReveal [revealDelay]="80">
+            {{ area.titulo }}
+          </h2>
           <p class="area__descricao">{{ area.descricao }}</p>
         </div>
 
-        <div class="area__listas">
+        <div class="area__listas reveal" appReveal [revealDelay]="160">
           <div>
             <h3 class="area__subtitulo">Aeroportos</h3>
             <ul class="chips chips--ouro">

@@ -1,20 +1,24 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DEPOIMENTOS } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
   selector: 'app-testimonials',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RevealOnScroll],
   template: `
     <!-- Seção some inteira se o array estiver vazio — critério 2.6 do plano -->
     @if (depoimentos.length > 0) {
       <section class="section" id="clientes" aria-labelledby="clientes-titulo">
         <div class="container">
-          <p class="overline">Clientes</p>
-          <h2 class="section-titulo" id="clientes-titulo">Quem contrata, volta</h2>
+          <p class="overline reveal" appReveal>Clientes</p>
+          <h2 class="section-titulo reveal" id="clientes-titulo" appReveal [revealDelay]="80">
+            Quem contrata, volta
+          </h2>
 
           <div class="cards">
             @for (depoimento of depoimentos; track depoimento.autor) {
-              <figure class="card">
+              <figure class="card reveal" appReveal [revealDelay]="$index * 90">
                 <span class="card__aspas" aria-hidden="true">“</span>
                 <blockquote class="card__citacao">{{ depoimento.citacao }}</blockquote>
                 <figcaption class="card__autor">

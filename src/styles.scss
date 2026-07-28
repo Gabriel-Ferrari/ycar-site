@@ -174,15 +174,127 @@ html.js .reveal.is-visible {
   transition-delay: var(--reveal-delay, 0ms);
 }
 
+/* ---- Reveal com escala (imagens) ---- */
+html.js .reveal-scale {
+  opacity: 0;
+  transform: scale(1.06);
+}
+
+html.js .reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* ---- Linha decorativa sob títulos de seção ---- */
+.section-titulo {
+  position: relative;
+  padding-block-end: var(--space-2);
+}
+
+.section-titulo::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 56px;
+  block-size: 2px;
+  background: var(--color-accent);
+  transform-origin: left;
+}
+
+html.js .section-titulo.reveal::after {
+  transform: scaleX(0);
+}
+
+html.js .section-titulo.reveal.is-visible::after {
+  transform: scaleX(1);
+  transition: transform 600ms var(--ease-out) 200ms;
+}
+
+/* ---- Entrada do hero (CSS puro: sem JS não roda, com fill both termina visível) ---- */
+@keyframes hero-palavra-sobe {
+  from {
+    opacity: 0;
+    transform: translateY(0.7em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-sobe {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-palavra {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.hero-palavra__inner {
+  display: inline-block;
+}
+
+html.js .hero-palavra__inner {
+  animation: hero-palavra-sobe var(--duration-slow) var(--ease-out) both;
+  animation-delay: var(--palavra-delay, 0ms);
+}
+
+html.js .hero-entrada {
+  animation: hero-sobe var(--duration-base) var(--ease-out) both;
+}
+
+/* ---- FAB de WhatsApp: aparece depois do hero ---- */
+html.js .fab {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition:
+    opacity 300ms var(--ease-out),
+    transform 300ms var(--ease-out);
+}
+
+html.js .fab.fab--visivel {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
 /* ---- Movimento reduzido: nada anima, tudo visível ---- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  html.js .reveal {
+  html.js .reveal,
+  html.js .reveal-scale {
     opacity: 1;
     transform: none;
+    transition: none;
+  }
+
+  html.js .section-titulo.reveal::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  html.js .fab {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
     transition: none;
   }
 

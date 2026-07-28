@@ -1,22 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DIFERENCIAIS } from '../content/site-content';
+import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
 @Component({
   selector: 'app-differentials',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, RevealOnScroll],
   template: `
     <section class="section" id="diferenciais" aria-labelledby="diferenciais-titulo">
       <div class="container">
-        <p class="overline">Diferenciais</p>
-        <h2 class="section-titulo" id="diferenciais-titulo">
+        <p class="overline reveal" appReveal>Diferenciais</p>
+        <h2 class="section-titulo reveal" id="diferenciais-titulo" appReveal [revealDelay]="80">
           Por que YCar e não um aplicativo?
         </h2>
 
         <div class="itens">
           @for (item of diferenciais; track item.titulo) {
-            <div class="item">
+            <div class="item reveal" appReveal [revealDelay]="$index * 90">
               <app-icon class="item__icone" [name]="icone(item.icone)" [size]="28" />
               <h3 class="item__titulo">{{ item.titulo }}</h3>
               <p class="item__descricao">{{ item.descricao }}</p>
