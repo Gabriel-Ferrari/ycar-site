@@ -44,3 +44,6 @@ __screenshots__/
 Thumbs.db
 
 .playwright-mcp/
+
+# Artefatos de teste de browser
+.playwright-mcp/
