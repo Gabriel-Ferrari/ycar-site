@@ -7,18 +7,23 @@ import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
   template: `
     <header class="header">
       <div class="container header__inner">
-        <a class="header__brand" href="#inicio" aria-label="YCar — voltar ao início">
-          YCAR<span class="header__dot" aria-hidden="true">.</span>
+        <a class="header__brand" href="#inicio" aria-label="YCar Executive — voltar ao início">
+          <img
+            src="/images/logo-ycar-header.png"
+            alt="YCar Executive"
+            width="91"
+            height="64"
+            fetchpriority="high"
+          />
         </a>
         <nav class="header__nav" aria-label="Seções do site">
           <a href="#servicos">Serviços</a>
-          <a href="#diferenciais">Diferenciais</a>
-          <a href="#veiculo">Veículo</a>
-          <a href="#area">Atendimento</a>
-          <a href="#contato">Contato</a>
+          <a href="#quem-somos">Quem Somos</a>
+          <a href="#como-trabalhamos">Como Trabalhamos</a>
+          <a href="#frota">Frota</a>
         </nav>
         <a class="btn btn--primary header__cta" [href]="waHref" target="_blank" rel="noopener">
-          WhatsApp
+          Reserve Agora!
         </a>
       </div>
     </header>
@@ -29,7 +34,7 @@ import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
       inset-block-start: 0;
       inset-inline: 0;
       z-index: 100;
-      background: rgba(14, 14, 16, 0.82);
+      background: rgba(5, 5, 5, 0.82);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-block-end: 1px solid var(--color-border);
@@ -45,18 +50,14 @@ import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
     }
 
     .header__brand {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.5rem;
-      letter-spacing: 0.06em;
-      text-decoration: none;
       display: inline-flex;
       align-items: center;
       min-height: 44px;
     }
 
-    .header__dot {
-      color: var(--color-accent);
+    .header__brand img {
+      block-size: 3.25rem;
+      inline-size: auto;
     }
 
     .header__nav {

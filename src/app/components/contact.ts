@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CONTATO, MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
+import { CONTATO, RESERVA, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon } from './icon';
 
@@ -8,15 +8,15 @@ import { Icon } from './icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon, RevealOnScroll],
   template: `
-    <section class="contato section" id="contato" aria-labelledby="contato-titulo">
+    <section class="contato section" id="reserva" aria-labelledby="contato-titulo">
       <div class="container contato__inner reveal" appReveal>
-        <p class="overline">Contato</p>
-        <h2 class="section-titulo" id="contato-titulo">Fale com a YCar</h2>
-        <p class="contato__sub">Resposta direta de quem dirige.</p>
+        <p class="overline">Reserva</p>
+        <h2 class="section-titulo" id="contato-titulo">{{ reserva.titulo }}</h2>
+        <p class="contato__sub">{{ reserva.descricao }}</p>
 
         <a class="btn btn--primary contato__whatsapp" [href]="waHref" target="_blank" rel="noopener">
           <app-icon name="whatsapp" [size]="22" />
-          Chamar no WhatsApp — {{ contato.whatsappExibicao }}
+          {{ reserva.cta.rotulo }} — {{ contato.whatsappExibicao }}
         </a>
 
         <ul class="contato__canais">
@@ -67,6 +67,7 @@ import { Icon } from './icon';
 
     .contato__sub {
       color: var(--color-text-2);
+      max-width: 52ch;
       margin-block-end: var(--space-4);
     }
 
@@ -121,5 +122,6 @@ import { Icon } from './icon';
 })
 export class Contact {
   protected readonly contato = CONTATO;
-  protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
+  protected readonly reserva = RESERVA;
+  protected readonly waHref = linkWhatsApp(RESERVA.cta.mensagem);
 }

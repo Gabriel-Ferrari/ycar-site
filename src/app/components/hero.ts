@@ -8,7 +8,6 @@ import { Parallax } from '../directives/parallax';
   imports: [Parallax],
   template: `
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
-      <!-- PROVISÓRIO: placeholder da imagem LCP — Etapa 5 troca por NgOptimizedImage priority -->
       <div class="hero__media" appParallax aria-hidden="true"></div>
       <div class="container hero__content">
         <p class="overline hero-entrada">{{ hero.overline }}</p>
@@ -55,8 +54,9 @@ import { Parallax } from '../directives/parallax';
       block-size: 115%;
       will-change: transform;
       background:
-        radial-gradient(ellipse at 78% 18%, rgba(201, 162, 39, 0.09), transparent 55%),
-        linear-gradient(160deg, #1a1a1f 0%, #101013 55%, #0e0e10 100%);
+        radial-gradient(ellipse at 78% 18%, rgba(247, 226, 185, 0.08), transparent 55%),
+        url('/images/hero-executivo.webp') center 30% / cover no-repeat,
+        #050505;
     }
 
     .hero__media::after {

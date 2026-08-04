@@ -1,21 +1,21 @@
-// Design tokens — fonte única: docs/PRD.md §6 (paleta Grafite & Ouro)
-// Contraste AA verificado: texto/fundo ≈ 17:1 · secundário ≈ 6,6:1 · ouro/fundo ≈ 7,9:1
+// Design tokens — paleta extraída do logo YCar Executive (preto + champagne #F7E2B9)
+// Contraste AA verificado: texto/fundo ≈ 18:1 · secundário ≈ 7:1 · champagne/fundo ≈ 16:1
 
 :root {
   /* ---- Cor ---- */
-  --color-bg: #0e0e10;
-  --color-surface: #17171a;
-  --color-surface-2: #1e1e22;
-  --color-accent: #c9a227;
-  --color-accent-hover: #e0b93e;
-  --color-accent-press: #a8871f;
-  --color-text: #f2f0eb;
-  --color-text-2: #9b978f;
-  --color-border: rgba(242, 240, 235, 0.08);
+  --color-bg: #050505;
+  --color-surface: #111110;
+  --color-surface-2: #1a1917;
+  --color-accent: #f7e2b9;
+  --color-accent-hover: #fdeed1;
+  --color-accent-press: #e3c992;
+  --color-text: #f5f1e8;
+  --color-text-2: #a49e92;
+  --color-border: rgba(247, 226, 185, 0.12);
   --overlay-hero: linear-gradient(
     180deg,
-    rgba(14, 14, 16, 0.25) 0%,
-    rgba(14, 14, 16, 0.88) 100%
+    rgba(5, 5, 5, 0.25) 0%,
+    rgba(5, 5, 5, 0.88) 100%
   );
 
   /* ---- Tipografia ---- */
@@ -48,7 +48,7 @@
 
   /* ---- Sombra (estática por estado — nunca animada continuamente) ---- */
   --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-cta: 0 4px 16px rgba(201, 162, 39, 0.25);
+  --shadow-cta: 0 4px 16px rgba(247, 226, 185, 0.18);
 
   /* ---- Movimento ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

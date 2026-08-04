@@ -7,11 +7,11 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RevealOnScroll],
   template: `
-    <section class="steps section" aria-labelledby="steps-titulo">
+    <section class="steps section" id="como-trabalhamos" aria-labelledby="steps-titulo">
       <div class="container">
-        <p class="overline reveal" appReveal>Como funciona</p>
+        <p class="overline reveal" appReveal>Como Trabalhamos</p>
         <h2 class="section-titulo reveal" id="steps-titulo" appReveal [revealDelay]="80">
-          Simples assim
+          Da reserva ao destino, sem preocupação
         </h2>
 
         <ol class="passos">
@@ -27,7 +27,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
         </ol>
 
         <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
-          Começar agora
+          Reserve Agora!
         </a>
       </div>
     </section>
@@ -48,7 +48,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
       padding: 0;
       margin-block: 0 var(--space-6);
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--space-4);
       counter-reset: passo;
     }
@@ -75,6 +75,12 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
     .passo__descricao {
       font-size: var(--text-small);
       color: var(--color-text-2);
+    }
+
+    @media (max-width: 63.99em) {
+      .passos {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 47.99em) {

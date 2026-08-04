@@ -1,7 +1,6 @@
 /**
  * Fonte única de conteúdo do site — editar aqui, nunca em template.
- * Textos marcados PROVISÓRIO aguardam validação (docs/PRD.md §11).
- * Critério da Etapa 5: `grep -r "PROVISÓRIO" src/` deve retornar vazio.
+ * Conteúdo conforme especificação: docs "Site_YCAR EXECUTIVE.docx".
  */
 
 export interface CtaWhatsApp {
@@ -13,42 +12,13 @@ export interface Servico {
   titulo: string;
   descricao: string;
   icone: string;
-  cta?: CtaWhatsApp;
-  destaque?: boolean;
 }
 
-export interface Diferencial {
-  titulo: string;
+export interface CategoriaFrota {
+  nome: string;
+  lugares: string;
   descricao: string;
   icone: string;
-}
-
-export interface FotoVeiculo {
-  src: string;
-  alt: string;
-  largura: number;
-  altura: number;
-}
-
-export interface Veiculo {
-  nome: string;
-  ano: number;
-  categoria: 'executivo' | 'van';
-  descricao: string;
-  destaques: string[];
-  fotos: FotoVeiculo[];
-}
-
-export interface Depoimento {
-  citacao: string;
-  autor: string;
-  contexto: string;
-}
-
-export interface Estatistica {
-  valor: number;
-  sufixo?: string;
-  rotulo: string;
 }
 
 export interface Passo {
@@ -63,223 +33,188 @@ export function linkWhatsApp(mensagem: string): string {
 }
 
 export const MENSAGEM_PADRAO =
-  'Olá! Vim pelo site da YCar e gostaria de um orçamento de transporte executivo.';
+  'Olá! Vim pelo site da YCAR EXECUTIVE e gostaria de fazer uma reserva.';
 
 export const CONTATO = {
   whatsappNumero: WHATSAPP_NUMERO,
   whatsappExibicao: '+55 11 98299-8183',
   instagramUsuario: '@ycarexecutive',
   instagramUrl: 'https://www.instagram.com/ycarexecutive/',
-  // PROVISÓRIO: e-mail depende do Cloudflare Email Routing (suposição ⚠️ 9)
   email: 'contato@ycarexecutive.com.br',
-  // PROVISÓRIO: horário a confirmar (suposição ⚠️ 6)
   horario: 'Todos os dias, com agendamento prévio',
   cidade: 'São Paulo – SP',
-  // PROVISÓRIO: CNPJ a fornecer (suposição ⚠️ 8)
   cnpj: '',
 } as const;
 
 export const HERO = {
-  overline: 'Transporte executivo · São Paulo',
-  titulo: 'Transporte executivo corporativo em São Paulo',
+  overline: 'YCAR Executive · São Paulo',
+  titulo: 'Transporte Executivo com excelência, conforto e pontualidade em cada detalhe.',
   subtitulo:
-    'Motorista fixo, sigilo absoluto e pontualidade monitorada — com nota fiscal em todo atendimento. Há 5 anos servindo empresas e executivos na capital e Grande São Paulo.',
+    'Motoristas profissionais, veículos de alto padrão e atendimento personalizado em cada trajeto.',
   ctaPrimario: {
-    rotulo: 'Pedir proposta no WhatsApp',
+    rotulo: 'Reserve Agora!',
     mensagem: MENSAGEM_PADRAO,
   },
   ctaSecundario: { rotulo: 'Conhecer os serviços', ancora: '#servicos' },
-  imagem: {
-    // PROVISÓRIO: trocar por foto real do carro (externa 3/4), WebP < 200 KB
-    src: 'images/hero-placeholder.webp',
-    alt: 'Chery Tiggo 8 Pro Hybrid 2024 da YCar em frente a prédio corporativo',
-    largura: 1600,
-    altura: 900,
-  },
 } as const;
 
-export const ESTATISTICAS: Estatistica[] = [
-  { valor: 5, rotulo: 'anos de atendimento executivo' },
-  // PROVISÓRIO ⚠️ 1: confirmar que atende os três aeroportos
-  { valor: 3, rotulo: 'aeroportos atendidos (GRU · CGH · VCP)' },
-  // PROVISÓRIO ⚠️ 2: confirmar cobertura da RMSP inteira; senão trocar por número real
-  { valor: 39, rotulo: 'municípios da Grande São Paulo' },
-];
+export const SERVICOS_INTRO = {
+  titulo: 'Garanta sua viagem com segurança, conforto e pontualidade',
+  descricao:
+    'Do Sedan Executivo ao Ônibus, incluindo blindados — veículos para viagens individuais ou grandes grupos, com o mais alto padrão de qualidade.',
+} as const;
 
 export const SERVICOS: Servico[] = [
   {
-    titulo: 'Atendimento corporativo',
+    titulo: 'Transfer Executivo',
     descricao:
-      'Contrato mensal ou demanda recorrente para diretoria, visitas de negócios e comitivas. Um único motorista dedicado à sua conta e nota fiscal em todo atendimento.',
+      'Aeroportos, hotéis, empresas, eventos, casamentos, congressos e viagens corporativas ou particulares.',
     icone: 'briefcase',
-    destaque: true,
-    cta: {
-      rotulo: 'Pedir proposta corporativa',
-      mensagem: 'Olá! Gostaria de uma proposta de atendimento corporativo da YCar.',
-    },
   },
   {
-    titulo: 'Transfer aeroporto',
-    // PROVISÓRIO ⚠️ 5: confirmar recepção com identificação no desembarque
+    titulo: 'Receptivo Aeroporto',
     descricao:
-      'GRU, CGH e VCP. Acompanhamos o status do voo: atrasou, o horário ajusta sem custo extra. Recepção no desembarque com identificação.',
+      'Estaremos esperando por você nos aeroportos de São Paulo, no horário da sua chegada.',
     icone: 'plane',
-    cta: {
-      rotulo: 'Reservar transfer',
-      mensagem: 'Olá! Gostaria de cotar um transfer de aeroporto com a YCar.',
-    },
   },
   {
-    titulo: 'À disposição por hora ou diária',
+    titulo: 'Viagens',
     descricao:
-      'Agenda de reuniões pela cidade, roadshow, dia de visitas. O carro espera; a agenda manda.',
-    icone: 'clock',
-    cta: {
-      rotulo: 'Consultar disponibilidade',
-      mensagem: 'Olá! Gostaria de cotar o serviço de motorista à disposição da YCar.',
-    },
-  },
-  {
-    titulo: 'Viagens rodoviárias',
-    // PROVISÓRIO: confirmar raio real de atuação
-    descricao:
-      'Intermunicipais e interestaduais, ida e volta ou apenas trecho. Litoral, interior e outras capitais.',
+      'Interior paulista, litoral e outros estados — transporte de alto padrão para qualquer destino.',
     icone: 'road',
-    cta: {
-      rotulo: 'Cotar viagem',
-      mensagem: 'Olá! Gostaria de cotar uma viagem rodoviária com a YCar.',
-    },
   },
   {
-    titulo: 'Eventos',
+    titulo: 'Operação à Disposição',
     descricao:
-      'Casamentos, formaturas e eventos corporativos. Horário combinado, carro impecável, sem imprevisto.',
-    icone: 'star',
-    cta: {
-      rotulo: 'Cotar evento',
-      mensagem: 'Olá! Gostaria de cotar transporte executivo para um evento com a YCar.',
-    },
+      'Motorista executivo à sua disposição para múltiplos compromissos ao longo do dia.',
+    icone: 'clock',
   },
-];
-
-export const DIFERENCIAIS: Diferencial[] = [
   {
-    titulo: 'Motorista fixo',
+    titulo: 'City Tour',
     descricao:
-      'Sempre o mesmo profissional. Ele conhece o passageiro, os endereços e as preferências — nenhum aplicativo replica isso.',
-    icone: 'user',
+      'Passeios por São Paulo, Aparecida, Campos do Jordão, Holambra, Santos, São Roque e outros destinos.',
+    icone: 'pin',
   },
   {
-    titulo: 'Sigilo e discrição',
-    descricao: 'Reuniões acontecem no banco de trás. O que se fala no carro fica no carro.',
+    titulo: 'Motoristas Bilíngues',
+    descricao: 'Atendimento em seu idioma, com mais conforto e tranquilidade em todo o trajeto.',
+    icone: 'globe',
+  },
+  {
+    titulo: 'Veículos Blindados',
+    descricao:
+      'Blindados com monitoramento 24 horas: máxima segurança, discrição e tranquilidade.',
     icone: 'shield',
   },
   {
-    titulo: 'Pontualidade monitorada',
+    titulo: 'Experiência Personalizada',
     descricao:
-      'Voo e trânsito acompanhados em tempo real. O carro chega antes do horário, não "em até tantos minutos".',
-    icone: 'watch',
-  },
-  {
-    titulo: 'Nota fiscal e contrato',
-    descricao:
-      'NF em todo atendimento, para reembolso e conformidade do financeiro. Contrato para demanda recorrente.',
-    icone: 'document',
+      'Planejamos cada detalhe conforme a sua necessidade, para uma experiência exclusiva.',
+    icone: 'star',
   },
 ];
 
-export const VEICULOS: Veiculo[] = [
-  {
-    nome: 'Chery Tiggo 8 Pro Hybrid',
-    ano: 2024,
-    categoria: 'executivo',
-    // PROVISÓRIO ⚠️ 3/4: cor, itens de bordo e configuração de lugares a confirmar
-    descricao:
-      'SUV híbrido: deslocamento silencioso, partida sem ruído e conforto estável mesmo no trânsito de São Paulo. Higienizado a cada atendimento.',
-    destaques: ['Ano 2024', 'Híbrido', 'Higienizado a cada atendimento'],
-    fotos: [
-      // PROVISÓRIO: trocar por 3 fotos reais (interna banco traseiro, porta-malas, detalhe)
-      {
-        src: 'images/veiculo-1-placeholder.webp',
-        alt: 'Banco traseiro do Chery Tiggo 8 Pro Hybrid da YCar',
-        largura: 1200,
-        altura: 900,
-      },
-      {
-        src: 'images/veiculo-2-placeholder.webp',
-        alt: 'Porta-malas aberto do Chery Tiggo 8 Pro Hybrid da YCar',
-        largura: 1200,
-        altura: 900,
-      },
-      {
-        src: 'images/veiculo-3-placeholder.webp',
-        alt: 'Detalhe frontal do Chery Tiggo 8 Pro Hybrid da YCar',
-        largura: 1200,
-        altura: 900,
-      },
-    ],
-  },
-];
+export const QUEM_SOMOS = {
+  titulo: 'Excelência em Transporte Executivo em São Paulo',
+  paragrafos: [
+    'Na YCAR EXECUTIVE, unimos qualidade, sofisticação e segurança em cada trajeto, com motoristas profissionais e uma frota moderna e revisada.',
+    'Atendemos diárias com motorista à disposição, transfers, aeroportos, viagens, eventos e deslocamentos executivos — sempre com pontualidade e atenção aos detalhes.',
+    'Escolher a YCAR EXECUTIVE é optar por um serviço Premium, pensado para transformar cada viagem em uma experiência de alto padrão.',
+  ],
+  tagline: 'Seu destino, nossa prioridade.',
+  chamada: 'Reserve agora e viaje com quem entende de Transporte Executivo.',
+} as const;
 
 export const PASSOS: Passo[] = [
-  { titulo: 'Chame no WhatsApp', descricao: 'Diga origem, destino e horário.' },
   {
-    titulo: 'Receba a proposta',
-    // PROVISÓRIO ⚠️ 7: prazo de resposta a confirmar antes de prometer
-    descricao: 'Valor fechado, sem surpresa e sem tarifa dinâmica.',
+    titulo: 'Agendamento da Operação',
+    descricao:
+      'Agende de forma rápida e receba a confirmação com as informações do veículo, do motorista e do serviço.',
   },
   {
-    titulo: 'Motorista no local',
-    descricao: 'Antes do horário, com o trajeto já estudado.',
-  },
-];
-
-/**
- * Depoimentos reais a coletar (suposição ⚠️ 11). Array vazio = seção não renderiza.
- * NUNCA publicar depoimento inventado — critério de aceite 19 do PRD §9.
- * Os itens abaixo existem só para dimensionar o layout em desenvolvimento.
- */
-export const DEPOIMENTOS_DEV_APENAS: Depoimento[] = [
-  {
-    citacao:
-      'PROVISÓRIO — depoimento real a coletar. Texto de dimensionamento com duas linhas para validar o layout do card.',
-    autor: 'A. B.',
-    contexto: 'Diretor comercial',
+    titulo: 'Embarque com Tranquilidade',
+    descricao:
+      'Seu motorista chega com antecedência, recebe você com cordialidade e auxilia com as bagagens.',
   },
   {
-    citacao: 'PROVISÓRIO — depoimento real a coletar. Texto curto.',
-    autor: 'C. D.',
-    contexto: 'Assistente executiva',
+    titulo: 'Experiência Premium',
+    descricao:
+      'Veículos modernos com ar-condicionado, Wi-Fi, água mineral e mimos de bordo — do embarque ao destino.',
   },
   {
-    citacao:
-      'PROVISÓRIO — depoimento real a coletar. Texto de dimensionamento um pouco mais longo, com três linhas, para validar o alinhamento vertical entre cards de alturas diferentes.',
-    autor: 'E. F.',
-    contexto: 'Gerente de facilities',
+    titulo: 'Pagamento com Total Conveniência',
+    descricao: 'PIX, cartões de débito e crédito ou link de pagamento. Simples, rápido e seguro.',
   },
 ];
 
-/** Troque para [] antes do go-live se os reais não chegarem. */
-export const DEPOIMENTOS: Depoimento[] = DEPOIMENTOS_DEV_APENAS;
-
-export const AREA_ATENDIMENTO = {
-  titulo: 'Onde a YCar atende',
+export const FROTA_INTRO = {
+  titulo: 'Frota de Veículos Executiva',
   descricao:
-    'São Paulo capital — todas as regiões. Grande São Paulo: ABC, Guarulhos, Osasco, Barueri/Alphaville e demais municípios. Viagens intermunicipais e interestaduais sob cotação.',
-  aeroportos: ['Guarulhos (GRU)', 'Congonhas (CGH)', 'Viracopos (VCP)'],
-  regioes: [
-    'São Paulo capital',
-    'ABC Paulista',
-    'Guarulhos',
-    'Osasco',
-    'Barueri / Alphaville',
-    'Demais municípios da Grande SP',
-  ],
+    'Frota moderna e diversificada, do atendimento corporativo aos momentos especiais — experiência premium do embarque ao destino.',
+} as const;
+
+export const FROTA: CategoriaFrota[] = [
+  {
+    nome: 'Sedã Executivo',
+    lugares: '3 a 4 lugares',
+    descricao:
+      'Ideal para viagens individuais, casais e deslocamentos corporativos, oferecendo elegância, conforto e discrição.',
+    icone: 'car',
+  },
+  {
+    nome: 'SUV Executivo',
+    lugares: '4 a 6 lugares',
+    descricao:
+      'Mais espaço, sofisticação e versatilidade para famílias, grupos reduzidos e viagens de longa distância.',
+    icone: 'car',
+  },
+  {
+    nome: 'MiniVan Executiva',
+    lugares: '7 lugares',
+    descricao:
+      'Versatilidade e conforto para pequenos grupos com maior espaço interno e amplo espaço para bagagens.',
+    icone: 'van',
+  },
+  {
+    nome: 'Van Executiva',
+    lugares: '10 a 18 lugares',
+    descricao:
+      'Perfeita para grupos, eventos, turismo e traslados corporativos, com máximo conforto.',
+    icone: 'van',
+  },
+  {
+    nome: 'Micro-Ônibus Executivo',
+    lugares: '20 a 30 lugares',
+    descricao: 'Para grupos, eventos, passeios e transfers, com amplo espaço interno.',
+    icone: 'bus',
+  },
+  {
+    nome: 'Ônibus Executivo',
+    lugares: 'Acima de 40 lugares',
+    descricao: 'Solução completa para grandes grupos e excursões, preparada para longos trajetos.',
+    icone: 'bus',
+  },
+  {
+    nome: 'Veículos Blindados',
+    lugares: 'Sob consulta',
+    descricao:
+      'Segurança reforçada para clientes que necessitam de proteção adicional, sem abrir mão do conforto e da discrição.',
+    icone: 'shield',
+  },
+];
+
+export const RESERVA = {
+  titulo: 'Reserve Agora!',
+  descricao:
+    'Informe o trajeto, a data e o horário desejado. Nossa equipe confirmará a disponibilidade e retornará rapidamente com a confirmação da sua reserva.',
+  cta: {
+    rotulo: 'Reserve Agora!',
+    mensagem: MENSAGEM_PADRAO,
+  },
 } as const;
 
 export const MARCA = {
-  nomeCurto: 'YCar',
-  // PROVISÓRIO ⚠️ 12: validar nome completo exibido
-  nomeCompleto: 'YCar Transporte Executivo',
+  nomeCurto: 'YCar Executive',
+  nomeCompleto: 'YCAR EXECUTIVE',
   dominio: 'https://ycarexecutive.com.br',
 } as const;

@@ -7,17 +7,26 @@ import { CONTATO, MARCA } from '../content/site-content';
   template: `
     <footer class="footer">
       <div class="container footer__inner">
-        <p class="footer__marca">{{ marca.nomeCompleto }}</p>
+        <img
+          class="footer__logo"
+          src="/images/logo-ycar.png"
+          alt="{{ marca.nomeCompleto }}"
+          width="94"
+          height="66"
+          loading="lazy"
+        />
         <p class="footer__info">
           @if (contato.cnpj) {
             CNPJ {{ contato.cnpj }} ·
           }
-          {{ contato.cidade }} · © {{ ano }}
+          {{ contato.cidade }} · © {{ ano }} {{ marca.nomeCompleto }} — Todos os direitos
+          reservados
         </p>
         <nav class="footer__nav" aria-label="Links do rodapé">
           <a href="#servicos">Serviços</a>
-          <a href="#veiculo">Veículo</a>
-          <a href="#contato">Contato</a>
+          <a href="#quem-somos">Quem Somos</a>
+          <a href="#frota">Frota</a>
+          <a href="#reserva">Reserva</a>
           <a [href]="contato.instagramUrl" target="_blank" rel="noopener">Instagram</a>
         </nav>
       </div>
@@ -36,9 +45,9 @@ import { CONTATO, MARCA } from '../content/site-content';
       flex-wrap: wrap;
     }
 
-    .footer__marca {
-      font-family: var(--font-display);
-      font-weight: 600;
+    .footer__logo {
+      block-size: 4rem;
+      inline-size: auto;
     }
 
     .footer__info {

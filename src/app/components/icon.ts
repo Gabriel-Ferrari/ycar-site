@@ -13,7 +13,11 @@ export type IconName =
   | 'instagram'
   | 'whatsapp'
   | 'mail'
-  | 'pin';
+  | 'pin'
+  | 'globe'
+  | 'car'
+  | 'van'
+  | 'bus';
 
 @Component({
   selector: 'app-icon',
@@ -95,6 +99,33 @@ export type IconName =
         @case ('pin') {
           <path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 0 1 13 0c0 4.6-6.5 10-6.5 10z" />
           <circle cx="12" cy="11" r="2.5" />
+        }
+        @case ('globe') {
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18" />
+          <path d="M12 3c2.5 2.4 3.8 5.6 3.8 9s-1.3 6.6-3.8 9c-2.5-2.4-3.8-5.6-3.8-9s1.3-6.6 3.8-9z" />
+        }
+        @case ('car') {
+          <path d="M4 16v-4l2-5a2 2 0 0 1 1.9-1.3h8.2A2 2 0 0 1 18 7l2 5v4" />
+          <path d="M4 12h16" />
+          <path d="M6.5 16h.01" />
+          <path d="M17.5 16h.01" />
+          <path d="M4 16h16v2.5a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1V18h-9v.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" />
+        }
+        @case ('van') {
+          <path d="M2 8a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v9H2z" />
+          <path d="M15 10h3.6a1 1 0 0 1 .9.55L21.5 14a1 1 0 0 1 .1.45V17H15" />
+          <circle cx="6.5" cy="17.5" r="1.8" />
+          <circle cx="17.5" cy="17.5" r="1.8" />
+          <path d="M5 10h4v3H5z" />
+        }
+        @case ('bus') {
+          <path d="M4 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v13H4z" />
+          <path d="M4 11h16" />
+          <path d="M4 18v1.5a1 1 0 0 0 1 1h1.5a1 1 0 0 0 1-1V18" />
+          <path d="M16.5 18v1.5a1 1 0 0 0 1 1H19a1 1 0 0 0 1-1V18" />
+          <path d="M8 15h.01" />
+          <path d="M16 15h.01" />
         }
       }
     </svg>
