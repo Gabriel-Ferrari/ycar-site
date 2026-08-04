@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ycar-site",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist/ycar-site/browser",
+    "not_found_handling": "404-page"
+  }
+}
