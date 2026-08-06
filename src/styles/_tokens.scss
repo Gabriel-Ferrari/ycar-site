@@ -12,11 +12,8 @@
   --color-text: #f5f1e8;
   --color-text-2: #a49e92;
   --color-border: rgba(247, 226, 185, 0.12);
-  --overlay-hero: linear-gradient(
-    180deg,
-    rgba(5, 5, 5, 0.25) 0%,
-    rgba(5, 5, 5, 0.88) 100%
-  );
+  --color-error: #e0665c;
+  --overlay-hero: linear-gradient(180deg, rgba(5, 5, 5, 0.25) 0%, rgba(5, 5, 5, 0.88) 100%);
 
   /* ---- Tipografia ---- */
   --font-display: 'Fraunces', Georgia, serif;

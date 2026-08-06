@@ -85,8 +85,7 @@ export const SERVICOS: Servico[] = [
   },
   {
     titulo: 'Operação à Disposição',
-    descricao:
-      'Motorista executivo à sua disposição para múltiplos compromissos ao longo do dia.',
+    descricao: 'Motorista executivo à sua disposição para múltiplos compromissos ao longo do dia.',
     icone: 'clock',
   },
   {
@@ -102,8 +101,7 @@ export const SERVICOS: Servico[] = [
   },
   {
     titulo: 'Veículos Blindados',
-    descricao:
-      'Blindados com monitoramento 24 horas: máxima segurança, discrição e tranquilidade.',
+    descricao: 'Blindados com monitoramento 24 horas: máxima segurança, discrição e tranquilidade.',
     icone: 'shield',
   },
   {
@@ -211,6 +209,50 @@ export const RESERVA = {
     rotulo: 'Reserve Agora!',
     mensagem: MENSAGEM_PADRAO,
   },
+} as const;
+
+export type TipoServicoId = 'ida' | 'ida-volta' | 'disposicao';
+
+export const RESERVA_FORM = {
+  tipoLegenda: 'Tipo de serviço',
+  tiposServico: [
+    { id: 'ida' as TipoServicoId, rotulo: 'Somente Ida', icone: 'arrow-right' },
+    { id: 'ida-volta' as TipoServicoId, rotulo: 'Ida e Volta', icone: 'swap' },
+    { id: 'disposicao' as TipoServicoId, rotulo: 'À Disposição', icone: 'clock' },
+  ],
+  grupos: {
+    trajeto: 'Trajeto',
+    passageiro: 'Seus dados',
+  },
+  campos: {
+    embarque: {
+      rotulo: 'Endereço de embarque',
+      placeholder: 'Rua e número, aeroporto ou hotel',
+    },
+    destino: {
+      rotulo: 'Endereço de destino',
+      placeholder: 'Para onde vamos?',
+    },
+    data: { rotulo: 'Data' },
+    hora: { rotulo: 'Horário' },
+    horaInicio: { rotulo: 'Horário de início' },
+    dataRetorno: { rotulo: 'Data do retorno' },
+    horaRetorno: { rotulo: 'Horário do retorno' },
+    nome: { rotulo: 'Seu nome', placeholder: 'Nome completo' },
+    passageiros: { rotulo: 'Passageiros' },
+    observacoes: {
+      rotulo: 'Observações',
+      placeholder: 'Voo, bagagens, cadeirinha infantil, paradas extras…',
+      placeholderDisposicao: 'Quantas horas ou até que horário? Compromissos previstos…',
+    },
+  },
+  passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
+  opcional: 'opcional',
+  erroObrigatorio: 'Preencha este campo',
+  erroDataPassada: 'Escolha uma data a partir de hoje',
+  erroRetornoAntes: 'O retorno deve ser após a ida',
+  botao: 'Reservar pelo WhatsApp',
+  aviso: 'Você será direcionado ao WhatsApp com os dados da reserva já preenchidos.',
 } as const;
 
 export const MARCA = {

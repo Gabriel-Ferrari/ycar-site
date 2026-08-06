@@ -1,25 +1,31 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CONTATO, RESERVA, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
+import { BookingForm } from './booking-form';
 import { Icon } from './icon';
 
 @Component({
   selector: 'app-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon, RevealOnScroll],
+  imports: [Icon, RevealOnScroll, BookingForm],
   template: `
     <section class="contato section" id="reserva" aria-labelledby="contato-titulo">
-      <div class="container contato__inner reveal" appReveal>
-        <p class="overline">Reserva</p>
-        <h2 class="section-titulo" id="contato-titulo">{{ reserva.titulo }}</h2>
-        <p class="contato__sub">{{ reserva.descricao }}</p>
+      <div class="container contato__inner">
+        <div class="contato__intro reveal" appReveal>
+          <p class="overline">Reserva</p>
+          <h2 class="section-titulo" id="contato-titulo">{{ reserva.titulo }}</h2>
+          <p class="contato__sub">{{ reserva.descricao }}</p>
+        </div>
 
-        <a class="btn btn--primary contato__whatsapp" [href]="waHref" target="_blank" rel="noopener">
-          <app-icon name="whatsapp" [size]="22" />
-          {{ reserva.cta.rotulo }} — {{ contato.whatsappExibicao }}
-        </a>
+        <app-booking-form class="contato__form reveal" appReveal />
 
-        <ul class="contato__canais">
+        <ul class="contato__canais reveal" appReveal>
+          <li>
+            <a [href]="waHref" target="_blank" rel="noopener">
+              <app-icon name="whatsapp" [size]="20" />
+              {{ contato.whatsappExibicao }}
+            </a>
+          </li>
           <li>
             <a [href]="contato.instagramUrl" target="_blank" rel="noopener">
               <app-icon name="instagram" [size]="20" />
@@ -51,6 +57,11 @@ import { Icon } from './icon';
     .contato__inner {
       display: grid;
       justify-items: center;
+    }
+
+    .contato__intro {
+      display: grid;
+      justify-items: center;
       text-align: center;
     }
 
@@ -68,13 +79,12 @@ import { Icon } from './icon';
     .contato__sub {
       color: var(--color-text-2);
       max-width: 52ch;
-      margin-block-end: var(--space-4);
+      margin-block-end: var(--space-6);
     }
 
-    .contato__whatsapp {
-      font-size: var(--text-body-lg);
-      padding: 1rem 2rem;
-      margin-block-end: var(--space-4);
+    .contato__form {
+      inline-size: min(100%, 44rem);
+      margin-block-end: var(--space-6);
     }
 
     .contato__canais {
@@ -111,12 +121,6 @@ import { Icon } from './icon';
       gap: 0.5rem;
       min-height: 44px;
       color: var(--color-text-2);
-    }
-
-    @media (max-width: 47.99em) {
-      .contato__whatsapp {
-        inline-size: 100%;
-      }
     }
   `,
 })

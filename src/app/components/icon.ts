@@ -14,6 +14,8 @@ export type IconName =
   | 'whatsapp'
   | 'mail'
   | 'pin'
+  | 'swap'
+  | 'arrow-right'
   | 'globe'
   | 'car'
   | 'van'
@@ -100,17 +102,31 @@ export type IconName =
           <path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 0 1 13 0c0 4.6-6.5 10-6.5 10z" />
           <circle cx="12" cy="11" r="2.5" />
         }
+        @case ('arrow-right') {
+          <path d="M4 12h16" />
+          <path d="m14 6 6 6-6 6" />
+        }
+        @case ('swap') {
+          <path d="m16 3 4 4-4 4" />
+          <path d="M20 7H4" />
+          <path d="m8 21-4-4 4-4" />
+          <path d="M4 17h16" />
+        }
         @case ('globe') {
           <circle cx="12" cy="12" r="9" />
           <path d="M3 12h18" />
-          <path d="M12 3c2.5 2.4 3.8 5.6 3.8 9s-1.3 6.6-3.8 9c-2.5-2.4-3.8-5.6-3.8-9s1.3-6.6 3.8-9z" />
+          <path
+            d="M12 3c2.5 2.4 3.8 5.6 3.8 9s-1.3 6.6-3.8 9c-2.5-2.4-3.8-5.6-3.8-9s1.3-6.6 3.8-9z"
+          />
         }
         @case ('car') {
           <path d="M4 16v-4l2-5a2 2 0 0 1 1.9-1.3h8.2A2 2 0 0 1 18 7l2 5v4" />
           <path d="M4 12h16" />
           <path d="M6.5 16h.01" />
           <path d="M17.5 16h.01" />
-          <path d="M4 16h16v2.5a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1V18h-9v.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z" />
+          <path
+            d="M4 16h16v2.5a1 1 0 0 1-1 1h-1.5a1 1 0 0 1-1-1V18h-9v.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"
+          />
         }
         @case ('van') {
           <path d="M2 8a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v9H2z" />
