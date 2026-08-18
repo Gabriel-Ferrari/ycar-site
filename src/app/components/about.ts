@@ -23,7 +23,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
         <aside class="sobre__destaque reveal" appReveal [revealDelay]="200">
           <img
             class="sobre__foto"
-            src="/images/quem-somos.webp"
+            src="/images/quem-somos.png"
             alt="Profissional de terno escuro com braços cruzados e olhar confiante"
             width="800"
             height="1000"

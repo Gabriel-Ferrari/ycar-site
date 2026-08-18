@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CONTATO, MARCA } from '../content/site-content';
+import { CONTATO, MARCA, MENU } from '../content/site-content';
 
 @Component({
   selector: 'app-footer',
@@ -23,11 +23,14 @@ import { CONTATO, MARCA } from '../content/site-content';
           reservados
         </p>
         <nav class="footer__nav" aria-label="Links do rodapé">
-          <a href="#servicos">Serviços</a>
-          <a href="#quem-somos">Quem Somos</a>
-          <a href="#frota">Frota</a>
-          <a href="#reserva">Reserva</a>
-          <a [href]="contato.instagramUrl" target="_blank" rel="noopener">Instagram</a>
+          @for (item of menu; track item.destino) {
+            @if (item.externo) {
+              <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
+            } @else {
+              <a [href]="item.destino">{{ item.rotulo }}</a>
+            }
+          }
+          <a href="#reserva">Reserve Agora!</a>
         </nav>
       </div>
     </footer>
@@ -85,6 +88,7 @@ import { CONTATO, MARCA } from '../content/site-content';
 })
 export class Footer {
   protected readonly marca = MARCA;
+  protected readonly menu = MENU;
   protected readonly contato = CONTATO;
   protected readonly ano = new Date().getFullYear();
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
+import { MENU, MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
 
 @Component({
   selector: 'app-header',
@@ -17,10 +17,13 @@ import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
           />
         </a>
         <nav class="header__nav" aria-label="Seções do site">
-          <a href="#servicos">Serviços</a>
-          <a href="#quem-somos">Quem Somos</a>
-          <a href="#como-trabalhamos">Como Trabalhamos</a>
-          <a href="#frota">Frota</a>
+          @for (item of menu; track item.destino) {
+            @if (item.externo) {
+              <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
+            } @else {
+              <a [href]="item.destino">{{ item.rotulo }}</a>
+            }
+          }
         </nav>
         <a class="btn btn--primary header__cta" [href]="waHref" target="_blank" rel="noopener">
           Reserve Agora!
@@ -113,5 +116,6 @@ import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
   `,
 })
 export class Header {
+  protected readonly menu = MENU;
   protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
 }
