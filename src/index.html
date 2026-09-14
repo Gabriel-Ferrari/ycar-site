@@ -42,7 +42,20 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="preload" href="images/hero-executivo.webp" as="image" type="image/webp" />
+    <link
+      rel="preload"
+      href="images/principal-horizontal.webp"
+      as="image"
+      type="image/webp"
+      media="(min-width: 48em)"
+    />
+    <link
+      rel="preload"
+      href="images/principal-vertical.webp"
+      as="image"
+      type="image/webp"
+      media="(max-width: 47.99em)"
+    />
     <script>
       // Anti-FOIC: estados iniciais de animação só se aplicam com JS ativo (html.js).
       // Sem JS, nenhum conteúdo fica oculto — ver docs/PRD.md §7.

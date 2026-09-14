@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CONTATO, RESERVA, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
-import { BookingForm } from './booking-form';
 import { Icon } from './icon';
 
 @Component({
   selector: 'app-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon, RevealOnScroll, BookingForm],
+  imports: [Icon, RevealOnScroll],
   template: `
     <section class="contato section" id="reserva" aria-labelledby="contato-titulo">
       <div class="container contato__inner">
@@ -17,7 +16,16 @@ import { Icon } from './icon';
           <p class="contato__sub">{{ reserva.descricao }}</p>
         </div>
 
-        <app-booking-form class="contato__form reveal" appReveal />
+        <div class="contato__acao reveal" appReveal [revealDelay]="80">
+          <a
+            class="btn btn--primary btn--lg"
+            [href]="reserva.plataformaUrl"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ reserva.plataformaRotulo }}
+          </a>
+        </div>
 
         <ul class="contato__canais reveal" appReveal>
           <li>
@@ -49,11 +57,6 @@ import { Icon } from './icon';
     </section>
   `,
   styles: `
-    .contato {
-      background: var(--color-surface);
-      border-block-start: 1px solid var(--color-border);
-    }
-
     .contato__inner {
       display: grid;
       justify-items: center;
@@ -82,8 +85,10 @@ import { Icon } from './icon';
       margin-block-end: var(--space-6);
     }
 
-    .contato__form {
-      inline-size: min(100%, 44rem);
+    .contato__acao {
+      display: grid;
+      justify-items: center;
+      gap: var(--space-2);
       margin-block-end: var(--space-6);
     }
 

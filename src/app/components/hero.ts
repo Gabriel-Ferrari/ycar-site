@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HERO, linkWhatsApp } from '../content/site-content';
+import { HERO, RESERVA } from '../content/site-content';
 import { Parallax } from '../directives/parallax';
 
 @Component({
@@ -29,9 +29,6 @@ import { Parallax } from '../directives/parallax';
           <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
             {{ hero.ctaPrimario.rotulo }}
           </a>
-          <a class="btn btn--ghost" [href]="hero.ctaSecundario.ancora">
-            {{ hero.ctaSecundario.rotulo }}
-          </a>
         </div>
       </div>
     </section>
@@ -43,8 +40,8 @@ import { Parallax } from '../directives/parallax';
       display: flex;
       align-items: center;
       overflow: hidden;
-      /* Espaço para o header fixo de duas linhas no mobile */
-      padding-block: 8rem var(--space-8);
+      /* Espaço para o header fixo */
+      padding-block: 7rem var(--space-8);
     }
 
     .hero__media {
@@ -55,15 +52,39 @@ import { Parallax } from '../directives/parallax';
       will-change: transform;
       background:
         radial-gradient(ellipse at 78% 18%, rgba(247, 226, 185, 0.08), transparent 55%),
-        url('/images/hero-executivo.webp') center 30% / cover no-repeat,
+        url('/images/principal-horizontal.webp') 70% center / cover no-repeat,
         #050505;
     }
 
+    /* Foto clara (interior bege): véu lateral escurece o lado do texto */
     .hero__media::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: var(--overlay-hero);
+      background:
+        linear-gradient(
+          90deg,
+          rgba(5, 5, 5, 0.92) 0%,
+          rgba(5, 5, 5, 0.78) 38%,
+          rgba(5, 5, 5, 0.3) 70%,
+          rgba(5, 5, 5, 0.12) 100%
+        ),
+        var(--overlay-hero);
+    }
+
+    @media (max-width: 47.99em) {
+      .hero__media {
+        background: url('/images/principal-vertical.webp') center top / cover no-repeat, #050505;
+      }
+
+      .hero__media::after {
+        background: linear-gradient(
+          180deg,
+          rgba(5, 5, 5, 0.55) 0%,
+          rgba(5, 5, 5, 0.8) 45%,
+          rgba(5, 5, 5, 0.94) 100%
+        );
+      }
     }
 
     .hero__content {
@@ -92,6 +113,6 @@ import { Parallax } from '../directives/parallax';
 })
 export class Hero {
   protected readonly hero = HERO;
-  protected readonly ctaHref = linkWhatsApp(HERO.ctaPrimario.mensagem);
+  protected readonly ctaHref = RESERVA.plataformaUrl;
   protected readonly palavras = HERO.titulo.split(' ');
 }

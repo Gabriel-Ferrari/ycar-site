@@ -14,12 +14,12 @@ export type IconName =
   | 'whatsapp'
   | 'mail'
   | 'pin'
-  | 'swap'
-  | 'arrow-right'
   | 'globe'
   | 'car'
   | 'van'
-  | 'bus';
+  | 'bus'
+  | 'menu'
+  | 'close';
 
 @Component({
   selector: 'app-icon',
@@ -102,15 +102,13 @@ export type IconName =
           <path d="M12 21s-6.5-5.4-6.5-10a6.5 6.5 0 0 1 13 0c0 4.6-6.5 10-6.5 10z" />
           <circle cx="12" cy="11" r="2.5" />
         }
-        @case ('arrow-right') {
-          <path d="M4 12h16" />
-          <path d="m14 6 6 6-6 6" />
+        @case ('menu') {
+          <path d="M4 8h16" />
+          <path d="M4 16h16" />
         }
-        @case ('swap') {
-          <path d="m16 3 4 4-4 4" />
-          <path d="M20 7H4" />
-          <path d="m8 21-4-4 4-4" />
-          <path d="M4 17h16" />
+        @case ('close') {
+          <path d="M6 6l12 12" />
+          <path d="M18 6 6 18" />
         }
         @case ('globe') {
           <circle cx="12" cy="12" r="9" />

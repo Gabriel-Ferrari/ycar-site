@@ -12,6 +12,8 @@ export interface Servico {
   titulo: string;
   descricao: string;
   icone: string;
+  imagem: string;
+  foco?: string;
 }
 
 export interface CategoriaFrota {
@@ -19,6 +21,7 @@ export interface CategoriaFrota {
   lugares: string;
   descricao: string;
   icone: string;
+  imagem: string;
 }
 
 export interface Passo {
@@ -63,81 +66,81 @@ export const MENU: ItemMenu[] = [
 
 export const HERO = {
   overline: 'YCAR Executive · São Paulo',
-  titulo: 'Transporte Executivo com excelência, conforto e pontualidade em cada detalhe.',
+  titulo: 'Transporte Executivo com excelência, conforto e pontualidade.',
   subtitulo:
-    'Na YCAR EXECUTIVE você encontra motoristas profissionais, veículos de alto padrão e um atendimento personalizado para tornar cada trajeto mais seguro, confortável e produtivo.',
-  ctaPrimario: {
-    rotulo: 'Reserve Agora!',
-    mensagem: MENSAGEM_PADRAO,
-  },
-  ctaSecundario: { rotulo: 'Conhecer os serviços', ancora: '#servicos' },
+    'Motoristas profissionais, veículos de alto padrão e atendimento personalizado para uma experiência exclusiva.',
+  ctaPrimario: { rotulo: 'Reserve Agora!' },
 } as const;
 
 export const SERVICOS_INTRO = {
-  titulo: 'Garanta sua Viagem com Segurança, Conforto e Pontualidade',
-  descricao:
-    'Nossa frota é composta por veículos Sedan e SUV, incluindo opções blindadas, além de MiniVans, Vans, Micro-Ônibus e Ônibus.',
+  titulo: 'Encontre o Serviço Ideal para sua Viagem',
+  descricao: 'Sedans, SUVs, Blindados, MiniVans, Vans, Micro-Ônibus e Ônibus.',
 } as const;
 
 export const SERVICOS: Servico[] = [
   {
     titulo: 'Transfer Executivo',
     descricao:
-      'Soluções completas em transporte executivo para aeroportos, hotéis, empresas, eventos, carro de noiva, casamentos, congressos, feiras, shows, viagens corporativas e particulares.',
+      'Aeroportos, hotéis, empresas, noiva e casamentos, eventos, e viagens corporativas ou particulares.',
     icone: 'briefcase',
+    imagem: '/images/servicos/transfer-executivo.webp',
+    foco: 'center top',
   },
   {
     titulo: 'Receptivo Aeroporto',
-    descricao:
-      'Chegue com tranquilidade. Nós estaremos esperando por você nos aeroportos de São Paulo, no horário da sua chegada, para um transporte executivo com excelência.',
+    descricao: 'Recepção personalizada nos aeroportos de São Paulo, com conforto e pontualidade.',
     icone: 'plane',
+    imagem: '/images/servicos/receptivo-aeroporto.webp',
   },
   {
     titulo: 'Viagens',
-    descricao:
-      'Atendemos viagens para o interior paulista, litoral e cidades de outros estados, oferecendo transporte executivo de alto padrão para qualquer destino.',
+    descricao: 'Transporte Executivo para o interior, litoral e outros estados.',
     icone: 'road',
+    imagem: '/images/servicos/viagens.webp',
   },
   {
     titulo: 'Operação à Disposição',
-    descricao:
-      'Tenha um Motorista Executivo à sua disposição para múltiplos compromissos, com total comodidade, flexibilidade e atendimento personalizado ao longo do dia.',
+    descricao: 'Motorista Executivo à sua disposição para múltiplos compromissos ao longo do dia.',
     icone: 'clock',
+    imagem: '/images/servicos/operacao-disposicao.webp',
   },
   {
     titulo: 'City Tour',
-    descricao:
-      'Transforme sua viagem em uma experiência inesquecível. Realizamos passeios turísticos por São Paulo, Aparecida, Campos do Jordão, Holambra, Santos, São Roque e diversos outros destinos, com conforto, segurança e atendimento de excelência.',
+    descricao: 'Passeios turísticos em São Paulo e diversos destinos, com conforto e segurança.',
     icone: 'pin',
+    imagem: '/images/servicos/city-tour.webp',
   },
   {
     titulo: 'Motoristas Bilíngues',
-    descricao:
-      'Nossa equipe oferece atendimento em seu idioma, garantindo mais conforto, praticidade e tranquilidade durante toda a sua experiência de transporte.',
+    descricao: 'Atendimento em seu idioma para uma experiência mais confortável e tranquila.',
     icone: 'globe',
+    imagem: '/images/servicos/motoristas-bilingues.webp',
   },
   {
     titulo: 'Veículos Blindados',
-    descricao:
-      'Disponibilizamos veículos blindados com monitoramento 24 horas, proporcionando máxima segurança, discrição e tranquilidade em todos os deslocamentos.',
+    descricao: 'Veículos blindados para deslocamentos com máxima segurança e discrição.',
     icone: 'shield',
+    imagem: '/images/servicos/veiculo-blindado.webp',
+  },
+  {
+    titulo: 'Segurança Armada',
+    descricao: 'Escolta especializada com profissionais treinados e qualificados.',
+    icone: 'shield',
+    imagem: '/images/servicos/seguranca-armada.webp',
   },
   {
     titulo: 'Experiência Personalizada',
-    descricao:
-      'Conte com um serviço de transporte executivo incluindo suas preferências. Planejamos cada detalhe conforme a sua necessidade para oferecer uma experiência exclusiva, segura e eficiente.',
+    descricao: 'Transporte Executivo adaptado às suas necessidades e preferências.',
     icone: 'star',
+    imagem: '/images/servicos/experiencia-personalizada.webp',
   },
 ];
 
 export const QUEM_SOMOS = {
-  titulo: 'Excelência em Transporte Executivo em São Paulo',
+  titulo: 'Referência em Transporte Executivo em São Paulo',
   paragrafos: [
-    'Somos uma empresa especializada em Transporte Executivo. Na YCAR EXECUTIVE, oferecemos uma experiência de transporte diferenciada, unindo qualidade, sofisticação e segurança em cada trajeto.',
-    'Contamos com motoristas profissionais, experientes e altamente capacitados, prontos para atender clientes que valorizam discrição, conforto e um atendimento personalizado.',
-    'Nossa frota é composta por veículos modernos, revisados e preparados para proporcionar uma viagem tranquila, segura e agradável.',
-    'Atendemos por reserva de tempo e diária com motorista à disposição, transfers, aeroportos, viagens, eventos, reuniões, hotéis e deslocamentos executivos, sempre com pontualidade, responsabilidade e atenção aos detalhes.',
-    'Escolher a YCAR EXECUTIVE é optar por um serviço Premium, pensado para transformar cada viagem em uma experiência de alto padrão.',
+    'Desde 2020, a YCAR EXECUTIVE é especializada em Transporte Executivo em São Paulo, atendendo clientes que valorizam conforto, segurança e discrição.',
+    'Com motoristas experientes e veículos de alto padrão, oferecemos atendimento personalizado, pontualidade e atenção aos detalhes em cada trajeto.',
   ],
   tagline: 'Seu destino, nossa prioridade.',
   chamada: 'Reserve agora e viaje com quem entende de Transporte Executivo.',
@@ -146,136 +149,92 @@ export const QUEM_SOMOS = {
 export const PASSOS: Passo[] = [
   {
     titulo: 'Agendamento da Operação',
-    descricao:
-      'Realize seu agendamento de forma rápida e prática. Em seguida, você receberá a confirmação da reserva, com todas as informações do veículo, do motorista e do serviço contratado, para viajar com total tranquilidade.',
+    descricao: 'Agende seu serviço e receba a confirmação com os dados do motorista e veículo.',
   },
   {
     titulo: 'Embarque com Tranquilidade',
     descricao:
-      'No dia e horário agendados, seu motorista estará no local combinado com antecedência, preparado para recebê-lo com cordialidade, auxiliar com as bagagens e conduzir sua viagem com conforto, segurança e excelência.',
+      'Seu motorista estará no local e horário combinados, pronto para recebê-lo e auxiliar com as bagagens.',
   },
   {
     titulo: 'Experiência Premium',
     descricao:
-      'Desfrute de uma viagem com conforto, segurança e exclusividade em veículos executivos modernos, equipados com ar-condicionado, Wi-Fi, água mineral, mimos de bordo e atendimento personalizado. Cada detalhe é planejado para proporcionar uma experiência diferenciada do embarque ao destino.',
+      'Veículos modernos com Wi-Fi, água com e sem gás, mimos de bordo e atendimento personalizado.',
   },
   {
-    titulo: 'Pagamento com Total Conveniência',
-    descricao:
-      'Escolha a forma de pagamento que melhor atende às suas necessidades. Aceitamos PIX, cartões de débito e crédito, além de link de pagamento, garantindo uma experiência simples, rápida e segura.',
+    titulo: 'Pagamento Facilitado',
+    descricao: 'Pague via PIX, cartões de débito ou crédito e link de pagamento.',
   },
 ];
 
 export const FROTA_INTRO = {
-  titulo: 'Frota de Veículos Executiva',
+  titulo: 'Frota de Veículos',
   descricao:
-    'Contamos com uma frota de veículos executiva moderna e diversificada, escolhida para proporcionar conforto, segurança e praticidade em todos os deslocamentos. Do atendimento corporativo aos momentos especiais, oferecemos veículos preparados para entregar uma experiência premium do embarque ao destino.',
+    'Frota moderna e diversificada, com veículos selecionados para diferentes necessidades e ocasiões.',
 } as const;
 
 export const FROTA: CategoriaFrota[] = [
   {
-    nome: 'Sedã Executivo',
+    nome: 'Sedã',
     lugares: '3 a 4 lugares',
-    descricao:
-      'Ideal para viagens individuais, casais e deslocamentos corporativos, oferecendo elegância, conforto e discrição.',
+    descricao: 'Ideal para viagens individuais, casais e deslocamentos corporativos.',
     icone: 'car',
+    imagem: '/images/frota/sedan.webp',
   },
   {
-    nome: 'SUV Executivo',
+    nome: 'SUV',
     lugares: '4 a 6 lugares',
-    descricao:
-      'Mais espaço, sofisticação e versatilidade para famílias, grupos reduzidos e viagens de longa distância.',
+    descricao: 'Mais espaço e versatilidade para famílias, pequenos grupos e viagens.',
     icone: 'car',
+    imagem: '/images/frota/suv.webp',
   },
   {
-    nome: 'MiniVan Executiva',
+    nome: 'MiniVan',
     lugares: '7 lugares',
-    descricao:
-      'Versatilidade e conforto para pequenos grupos com maior espaço interno e amplo espaço para bagagens.',
+    descricao: 'Ideal para pequenos grupos, com amplo espaço interno e para bagagens.',
     icone: 'van',
+    imagem: '/images/frota/minivan.webp',
   },
   {
-    nome: 'Van Executiva',
+    nome: 'Van',
     lugares: '10 a 18 lugares',
-    descricao:
-      'A opção perfeita para grupos, eventos, turismo e traslados corporativos, com amplo espaço e máximo conforto para todos os passageiros.',
+    descricao: 'Ideal para grupos, eventos, turismo e traslados corporativos.',
     icone: 'van',
+    imagem: '/images/frota/van.webp',
   },
   {
-    nome: 'Micro-Ônibus Executivo',
+    nome: 'Micro-Ônibus',
     lugares: '20 a 30 lugares',
-    descricao:
-      'Ideal para grupos, eventos corporativos, passeios, transfers e viagens. Oferece conforto, segurança e praticidade, com amplo espaço interno e estrutura adequada para transportar passageiros com tranquilidade.',
+    descricao: 'Amplo espaço para grupos maiores, eventos, transfers, passeios e viagens.',
     icone: 'bus',
+    imagem: '/images/frota/micro-onibus.webp',
   },
   {
-    nome: 'Ônibus Executivo',
+    nome: 'Ônibus',
     lugares: 'Acima de 40 lugares',
-    descricao:
-      'Uma solução completa para grandes grupos, excursões, eventos e operações corporativas. Veículos preparados para longos trajetos, proporcionando conforto, segurança e eficiência em cada deslocamento.',
+    descricao: 'Ideal para grandes grupos, excursões, eventos e viagens de longa distância.',
     icone: 'bus',
+    imagem: '/images/frota/onibus.webp',
   },
   {
-    nome: 'Veículos Blindados',
-    lugares: 'Sob consulta',
-    descricao:
-      'Segurança reforçada para clientes que necessitam de proteção adicional, sem abrir mão do conforto e da discrição.',
+    nome: 'Blindados',
+    lugares: 'Blindados Sob Demanda',
+    descricao: 'Segurança reforçada e proteção adicional, com conforto e discrição.',
     icone: 'shield',
+    imagem: '/images/frota/blindado.webp',
   },
 ];
 
 export const RESERVA = {
   titulo: 'Reserve Agora!',
   descricao:
-    'Informe o trajeto, a data e o horário desejado. Nossa equipe confirmará a disponibilidade e retornará rapidamente com a confirmação da sua reserva.',
+    'Escolha o serviço, a data e o horário na nossa plataforma de agendamento. Você recebe a confirmação da reserva com todos os detalhes.',
   cta: {
     rotulo: 'Reserve Agora!',
     mensagem: MENSAGEM_PADRAO,
   },
-} as const;
-
-export type TipoServicoId = 'ida' | 'ida-volta' | 'disposicao';
-
-export const RESERVA_FORM = {
-  tipoLegenda: 'Tipo de serviço',
-  tiposServico: [
-    { id: 'ida' as TipoServicoId, rotulo: 'Somente Ida', icone: 'arrow-right' },
-    { id: 'ida-volta' as TipoServicoId, rotulo: 'Ida e Volta', icone: 'swap' },
-    { id: 'disposicao' as TipoServicoId, rotulo: 'À Disposição', icone: 'clock' },
-  ],
-  grupos: {
-    trajeto: 'Trajeto',
-    passageiro: 'Seus dados',
-  },
-  campos: {
-    embarque: {
-      rotulo: 'Endereço de embarque',
-      placeholder: 'Rua e número, aeroporto ou hotel',
-    },
-    destino: {
-      rotulo: 'Endereço de destino',
-      placeholder: 'Para onde vamos?',
-    },
-    data: { rotulo: 'Data' },
-    hora: { rotulo: 'Horário' },
-    horaInicio: { rotulo: 'Horário de início' },
-    dataRetorno: { rotulo: 'Data do retorno' },
-    horaRetorno: { rotulo: 'Horário do retorno' },
-    nome: { rotulo: 'Seu nome', placeholder: 'Nome completo' },
-    passageiros: { rotulo: 'Passageiros' },
-    observacoes: {
-      rotulo: 'Observações',
-      placeholder: 'Voo, bagagens, cadeirinha infantil, paradas extras…',
-      placeholderDisposicao: 'Quantas horas ou até que horário? Compromissos previstos…',
-    },
-  },
-  passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
-  opcional: 'opcional',
-  erroObrigatorio: 'Preencha este campo',
-  erroDataPassada: 'Escolha uma data a partir de hoje',
-  erroRetornoAntes: 'O retorno deve ser após a ida',
-  botao: 'Reservar pelo WhatsApp',
-  aviso: 'Você será direcionado ao WhatsApp com os dados da reserva já preenchidos.',
+  plataformaUrl: 'https://ycarexecutive.youcanbook.me',
+  plataformaRotulo: 'Fazer reserva online',
 } as const;
 
 export const MARCA = {

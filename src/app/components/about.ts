@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { QUEM_SOMOS, RESERVA, linkWhatsApp } from '../content/site-content';
+import { QUEM_SOMOS, RESERVA } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
@@ -7,7 +7,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RevealOnScroll],
   template: `
-    <section class="sobre section" id="quem-somos" aria-labelledby="sobre-titulo">
+    <section class="sobre section section--alt" id="quem-somos" aria-labelledby="sobre-titulo">
       <div class="container sobre__inner">
         <div class="sobre__texto">
           <p class="overline reveal" appReveal>Quem Somos</p>
@@ -39,11 +39,6 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
     </section>
   `,
   styles: `
-    .sobre {
-      background: var(--color-surface);
-      border-block: 1px solid var(--color-border);
-    }
-
     .sobre__inner {
       display: grid;
       grid-template-columns: 7fr 5fr;
@@ -103,5 +98,5 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
 export class About {
   protected readonly quemSomos = QUEM_SOMOS;
   protected readonly reserva = RESERVA;
-  protected readonly ctaHref = linkWhatsApp(RESERVA.cta.mensagem);
+  protected readonly ctaHref = RESERVA.plataformaUrl;
 }
