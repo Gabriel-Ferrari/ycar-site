@@ -20,7 +20,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
             </p>
           }
         </div>
-        <aside class="sobre__destaque reveal" appReveal [revealDelay]="200">
+        <aside class="sobre__destaque tema-escuro reveal" appReveal [revealDelay]="200">
           <img
             class="sobre__foto"
             src="/images/quem-somos.png"

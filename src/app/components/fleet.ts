@@ -20,7 +20,7 @@ import { Icon, IconName } from './icon';
 
         <div class="cards">
           @for (categoria of frota; track categoria.nome) {
-            <article class="card reveal" appReveal [revealDelay]="($index % 3) * 90">
+            <article class="card tema-escuro reveal" appReveal [revealDelay]="($index % 3) * 90">
               <img
                 class="card__foto"
                 [src]="categoria.imagem"

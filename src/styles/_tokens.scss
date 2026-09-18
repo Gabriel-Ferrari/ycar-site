@@ -2,17 +2,48 @@
 // Contraste AA verificado: texto/fundo ≈ 18:1 · secundário ≈ 7:1 · champagne/fundo ≈ 16:1
 
 :root {
-  /* ---- Cor ---- */
-  --color-bg: #050505;
-  --color-surface: #111110;
-  --color-surface-2: #1a1917;
-  --color-surface-3: #24221f;
-  --color-accent: #f7e2b9;
-  --color-accent-hover: #fdeed1;
-  --color-accent-press: #e3c992;
-  --color-text: #f5f1e8;
-  --color-text-2: #d8d1c2;
-  --color-border: rgba(247, 226, 185, 0.12);
+  /* ---- Cor: paleta escura (padrão) ---- */
+  --escuro-bg: #050505;
+  --escuro-surface: #111110;
+  --escuro-surface-2: #1a1917;
+  --escuro-surface-3: #24221f;
+  --escuro-accent: #f7e2b9;
+  --escuro-accent-hover: #fdeed1;
+  --escuro-accent-press: #e3c992;
+  --escuro-text: #f5f1e8;
+  --escuro-text-2: #d8d1c2;
+  --escuro-border: rgba(247, 226, 185, 0.12);
+  --escuro-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --escuro-shadow-cta: 0 4px 16px rgba(247, 226, 185, 0.18);
+
+  /* ---- Cor: paleta bege (seções que quebram a sequência escura) ----
+     Fundo é o próprio champagne do logo (#F7E2B9); o acento vira bronze
+     porque o champagne some sobre ele mesmo.
+     Contraste AA: texto ≈ 14:1 · secundário ≈ 6,3:1 · bronze ≈ 4,8:1 */
+  --bege-bg: #f3e0bc;
+  --bege-surface: #ecd6ac;
+  --bege-surface-2: #ecd6ac;
+  --bege-surface-3: #e4cb9c;
+  --bege-accent: #7a5c1e;
+  --bege-accent-hover: #644b16;
+  --bege-accent-press: #513c11;
+  --bege-text: #14120f;
+  --bege-text-2: #554e42;
+  --bege-border: rgba(20, 18, 15, 0.16);
+  --bege-shadow-card: 0 8px 24px rgba(20, 18, 15, 0.14);
+  --bege-shadow-cta: 0 4px 16px rgba(20, 18, 15, 0.2);
+
+  /* ---- Cor: tokens em uso (apontam para a paleta escura por padrão) ---- */
+  --color-bg: var(--escuro-bg);
+  --color-surface: var(--escuro-surface);
+  --color-surface-2: var(--escuro-surface-2);
+  --color-surface-3: var(--escuro-surface-3);
+  --color-accent: var(--escuro-accent);
+  --color-accent-hover: var(--escuro-accent-hover);
+  --color-accent-press: var(--escuro-accent-press);
+  --color-text: var(--escuro-text);
+  --color-text-2: var(--escuro-text-2);
+  --color-border: var(--escuro-border);
   --color-error: #e0665c;
   --overlay-hero: linear-gradient(180deg, rgba(5, 5, 5, 0.25) 0%, rgba(5, 5, 5, 0.88) 100%);
 
@@ -45,8 +76,8 @@
   --radius-pill: 999px;
 
   /* ---- Sombra (estática por estado — nunca animada continuamente) ---- */
-  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-cta: 0 4px 16px rgba(247, 226, 185, 0.18);
+  --shadow-card: var(--escuro-shadow-card);
+  --shadow-cta: var(--escuro-shadow-cta);
 
   /* ---- Movimento ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

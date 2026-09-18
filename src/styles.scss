@@ -94,10 +94,43 @@ p {
   padding-block: var(--space-section);
 }
 
-/* Seções alternam entre o fundo base e um tom mais claro ao longo da página. */
+/* Seções alternam entre o fundo preto e um bege claro ao longo da página.
+   A seção troca os tokens de cor, então todo componente dentro dela se
+   adapta sem precisar de regra própria. */
 .section--alt {
-  background: var(--color-surface);
-  border-block: 1px solid var(--color-border);
+  --color-surface: var(--bege-surface);
+  --color-surface-2: var(--bege-surface-2);
+  --color-surface-3: var(--bege-surface-3);
+  --color-accent: var(--bege-accent);
+  --color-accent-hover: var(--bege-accent-hover);
+  --color-accent-press: var(--bege-accent-press);
+  --color-text: var(--bege-text);
+  --color-text-2: var(--bege-text-2);
+  --color-border: var(--bege-border);
+  --shadow-card: var(--bege-shadow-card);
+  --shadow-cta: var(--bege-shadow-cta);
+
+  background: var(--bege-bg);
+  color: var(--color-text);
+  border-block: 1px solid var(--bege-border);
+}
+
+/* Bloco escuro dentro de uma seção bege (ex.: cards de frota com foto
+   escurecida): devolve a paleta escura só ali dentro. */
+.tema-escuro {
+  --color-surface: var(--escuro-surface);
+  --color-surface-2: var(--escuro-surface-2);
+  --color-surface-3: var(--escuro-surface-3);
+  --color-accent: var(--escuro-accent);
+  --color-accent-hover: var(--escuro-accent-hover);
+  --color-accent-press: var(--escuro-accent-press);
+  --color-text: var(--escuro-text);
+  --color-text-2: var(--escuro-text-2);
+  --color-border: var(--escuro-border);
+  --shadow-card: var(--escuro-shadow-card);
+  --shadow-cta: var(--escuro-shadow-cta);
+
+  color: var(--color-text);
 }
 
 /* Menu mobile aberto: a página atrás não rola */
@@ -151,6 +184,34 @@ html.menu-aberto {
   &:active {
     background-color: var(--color-accent-press);
     transform: translateY(0);
+  }
+}
+
+/* Sobre bege o champagne some: o CTA inverte para preto sobre bege. */
+.section--alt .btn--primary {
+  background-color: var(--bege-text);
+  color: var(--bege-bg);
+
+  &:hover {
+    background-color: #2d2922;
+  }
+
+  &:active {
+    background-color: #000;
+  }
+}
+
+/* Dentro de uma ilha escura o champagne volta a funcionar. */
+.section--alt .tema-escuro .btn--primary {
+  background-color: var(--color-accent);
+  color: var(--escuro-bg);
+
+  &:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  &:active {
+    background-color: var(--color-accent-press);
   }
 }
 
