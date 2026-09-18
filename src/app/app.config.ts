@@ -1,13 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 
+// Site de página única por âncoras: sem @angular/router no bundle do cliente.
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-    provideClientHydration(),
-  ],
+  providers: [provideBrowserGlobalErrorListeners(), provideClientHydration()],
 };

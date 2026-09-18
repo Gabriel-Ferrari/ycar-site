@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FROTA, FROTA_INTRO } from '../content/site-content';
+import { FROTA, FROTA_INTRO, SIZES_CARD, srcsetCard } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
@@ -24,6 +24,8 @@ import { Icon, IconName } from './icon';
               <img
                 class="card__foto"
                 [src]="categoria.imagem"
+                [srcset]="categoria.srcset"
+                [sizes]="sizes"
                 alt=""
                 width="900"
                 height="720"
@@ -235,8 +237,12 @@ import { Icon, IconName } from './icon';
   `,
 })
 export class Fleet {
-  protected readonly frota = FROTA;
+  protected readonly frota = FROTA.map((categoria) => ({
+    ...categoria,
+    srcset: srcsetCard(categoria.imagem),
+  }));
   protected readonly intro = FROTA_INTRO;
+  protected readonly sizes = SIZES_CARD;
 
   protected icone(nome: string): IconName {
     return nome as IconName;

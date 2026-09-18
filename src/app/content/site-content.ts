@@ -41,6 +41,22 @@ export function linkWhatsApp(mensagem: string): string {
   return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
 }
 
+/**
+ * Cards de serviço e frota compartilham a mesma grade, logo as mesmas larguras.
+ * As variantes são geradas em public/images/{servicos,frota}/<nome>-<largura>.webp;
+ * o arquivo sem sufixo é a maior (900w) e serve de fallback no `src`.
+ */
+const LARGURAS_CARD = [400, 560, 672] as const;
+
+/** Grade dos cards: 3 colunas ≥64em (máx. 368px), 2 colunas ≥48em, 1 coluna abaixo. */
+export const SIZES_CARD =
+  '(min-width: 64em) 368px, (min-width: 48em) calc(50vw - 2rem), calc(100vw - 2.5rem)';
+
+export function srcsetCard(imagem: string): string {
+  const base = imagem.replace(/\.webp$/, '');
+  return [...LARGURAS_CARD.map((w) => `${base}-${w}.webp ${w}w`), `${imagem} 900w`].join(', ');
+}
+
 export const MENSAGEM_PADRAO =
   'Olá! Vim pelo site da YCAR EXECUTIVE e gostaria de fazer uma reserva.';
 

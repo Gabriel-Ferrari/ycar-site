@@ -9,7 +9,7 @@ import { CONTATO, MARCA, MENU } from '../content/site-content';
       <div class="container footer__inner">
         <img
           class="footer__logo"
-          src="/images/logo-ycar.png"
+          src="/images/logo-ycar.webp"
           alt="{{ marca.nomeCompleto }}"
           width="94"
           height="66"

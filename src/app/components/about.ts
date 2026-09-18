@@ -23,11 +23,19 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
         <aside class="sobre__destaque tema-escuro reveal" appReveal [revealDelay]="200">
           <img
             class="sobre__foto"
-            src="/images/quem-somos.png"
+            src="/images/quem-somos.webp"
+            srcset="
+              /images/quem-somos-400.webp  400w,
+              /images/quem-somos-600.webp  600w,
+              /images/quem-somos-800.webp  800w,
+              /images/quem-somos.webp     1086w
+            "
+            sizes="(min-width: 64em) 30vw, calc(100vw - 2.5rem)"
             alt="Profissional de terno escuro com braços cruzados e olhar confiante"
-            width="800"
-            height="1000"
+            width="1086"
+            height="1448"
             loading="lazy"
+            decoding="async"
           />
           <p class="sobre__tagline">{{ quemSomos.tagline }}</p>
           <p class="sobre__chamada">{{ quemSomos.chamada }}</p>

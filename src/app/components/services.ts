@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SERVICOS, SERVICOS_INTRO } from '../content/site-content';
+import { SERVICOS, SERVICOS_INTRO, SIZES_CARD, srcsetCard } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
@@ -24,6 +24,8 @@ import { Icon, IconName } from './icon';
               <img
                 class="card__foto"
                 [src]="servico.imagem"
+                [srcset]="servico.srcset"
+                [sizes]="sizes"
                 [style.object-position]="servico.foco"
                 alt=""
                 width="900"
@@ -173,8 +175,12 @@ import { Icon, IconName } from './icon';
   `,
 })
 export class Services {
-  protected readonly servicos = SERVICOS;
+  protected readonly servicos = SERVICOS.map((servico) => ({
+    ...servico,
+    srcset: srcsetCard(servico.imagem),
+  }));
   protected readonly intro = SERVICOS_INTRO;
+  protected readonly sizes = SIZES_CARD;
 
   protected icone(nome: string): IconName {
     return nome as IconName;

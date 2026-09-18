@@ -19,7 +19,7 @@ import { Icon } from './icon';
       <div class="container header__inner">
         <a class="header__brand" href="#inicio" aria-label="YCar Executive — voltar ao início">
           <img
-            src="/images/logo-ycar-header.png"
+            src="/images/logo-ycar-header.webp"
             alt="YCar Executive"
             width="91"
             height="64"
@@ -67,7 +67,7 @@ import { Icon } from './icon';
           aria-label="YCar Executive — voltar ao início"
           (click)="irPara($event, '#inicio')"
         >
-          <img src="/images/logo-ycar-header.png" alt="YCar Executive" width="91" height="64" />
+          <img src="/images/logo-ycar-header.webp" alt="YCar Executive" width="91" height="64" />
         </a>
         <button type="button" class="header__menu-btn" autofocus (click)="fechar()">
           <app-icon name="close" [size]="22" />

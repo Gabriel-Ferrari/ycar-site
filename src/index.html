@@ -35,6 +35,26 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <!-- Ordem importa: a imagem do hero é o LCP e vem antes das fontes.
+         As fontes do texto visível no primeiro quadro (Fraunces no h1, Inter 400 no corpo)
+         são pré-carregadas para sair do caminho crítico; Inter 500 fica de fora por
+         aparecer só em botões e legendas. -->
+    <link
+      rel="preload"
+      href="images/principal-horizontal.webp"
+      as="image"
+      type="image/webp"
+      media="(min-width: 48em)"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      href="images/principal-vertical.webp"
+      as="image"
+      type="image/webp"
+      media="(max-width: 47.99em)"
+      fetchpriority="high"
+    />
     <link
       rel="preload"
       href="fonts/fraunces-latin-600-normal.woff2"
@@ -44,17 +64,10 @@
     />
     <link
       rel="preload"
-      href="images/principal-horizontal.webp"
-      as="image"
-      type="image/webp"
-      media="(min-width: 48em)"
-    />
-    <link
-      rel="preload"
-      href="images/principal-vertical.webp"
-      as="image"
-      type="image/webp"
-      media="(max-width: 47.99em)"
+      href="fonts/inter-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
     <script>
       // Anti-FOIC: estados iniciais de animação só se aplicam com JS ativo (html.js).
