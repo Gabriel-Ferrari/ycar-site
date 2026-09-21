@@ -68,9 +68,9 @@ Ordem das seções, objetivo e CTA de cada uma:
 
 ## 5. Conteúdo por seção
 
-Número do WhatsApp: `5511982998183`. Mensagem padrão pré-preenchida:
+Número do WhatsApp: `5511965420041`. Mensagem padrão pré-preenchida:
 `Olá! Vim pelo site da YCar e gostaria de um orçamento de transporte executivo.`
-(`https://wa.me/5511982998183?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20YCar%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20transporte%20executivo.`)
+(`https://wa.me/5511965420041?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20YCar%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20transporte%20executivo.`)
 
 ### 5.1 Header
 - Logo: wordmark "YCAR" (redesenho tipográfico em Fraunces — o PNG existente vira referência; se tiver qualidade, uso o PNG com fundo transparente) <!-- PROVISÓRIO: validar qualidade do PNG -->

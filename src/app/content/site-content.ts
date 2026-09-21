@@ -35,7 +35,7 @@ export interface ItemMenu {
   externo?: boolean;
 }
 
-const WHATSAPP_NUMERO = '5511982998183';
+const WHATSAPP_NUMERO = '5511965420041';
 
 export function linkWhatsApp(mensagem: string): string {
   return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
@@ -62,7 +62,7 @@ export const MENSAGEM_PADRAO =
 
 export const CONTATO = {
   whatsappNumero: WHATSAPP_NUMERO,
-  whatsappExibicao: '+55 11 98299-8183',
+  whatsappExibicao: '+55 11 96542-0041',
   instagramUsuario: '@ycarexecutive',
   instagramUrl: 'https://www.instagram.com/ycarexecutive/',
   email: 'contato@ycarexecutive.com.br',
