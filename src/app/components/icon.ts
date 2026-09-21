@@ -19,7 +19,8 @@ export type IconName =
   | 'van'
   | 'bus'
   | 'menu'
-  | 'close';
+  | 'close'
+  | 'chevron-right';
 
 @Component({
   selector: 'app-icon',
@@ -109,6 +110,9 @@ export type IconName =
         @case ('close') {
           <path d="M6 6l12 12" />
           <path d="M18 6 6 18" />
+        }
+        @case ('chevron-right') {
+          <path d="m9 6 6 6-6 6" />
         }
         @case ('globe') {
           <circle cx="12" cy="12" r="9" />

@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SERVICOS, SERVICOS_INTRO, SIZES_CARD, srcsetCard } from '../content/site-content';
+import {
+  RESERVA,
+  SERVICOS,
+  SERVICOS_INTRO,
+  SIZES_CARD,
+  srcsetCard,
+} from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
@@ -37,6 +43,16 @@ import { Icon, IconName } from './icon';
                 <app-icon class="card__icone" [name]="icone(servico.icone)" [size]="32" />
                 <h3 class="card__titulo">{{ servico.titulo }}</h3>
                 <p class="card__descricao">{{ servico.descricao }}</p>
+                <a
+                  class="btn btn--primary card__cta"
+                  [href]="reservaUrl"
+                  target="_blank"
+                  rel="noopener"
+                  [attr.aria-label]="reservaRotulo + ' — ' + servico.titulo"
+                >
+                  {{ reservaRotulo }}
+                  <app-icon class="card__cta-seta" name="chevron-right" [size]="18" />
+                </a>
               </div>
             </article>
           }
@@ -67,7 +83,7 @@ import { Icon, IconName } from './icon';
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      min-block-size: 24rem;
+      aspect-ratio: 4 / 5;
       overflow: hidden;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
@@ -82,6 +98,8 @@ import { Icon, IconName } from './icon';
       object-fit: cover;
       z-index: 0;
       filter: brightness(0.92);
+      /* Foto deslocada para baixo via foco não deixa emenda visível no topo */
+      mask-image: linear-gradient(to bottom, transparent, #000 9rem);
       transition: transform var(--duration-base) var(--ease-out);
     }
 
@@ -150,8 +168,26 @@ import { Icon, IconName } from './icon';
       max-width: 32ch;
     }
 
+    .card__cta {
+      min-height: 44px;
+      margin-block-start: var(--space-2);
+      padding: 0.5rem 1rem 0.5rem 1.25rem;
+      gap: 0.375rem;
+      border-radius: var(--radius-pill);
+      font-size: var(--text-small);
+    }
+
+    .card__cta-seta {
+      transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    .card__cta:hover .card__cta-seta {
+      transform: translateX(3px);
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .card:hover .card__foto {
+      .card:hover .card__foto,
+      .card__cta:hover .card__cta-seta {
         transform: none;
       }
     }
@@ -161,15 +197,23 @@ import { Icon, IconName } from './icon';
         grid-template-columns: repeat(2, 1fr);
       }
 
-      /* Card órfão na última linha ocupa a largura toda */
+      /* Card órfão na última linha fica centralizado, na largura de uma coluna */
       .card:last-child:nth-child(odd) {
         grid-column: 1 / -1;
+        justify-self: center;
+        inline-size: calc((100% - var(--space-3)) / 2);
       }
     }
 
     @media (max-width: 47.99em) {
       .cards {
         grid-template-columns: 1fr;
+        max-inline-size: 28rem;
+        margin-inline: auto;
+      }
+
+      .card:last-child:nth-child(odd) {
+        inline-size: auto;
       }
     }
   `,
@@ -181,6 +225,8 @@ export class Services {
   }));
   protected readonly intro = SERVICOS_INTRO;
   protected readonly sizes = SIZES_CARD;
+  protected readonly reservaUrl = RESERVA.plataformaUrl;
+  protected readonly reservaRotulo = RESERVA.cta.rotulo;
 
   protected icone(nome: string): IconName {
     return nome as IconName;
