@@ -32,7 +32,7 @@ import { Icon, IconName } from './icon';
                 [src]="servico.imagem"
                 [srcset]="servico.srcset"
                 [sizes]="sizes"
-                [style.object-position]="servico.foco"
+                [style.--recorte]="servico.recorte"
                 alt=""
                 width="900"
                 height="1350"
@@ -83,22 +83,23 @@ import { Icon, IconName } from './icon';
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      aspect-ratio: 4 / 5;
       overflow: hidden;
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       transition: transform var(--duration-fast) var(--ease-out);
     }
 
+    /* Foto ancorada na base, na largura do card: o assunto (pessoas, carro) fica
+       sempre na faixa reservada abaixo do texto, em qualquer largura de tela */
     .card__foto {
       position: absolute;
-      inset: 0;
+      inset: auto 0 0;
       inline-size: 100%;
-      block-size: 100%;
-      object-fit: cover;
+      block-size: auto;
       z-index: 0;
+      translate: 0 var(--recorte, 0%);
       filter: brightness(0.92);
-      /* Foto deslocada para baixo via foco não deixa emenda visível no topo */
+      /* Quando o texto é mais alto que a foto, o topo dela esmaece no fundo do card */
       mask-image: linear-gradient(to bottom, transparent, #000 9rem);
       transition: transform var(--duration-base) var(--ease-out);
     }
@@ -125,7 +126,9 @@ import { Icon, IconName } from './icon';
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-1);
-      padding: var(--space-6) var(--space-4) var(--space-4);
+      /* % no padding é relativo à largura do card: reserva a faixa da foto
+         abaixo do CTA, então a altura do card acompanha o texto */
+      padding: var(--space-6) var(--space-4) calc(var(--space-4) + 75%);
     }
 
     /* Elevação via pseudo-elemento com opacity — box-shadow nunca é animada */

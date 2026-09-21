@@ -13,7 +13,8 @@ export interface Servico {
   descricao: string;
   icone: string;
   imagem: string;
-  foco?: string;
+  /** Quanto a foto desce (% da própria altura, cortando o chão) para o CTA não cobrir rostos */
+  recorte?: string;
 }
 
 export interface CategoriaFrota {
@@ -100,14 +101,14 @@ export const SERVICOS: Servico[] = [
       'Aeroportos, hotéis, empresas, noiva e casamentos, eventos, e viagens corporativas ou particulares.',
     icone: 'briefcase',
     imagem: '/images/servicos/transfer-executivo.webp',
-    foco: 'center 5.5rem',
+    recorte: '14%',
   },
   {
     titulo: 'Receptivo Aeroporto',
     descricao: 'Recepção personalizada nos aeroportos de São Paulo, com conforto e pontualidade.',
     icone: 'plane',
     imagem: '/images/servicos/receptivo-aeroporto.webp',
-    foco: 'center 6rem',
+    recorte: '6%',
   },
   {
     titulo: 'Viagens',
@@ -120,21 +121,19 @@ export const SERVICOS: Servico[] = [
     descricao: 'Motorista Executivo à sua disposição para múltiplos compromissos ao longo do dia.',
     icone: 'clock',
     imagem: '/images/servicos/operacao-disposicao.webp',
-    foco: 'center 2rem',
+    recorte: '4%',
   },
   {
     titulo: 'City Tour',
     descricao: 'Passeios turísticos em São Paulo e diversos destinos, com conforto e segurança.',
     icone: 'pin',
     imagem: '/images/servicos/city-tour.webp',
-    foco: 'center 1.5rem',
   },
   {
     titulo: 'Motoristas Bilíngues',
     descricao: 'Atendimento em seu idioma para uma experiência mais confortável e tranquila.',
     icone: 'globe',
     imagem: '/images/servicos/motoristas-bilingues.webp',
-    foco: 'center top',
   },
   {
     titulo: 'Veículos Blindados',
@@ -147,14 +146,14 @@ export const SERVICOS: Servico[] = [
     descricao: 'Escolta especializada com profissionais treinados e qualificados.',
     icone: 'shield',
     imagem: '/images/servicos/seguranca-armada.webp',
-    foco: 'center top',
+    recorte: '4%',
   },
   {
     titulo: 'Experiência Personalizada',
     descricao: 'Transporte Executivo adaptado às suas necessidades e preferências.',
     icone: 'star',
     imagem: '/images/servicos/experiencia-personalizada.webp',
-    foco: 'center 7rem',
+    recorte: '18%',
   },
 ];
 
