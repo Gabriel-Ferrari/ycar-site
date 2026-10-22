@@ -24,9 +24,14 @@ const CAMINHO_FOTO = /^\/images\/(servicos|frota)\/[a-z0-9-]+\.(webp|jpg)$/;
 export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
-    // Sem secrets, a senha viraria a string "undefined"; senha curta cai na força bruta
-    if (!env.GITHUB_TOKEN || !(env.ADMIN_SENHA?.length >= SENHA_MINIMA)) {
-      return json({ erro: 'O painel ainda não foi configurado.' }, 503);
+    // Sem secrets, a senha viraria a string "undefined"; senha curta cai na força bruta.
+    // Dizer qual falta não expõe nada: com 503 o login fica fechado.
+    const faltando = [
+      !env.GITHUB_TOKEN?.trim() && 'GITHUB_TOKEN',
+      !(env.ADMIN_SENHA?.length >= SENHA_MINIMA) && `ADMIN_SENHA com ${SENHA_MINIMA}+ caracteres`,
+    ].filter(Boolean);
+    if (faltando.length) {
+      return json({ erro: `O painel ainda não foi configurado: falta ${faltando.join(' e ')}.` }, 503);
     }
     try {
       if (pathname === '/api/entrar' && request.method === 'POST') return await entrar(request, env);
