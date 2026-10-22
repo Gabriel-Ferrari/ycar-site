@@ -16,21 +16,21 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
           loading="lazy"
         />
         <p class="footer__info">
-          @if (contato.cnpj) {
-            CNPJ {{ contato.cnpj }} ·
+          @if (contato().cnpj) {
+            CNPJ {{ contato().cnpj }} ·
           }
-          {{ contato.cidade }} · © {{ ano }} {{ marca.nomeCompleto }} — Todos os direitos
+          {{ contato().cidade }} · © {{ ano }} {{ marca.nomeCompleto }} — Todos os direitos
           reservados
         </p>
         <nav class="footer__nav" aria-label="Links do rodapé">
-          @for (item of menu; track item.destino) {
+          @for (item of menu(); track $index) {
             @if (item.externo) {
               <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
             } @else {
               <a [href]="item.destino">{{ item.rotulo }}</a>
             }
           }
-          <a href="#reserva">{{ ctaRotulo }}</a>
+          <a href="#reserva">{{ reserva().cta.rotulo }}</a>
         </nav>
       </div>
     </footer>
@@ -90,6 +90,6 @@ export class Footer {
   protected readonly marca = MARCA;
   protected readonly menu = MENU;
   protected readonly contato = CONTATO;
-  protected readonly ctaRotulo = RESERVA.cta.rotulo;
+  protected readonly reserva = RESERVA;
   protected readonly ano = new Date().getFullYear();
 }

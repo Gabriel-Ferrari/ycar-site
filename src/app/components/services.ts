@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import {
   RESERVA,
   SERVICOS,
@@ -18,14 +18,14 @@ import { Icon, IconName } from './icon';
       <div class="container">
         <p class="overline reveal" appReveal>Serviços</p>
         <h2 class="section-titulo reveal" id="servicos-titulo" appReveal [revealDelay]="80">
-          {{ intro.titulo }}
+          {{ intro().titulo }}
         </h2>
         <p class="section-sub reveal" appReveal [revealDelay]="160">
-          {{ intro.descricao }}
+          {{ intro().descricao }}
         </p>
 
         <div class="cards">
-          @for (servico of servicos; track servico.titulo) {
+          @for (servico of servicos(); track $index) {
             <article class="card reveal" appReveal [revealDelay]="($index % 3) * 90">
               <img
                 class="card__foto"
@@ -45,12 +45,12 @@ import { Icon, IconName } from './icon';
                 <p class="card__descricao">{{ servico.descricao }}</p>
                 <a
                   class="btn btn--primary card__cta"
-                  [href]="reservaUrl"
+                  [href]="reserva().plataformaUrl"
                   target="_blank"
                   rel="noopener"
-                  [attr.aria-label]="reservaRotulo + ' — ' + servico.titulo"
+                  [attr.aria-label]="reserva().cta.rotulo + ' — ' + servico.titulo"
                 >
-                  {{ reservaRotulo }}
+                  {{ reserva().cta.rotulo }}
                   <app-icon class="card__cta-seta" name="chevron-right" [size]="18" />
                 </a>
               </div>
@@ -222,14 +222,12 @@ import { Icon, IconName } from './icon';
   `,
 })
 export class Services {
-  protected readonly servicos = SERVICOS.map((servico) => ({
-    ...servico,
-    srcset: srcsetCard(servico.imagem),
-  }));
+  protected readonly servicos = computed(() =>
+    SERVICOS().map((servico) => ({ ...servico, srcset: srcsetCard(servico.imagem) })),
+  );
   protected readonly intro = SERVICOS_INTRO;
   protected readonly sizes = SIZES_CARD;
-  protected readonly reservaUrl = RESERVA.plataformaUrl;
-  protected readonly reservaRotulo = RESERVA.cta.rotulo;
+  protected readonly reserva = RESERVA;
 
   protected icone(nome: string): IconName {
     return nome as IconName;

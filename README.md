@@ -72,6 +72,14 @@ Página com senha em `/admin/` para editar sem depender de desenvolvedor: WhatsA
 automática, link de reservas, Instagram, horário, textos de todas as seções, nomes do menu e os
 cartões de serviços e frota (adicionar, remover, reordenar e trocar foto).
 
+Ao lado do formulário fica uma **prévia ao vivo**: o próprio site num iframe (`/?previa=1`), que
+recebe o conteúdo em edição a cada tecla — inclusive fotos ainda não publicadas. Clicar num trecho
+da prévia abre o campo correspondente; focar um campo destaca o trecho na prévia. No celular a
+prévia abre em tela cheia pelo botão "Ver prévia". Por isso o conteúdo em
+[site-content.ts](src/app/content/site-content.ts) é `signal`/`computed`: no site publicado ele
+nunca muda; na prévia, `window.ycarPrevia` (registrado em [main.ts](src/main.ts) só dentro do
+iframe com `?previa`) troca o valor.
+
 Como funciona:
 
 1. O painel ([public/admin](public/admin)) carrega o `conteudo.json` atual pela API do Worker
@@ -92,6 +100,9 @@ npx wrangler secret put GITHUB_TOKEN   # fine-grained token: só este repo, Cont
 
 Sem os dois, a API responde 503 e o painel fica fechado. Trocar `ADMIN_SENHA` desconecta todas as
 sessões abertas. O login tem limite de 5 tentativas por minuto por IP.
+
+Os desenhos dos ícones do painel são cópia dos de [icon.ts](src/app/components/icon.ts): ao mudar
+ou criar um ícone lá, atualize `SVG_ICONES` e `ICONES` em [admin.js](public/admin/admin.js).
 
 Para rodar a API localmente, crie `.dev.vars` (fica fora do git) com `ADMIN_SENHA` e
 `GITHUB_TOKEN`, e rode `npm run build && npx wrangler dev`.

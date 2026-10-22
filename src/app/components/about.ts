@@ -12,9 +12,9 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
         <div class="sobre__texto">
           <p class="overline reveal" appReveal>Quem Somos</p>
           <h2 class="section-titulo reveal" id="sobre-titulo" appReveal [revealDelay]="80">
-            {{ quemSomos.titulo }}
+            {{ quemSomos().titulo }}
           </h2>
-          @for (paragrafo of quemSomos.paragrafos; track $index) {
+          @for (paragrafo of quemSomos().paragrafos; track $index) {
             <p class="sobre__paragrafo reveal" appReveal [revealDelay]="120 + $index * 60">
               {{ paragrafo }}
             </p>
@@ -37,10 +37,10 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
             loading="lazy"
             decoding="async"
           />
-          <p class="sobre__tagline">{{ quemSomos.tagline }}</p>
-          <p class="sobre__chamada">{{ quemSomos.chamada }}</p>
-          <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
-            {{ reserva.cta.rotulo }}
+          <p class="sobre__tagline">{{ quemSomos().tagline }}</p>
+          <p class="sobre__chamada">{{ quemSomos().chamada }}</p>
+          <a class="btn btn--primary" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+            {{ reserva().cta.rotulo }}
           </a>
         </aside>
       </div>
@@ -106,5 +106,4 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
 export class About {
   protected readonly quemSomos = QUEM_SOMOS;
   protected readonly reserva = RESERVA;
-  protected readonly ctaHref = RESERVA.plataformaUrl;
 }

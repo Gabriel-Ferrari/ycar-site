@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { CONTATO, RESERVA, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon } from './icon';
@@ -12,45 +12,45 @@ import { Icon } from './icon';
       <div class="container contato__inner">
         <div class="contato__intro reveal" appReveal>
           <p class="overline">Reserva</p>
-          <h2 class="section-titulo" id="contato-titulo">{{ reserva.titulo }}</h2>
-          <p class="contato__sub">{{ reserva.descricao }}</p>
+          <h2 class="section-titulo" id="contato-titulo">{{ reserva().titulo }}</h2>
+          <p class="contato__sub">{{ reserva().descricao }}</p>
         </div>
 
         <div class="contato__acao reveal" appReveal [revealDelay]="80">
           <a
             class="btn btn--primary btn--lg"
-            [href]="reserva.plataformaUrl"
+            [href]="reserva().plataformaUrl"
             target="_blank"
             rel="noopener"
           >
-            {{ reserva.plataformaRotulo }}
+            {{ reserva().plataformaRotulo }}
           </a>
         </div>
 
         <ul class="contato__canais reveal" appReveal>
           <li>
-            <a [href]="waHref" target="_blank" rel="noopener">
+            <a [href]="waHref()" target="_blank" rel="noopener">
               <app-icon name="whatsapp" [size]="20" />
-              {{ contato.whatsappExibicao }}
+              {{ contato().whatsappExibicao }}
             </a>
           </li>
           <li>
-            <a [href]="contato.instagramUrl" target="_blank" rel="noopener">
+            <a [href]="contato().instagramUrl" target="_blank" rel="noopener">
               <app-icon name="instagram" [size]="20" />
-              {{ contato.instagramUsuario }}
+              {{ contato().instagramUsuario }}
             </a>
           </li>
-          @if (contato.email) {
+          @if (contato().email) {
             <li>
-              <a [href]="'mailto:' + contato.email">
+              <a [href]="'mailto:' + contato().email">
                 <app-icon name="mail" [size]="20" />
-                {{ contato.email }}
+                {{ contato().email }}
               </a>
             </li>
           }
           <li class="contato__horario">
             <app-icon name="clock" [size]="20" />
-            {{ contato.horario }}
+            {{ contato().horario }}
           </li>
         </ul>
       </div>
@@ -132,5 +132,5 @@ import { Icon } from './icon';
 export class Contact {
   protected readonly contato = CONTATO;
   protected readonly reserva = RESERVA;
-  protected readonly waHref = linkWhatsApp(RESERVA.cta.mensagem);
+  protected readonly waHref = computed(() => linkWhatsApp(RESERVA().cta.mensagem));
 }

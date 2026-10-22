@@ -4,6 +4,7 @@ import {
   DestroyRef,
   ElementRef,
   afterNextRender,
+  computed,
   inject,
 } from '@angular/core';
 import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
@@ -16,7 +17,7 @@ import { Icon } from './icon';
   template: `
     <a
       class="fab"
-      [href]="waHref"
+      [href]="waHref()"
       target="_blank"
       rel="noopener"
       aria-label="Abrir conversa no WhatsApp"
@@ -51,7 +52,7 @@ import { Icon } from './icon';
   `,
 })
 export class WhatsappFab {
-  protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
+  protected readonly waHref = computed(() => linkWhatsApp(MENSAGEM_PADRAO()));
 
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly destroyRef = inject(DestroyRef);

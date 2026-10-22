@@ -2,9 +2,22 @@
  * Fonte única de conteúdo do site — nunca em template.
  * Os textos editáveis vivem em conteudo.json, que o painel /admin altera via commit;
  * aqui ficam os tipos e o que é derivado deles (links, telefone formatado, menu).
+ *
+ * Tudo é signal para a prévia do painel trocar o conteúdo ao vivo (aplicarPrevia);
+ * no site publicado o valor nunca muda.
  */
 
-import conteudo from './conteudo.json';
+import { computed, signal } from '@angular/core';
+import inicial from './conteudo.json';
+
+export type Conteudo = typeof inicial;
+
+const conteudo = signal<Conteudo>(inicial);
+
+/** Prévia do painel /admin: mostra conteúdo ainda não publicado, só naquela aba. */
+export function aplicarPrevia(novo: Conteudo): void {
+  conteudo.set(novo);
+}
 
 export interface CtaWhatsApp {
   rotulo: string;
@@ -46,7 +59,7 @@ function formatarTelefone(digitos: string): string {
 }
 
 export function linkWhatsApp(mensagem: string): string {
-  return `https://wa.me/${conteudo.contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+  return `https://wa.me/${conteudo().contato.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
 /**
@@ -62,72 +75,86 @@ export const SIZES_CARD =
   '(min-width: 64em) 368px, (min-width: 48em) calc(50vw - 2rem), calc(100vw - 2.5rem)';
 
 export function srcsetCard(imagem: string): string {
-  // Fotos enviadas pelo painel podem ser .jpg (navegador sem encoder WebP)
-  const [, base, ext] = imagem.match(/^(.*)(\.\w+)$/)!;
+  // Fotos enviadas pelo painel podem ser .jpg (navegador sem encoder WebP);
+  // na prévia, foto ainda não publicada é um blob: sem variantes
+  const partes = imagem.match(/^(.*)(\.\w+)$/);
+  if (!partes) return imagem;
+  const [, base, ext] = partes;
   return [...LARGURAS_CARD.map((w) => `${base}-${w}${ext} ${w}w`), `${imagem} 900w`].join(', ');
 }
 
-export const MENSAGEM_PADRAO = conteudo.contato.mensagemWhatsapp;
+export const MENSAGEM_PADRAO = computed(() => conteudo().contato.mensagemWhatsapp);
 
-const INSTAGRAM_URL = `https://www.instagram.com/${conteudo.contato.instagram}/`;
+const INSTAGRAM_URL = computed(() => `https://www.instagram.com/${conteudo().contato.instagram}/`);
 
-export const CONTATO = {
-  whatsappExibicao: formatarTelefone(conteudo.contato.whatsapp),
-  instagramUsuario: `@${conteudo.contato.instagram}`,
-  instagramUrl: INSTAGRAM_URL,
-  email: conteudo.contato.email,
-  horario: conteudo.contato.horario,
-  cidade: conteudo.contato.cidade,
-  cnpj: conteudo.contato.cnpj,
-};
+export const CONTATO = computed(() => {
+  const contato = conteudo().contato;
+  return {
+    whatsappExibicao: formatarTelefone(contato.whatsapp),
+    instagramUsuario: `@${contato.instagram}`,
+    instagramUrl: INSTAGRAM_URL(),
+    email: contato.email,
+    horario: contato.horario,
+    cidade: contato.cidade,
+    cnpj: contato.cnpj,
+  };
+});
 
-export const MENU: ItemMenu[] = [
-  { rotulo: conteudo.menu.inicio, destino: '#inicio' },
-  { rotulo: conteudo.menu.servicos, destino: '#servicos' },
-  { rotulo: conteudo.menu.quemSomos, destino: '#quem-somos' },
-  { rotulo: conteudo.menu.comoTrabalhamos, destino: '#como-trabalhamos' },
-  { rotulo: conteudo.menu.frota, destino: '#frota' },
-  { rotulo: conteudo.menu.redesSociais, destino: INSTAGRAM_URL, externo: true },
-];
+export const MENU = computed<ItemMenu[]>(() => {
+  const menu = conteudo().menu;
+  return [
+    { rotulo: menu.inicio, destino: '#inicio' },
+    { rotulo: menu.servicos, destino: '#servicos' },
+    { rotulo: menu.quemSomos, destino: '#quem-somos' },
+    { rotulo: menu.comoTrabalhamos, destino: '#como-trabalhamos' },
+    { rotulo: menu.frota, destino: '#frota' },
+    { rotulo: menu.redesSociais, destino: INSTAGRAM_URL(), externo: true },
+  ];
+});
 
-export const HERO = {
-  ...conteudo.inicio,
-  ctaPrimario: { rotulo: conteudo.reserva.botao },
-};
-
-export const SERVICOS_INTRO = {
-  titulo: conteudo.servicos.titulo,
-  descricao: conteudo.servicos.descricao,
-};
-
-export const SERVICOS: Servico[] = conteudo.servicos.itens.map((servico) => ({
-  ...servico,
-  recorte: servico.recorte || undefined,
+export const HERO = computed(() => ({
+  ...conteudo().inicio,
+  ctaPrimario: { rotulo: conteudo().reserva.botao },
 }));
 
-export const QUEM_SOMOS = conteudo.quemSomos;
+export const SERVICOS_INTRO = computed(() => ({
+  titulo: conteudo().servicos.titulo,
+  descricao: conteudo().servicos.descricao,
+}));
 
-export const COMO_TRABALHAMOS_TITULO = conteudo.comoTrabalhamos.titulo;
+export const SERVICOS = computed<Servico[]>(() =>
+  conteudo().servicos.itens.map((servico) => ({
+    ...servico,
+    recorte: servico.recorte || undefined,
+  })),
+);
 
-export const PASSOS: Passo[] = conteudo.comoTrabalhamos.passos;
+export const QUEM_SOMOS = computed(() => conteudo().quemSomos);
 
-export const FROTA_INTRO = {
-  titulo: conteudo.frota.titulo,
-  descricao: conteudo.frota.descricao,
-};
+export const COMO_TRABALHAMOS_TITULO = computed(() => conteudo().comoTrabalhamos.titulo);
 
-export const FROTA: CategoriaFrota[] = conteudo.frota.itens;
+export const PASSOS = computed<Passo[]>(() => conteudo().comoTrabalhamos.passos);
 
-export const RESERVA = {
-  titulo: conteudo.reserva.titulo,
-  descricao: conteudo.reserva.descricao,
-  cta: {
-    rotulo: conteudo.reserva.botao,
-    mensagem: MENSAGEM_PADRAO,
-  },
-  plataformaUrl: conteudo.reserva.plataformaUrl,
-  plataformaRotulo: conteudo.reserva.botaoPlataforma,
-};
+export const FROTA_INTRO = computed(() => ({
+  titulo: conteudo().frota.titulo,
+  descricao: conteudo().frota.descricao,
+}));
+
+export const FROTA = computed<CategoriaFrota[]>(() => conteudo().frota.itens);
+
+export const RESERVA = computed(() => {
+  const reserva = conteudo().reserva;
+  return {
+    titulo: reserva.titulo,
+    descricao: reserva.descricao,
+    cta: {
+      rotulo: reserva.botao,
+      mensagem: MENSAGEM_PADRAO(),
+    },
+    plataformaUrl: reserva.plataformaUrl,
+    plataformaRotulo: reserva.botaoPlataforma,
+  };
+});
 
 export const MARCA = {
   nomeCurto: 'YCar Executive',
@@ -136,27 +163,30 @@ export const MARCA = {
 } as const;
 
 /** JSON-LD LocalBusiness (PRD §8.6), injetado no <head> durante o pré-render. */
-export const DADOS_ESTRUTURADOS = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: MARCA.nomeCompleto,
-  description:
-    'Transporte executivo em São Paulo: transfers, receptivo em aeroportos, viagens, city tour e frota do sedã ao ônibus, incluindo blindados.',
-  url: `${MARCA.dominio}/`,
-  image: `${MARCA.dominio}/images/og-image.png`,
-  telephone: CONTATO.whatsappExibicao,
-  ...(CONTATO.email && { email: CONTATO.email }),
-  ...(CONTATO.cnpj && { taxID: CONTATO.cnpj }),
-  foundingDate: '2020',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'São Paulo',
-    addressRegion: 'SP',
-    addressCountry: 'BR',
-  },
-  areaServed: [
-    { '@type': 'City', name: 'São Paulo' },
-    { '@type': 'AdministrativeArea', name: 'Região Metropolitana de São Paulo' },
-  ],
-  sameAs: [INSTAGRAM_URL],
-};
+export function dadosEstruturados() {
+  const contato = CONTATO();
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: MARCA.nomeCompleto,
+    description:
+      'Transporte executivo em São Paulo: transfers, receptivo em aeroportos, viagens, city tour e frota do sedã ao ônibus, incluindo blindados.',
+    url: `${MARCA.dominio}/`,
+    image: `${MARCA.dominio}/images/og-image.png`,
+    telephone: contato.whatsappExibicao,
+    ...(contato.email && { email: contato.email }),
+    ...(contato.cnpj && { taxID: contato.cnpj }),
+    foundingDate: '2020',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'São Paulo',
+      addressRegion: 'SP',
+      addressCountry: 'BR',
+    },
+    areaServed: [
+      { '@type': 'City', name: 'São Paulo' },
+      { '@type': 'AdministrativeArea', name: 'Região Metropolitana de São Paulo' },
+    ],
+    sameAs: [contato.instagramUrl],
+  };
+}

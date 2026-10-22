@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DOCUMENT,
   ElementRef,
   inject,
@@ -27,7 +28,7 @@ import { Icon } from './icon';
           />
         </a>
         <nav class="header__nav" aria-label="Seções do site">
-          @for (item of menu; track item.destino) {
+          @for (item of menu(); track $index) {
             @if (item.externo) {
               <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
             } @else {
@@ -35,8 +36,8 @@ import { Icon } from './icon';
             }
           }
         </nav>
-        <a class="btn btn--primary header__cta" [href]="reservaHref" target="_blank" rel="noopener">
-          <span class="header__cta-longo">{{ ctaRotulo }}</span>
+        <a class="btn btn--primary header__cta" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+          <span class="header__cta-longo">{{ reserva().cta.rotulo }}</span>
           <span class="header__cta-curto">Reservar</span>
         </a>
         <button
@@ -78,7 +79,7 @@ import { Icon } from './icon';
       <div class="container menu__corpo">
         <nav aria-label="Seções do site">
           <ol class="menu__lista">
-            @for (item of secoes; track item.destino) {
+            @for (item of secoes(); track $index) {
               <li [style.--i]="$index">
                 <a [href]="item.destino" (click)="irPara($event, item.destino)">
                   <span class="menu__num" aria-hidden="true">0{{ $index + 1 }}</span>
@@ -90,17 +91,17 @@ import { Icon } from './icon';
         </nav>
 
         <div class="menu__rodape">
-          <a class="btn btn--primary btn--lg menu__cta" [href]="reservaHref" target="_blank" rel="noopener">
-            {{ ctaRotulo }}
+          <a class="btn btn--primary btn--lg menu__cta" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+            {{ reserva().cta.rotulo }}
           </a>
           <div class="menu__contatos">
-            <a [href]="waHref" target="_blank" rel="noopener">
+            <a [href]="waHref()" target="_blank" rel="noopener">
               <app-icon name="whatsapp" [size]="20" />
-              {{ contato.whatsappExibicao }}
+              {{ contato().whatsappExibicao }}
             </a>
-            <a [href]="contato.instagramUrl" target="_blank" rel="noopener">
+            <a [href]="contato().instagramUrl" target="_blank" rel="noopener">
               <app-icon name="instagram" [size]="20" />
-              {{ contato.instagramUsuario }}
+              {{ contato().instagramUsuario }}
             </a>
           </div>
         </div>
@@ -376,11 +377,10 @@ export class Header {
   private destinoPendente: string | null = null;
 
   protected readonly menu = MENU;
-  protected readonly secoes = MENU.filter((item) => !item.externo);
+  protected readonly secoes = computed(() => MENU().filter((item) => !item.externo));
   protected readonly contato = CONTATO;
-  protected readonly reservaHref = RESERVA.plataformaUrl;
-  protected readonly ctaRotulo = RESERVA.cta.rotulo;
-  protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
+  protected readonly reserva = RESERVA;
+  protected readonly waHref = computed(() => linkWhatsApp(MENSAGEM_PADRAO()));
   protected readonly aberto = signal(false);
 
   protected abrir(): void {

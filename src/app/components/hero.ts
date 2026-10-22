@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { HERO, RESERVA } from '../content/site-content';
 import { Parallax } from '../directives/parallax';
 
@@ -10,9 +10,9 @@ import { Parallax } from '../directives/parallax';
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
       <div class="hero__media" appParallax aria-hidden="true"></div>
       <div class="container hero__content">
-        <p class="overline hero-entrada">{{ hero.overline }}</p>
-        <h1 class="hero__titulo" id="hero-titulo" [attr.aria-label]="hero.titulo">
-          @for (palavra of palavras; track $index) {
+        <p class="overline hero-entrada">{{ hero().overline }}</p>
+        <h1 class="hero__titulo" id="hero-titulo" [attr.aria-label]="hero().titulo">
+          @for (palavra of palavras(); track $index) {
             <span class="hero-palavra" aria-hidden="true"
               ><span
                 class="hero-palavra__inner"
@@ -23,11 +23,11 @@ import { Parallax } from '../directives/parallax';
           }
         </h1>
         <p class="hero__sub hero-entrada" [style.animation-delay]="'420ms'">
-          {{ hero.subtitulo }}
+          {{ hero().subtitulo }}
         </p>
         <div class="hero__acoes hero-entrada" [style.animation-delay]="'540ms'">
-          <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
-            {{ hero.ctaPrimario.rotulo }}
+          <a class="btn btn--primary" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+            {{ hero().ctaPrimario.rotulo }}
           </a>
         </div>
       </div>
@@ -113,6 +113,6 @@ import { Parallax } from '../directives/parallax';
 })
 export class Hero {
   protected readonly hero = HERO;
-  protected readonly ctaHref = RESERVA.plataformaUrl;
-  protected readonly palavras = HERO.titulo.split(' ');
+  protected readonly reserva = RESERVA;
+  protected readonly palavras = computed(() => HERO().titulo.split(' '));
 }

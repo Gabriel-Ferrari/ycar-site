@@ -17,35 +17,59 @@
       <button type="button" class="topo__link" id="sair" hidden>Sair</button>
     </header>
 
-    <main class="conteudo">
-      <p id="tela-carregando" class="carregando">Carregando…</p>
+    <p id="tela-carregando" class="carregando">Carregando…</p>
 
-      <form id="tela-login" class="login" hidden>
-        <h1>Entrar no painel</h1>
-        <!-- Só para o gerenciador de senhas do navegador/celular oferecer salvar a senha -->
-        <input type="text" autocomplete="username" value="YCAR EXECUTIVE" hidden />
-        <label for="senha">Senha</label>
-        <input id="senha" type="password" autocomplete="current-password" required />
-        <p id="erro-login" class="mensagem mensagem--erro" role="alert"></p>
-        <button class="botao botao--principal">Entrar</button>
-      </form>
+    <form id="tela-login" class="login" hidden>
+      <h1>Entrar no painel</h1>
+      <!-- Só para o gerenciador de senhas do navegador/celular oferecer salvar a senha -->
+      <input type="text" autocomplete="username" value="YCAR EXECUTIVE" hidden />
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" autocomplete="current-password" required />
+      <p id="erro-login" class="mensagem mensagem--erro" role="alert"></p>
+      <button class="botao botao--principal">Entrar</button>
+    </form>
 
-      <form id="editor" hidden novalidate>
-        <h1>O que você quer mudar?</h1>
-        <p class="intro">
-          Toque em uma parte do site para abrir, altere o que quiser e depois toque em
-          <strong>Salvar e publicar</strong>, lá embaixo. As mudanças aparecem no site em cerca de
-          2 minutos.
-        </p>
-        <div id="secoes"></div>
-      </form>
-    </main>
+    <div id="editor-app" class="app" hidden>
+      <main class="editor">
+        <form id="editor" novalidate>
+          <h1>O que você quer mudar?</h1>
+          <p class="intro">
+            Abra uma parte do site, altere o que quiser e veja o resultado na prévia ao lado. Nada
+            muda no site até você tocar em <strong>Salvar e publicar</strong>.
+          </p>
+          <div id="secoes"></div>
+        </form>
 
-    <div class="barra" id="barra" hidden>
-      <p id="status" class="barra__status" role="status"></p>
-      <button id="publicar" class="botao botao--principal" form="editor" disabled>
-        Salvar e publicar
-      </button>
+        <div class="barra">
+          <button type="button" id="abrir-previa" class="botao botao--previa">Ver prévia</button>
+          <p id="status" class="barra__status" role="status"></p>
+          <button id="publicar" class="botao botao--principal" form="editor" disabled>
+            Salvar e publicar
+          </button>
+        </div>
+      </main>
+
+      <aside id="previa" class="previa" aria-labelledby="previa-titulo">
+        <div class="previa__barra">
+          <h2 id="previa-titulo" class="previa__titulo">Prévia</h2>
+          <span id="previa-estado" class="previa__estado"></span>
+          <div class="previa__aparelhos" role="group" aria-label="Ver a prévia como">
+            <button type="button" class="aparelho" data-aparelho="celular" aria-pressed="true">
+              Celular
+            </button>
+            <button type="button" class="aparelho" data-aparelho="computador" aria-pressed="false">
+              Computador
+            </button>
+          </div>
+          <button type="button" id="fechar-previa" class="botao previa__fechar">
+            Voltar a editar
+          </button>
+        </div>
+        <p class="previa__dica">Toque ou clique em qualquer parte do site para editar aquele trecho.</p>
+        <div id="palco" class="previa__palco">
+          <iframe id="previa-frame" title="Prévia do site com as alterações"></iframe>
+        </div>
+      </aside>
     </div>
   </body>
 </html>

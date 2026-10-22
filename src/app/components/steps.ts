@@ -11,11 +11,11 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
       <div class="container">
         <p class="overline reveal" appReveal>Como Trabalhamos</p>
         <h2 class="section-titulo reveal" id="steps-titulo" appReveal [revealDelay]="80">
-          {{ titulo }}
+          {{ titulo() }}
         </h2>
 
         <ol class="passos">
-          @for (passo of passos; track passo.titulo) {
+          @for (passo of passos(); track $index) {
             <li class="passo reveal" appReveal [revealDelay]="$index * 120">
               <span class="passo__numero tabular" aria-hidden="true">
                 0{{ $index + 1 }}
@@ -26,8 +26,8 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
           }
         </ol>
 
-        <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
-          {{ ctaRotulo }}
+        <a class="btn btn--primary" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+          {{ reserva().cta.rotulo }}
         </a>
       </div>
     </section>
@@ -89,6 +89,5 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
 export class Steps {
   protected readonly titulo = COMO_TRABALHAMOS_TITULO;
   protected readonly passos = PASSOS;
-  protected readonly ctaRotulo = RESERVA.cta.rotulo;
-  protected readonly ctaHref = RESERVA.plataformaUrl;
+  protected readonly reserva = RESERVA;
 }

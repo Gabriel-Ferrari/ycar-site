@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { FROTA, FROTA_INTRO, SIZES_CARD, srcsetCard } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
@@ -12,14 +12,14 @@ import { Icon, IconName } from './icon';
       <div class="container">
         <p class="overline reveal" appReveal>Frota</p>
         <h2 class="section-titulo reveal" id="frota-titulo" appReveal [revealDelay]="80">
-          {{ intro.titulo }}
+          {{ intro().titulo }}
         </h2>
         <p class="section-sub reveal" appReveal [revealDelay]="160">
-          {{ intro.descricao }}
+          {{ intro().descricao }}
         </p>
 
         <div class="cards">
-          @for (categoria of frota; track categoria.nome) {
+          @for (categoria of frota(); track $index) {
             <article class="card tema-escuro reveal" appReveal [revealDelay]="($index % 3) * 90">
               <img
                 class="card__foto"
@@ -237,10 +237,9 @@ import { Icon, IconName } from './icon';
   `,
 })
 export class Fleet {
-  protected readonly frota = FROTA.map((categoria) => ({
-    ...categoria,
-    srcset: srcsetCard(categoria.imagem),
-  }));
+  protected readonly frota = computed(() =>
+    FROTA().map((categoria) => ({ ...categoria, srcset: srcsetCard(categoria.imagem) })),
+  );
   protected readonly intro = FROTA_INTRO;
   protected readonly sizes = SIZES_CARD;
 

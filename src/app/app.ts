@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
-import { DADOS_ESTRUTURADOS } from './content/site-content';
+import { dadosEstruturados } from './content/site-content';
 import { Header } from './components/header';
 import { Hero } from './components/hero';
 import { Services } from './components/services';
@@ -31,7 +31,7 @@ export class App {
     const script = documento.createElement('script');
     script.type = 'application/ld+json';
     // "<" escapado: texto vindo do painel não pode fechar a tag </script>
-    script.textContent = JSON.stringify(DADOS_ESTRUTURADOS).replace(/</g, '\\u003c');
+    script.textContent = JSON.stringify(dadosEstruturados()).replace(/</g, '\\u003c');
     documento.head.appendChild(script);
   }
 }
