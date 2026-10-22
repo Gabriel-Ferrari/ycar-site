@@ -47,3 +47,7 @@ Thumbs.db
 
 # Artefatos de teste de browser
 .playwright-mcp/
+
+# wrangler dev: secrets locais e estado
+.dev.vars
+.wrangler/

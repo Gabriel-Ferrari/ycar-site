@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PASSOS, RESERVA } from '../content/site-content';
+import { COMO_TRABALHAMOS_TITULO, PASSOS, RESERVA } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
@@ -11,7 +11,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
       <div class="container">
         <p class="overline reveal" appReveal>Como Trabalhamos</p>
         <h2 class="section-titulo reveal" id="steps-titulo" appReveal [revealDelay]="80">
-          Da Reserva ao Destino
+          {{ titulo }}
         </h2>
 
         <ol class="passos">
@@ -27,7 +27,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
         </ol>
 
         <a class="btn btn--primary" [href]="ctaHref" target="_blank" rel="noopener">
-          Reserve Agora!
+          {{ ctaRotulo }}
         </a>
       </div>
     </section>
@@ -87,6 +87,8 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   `,
 })
 export class Steps {
+  protected readonly titulo = COMO_TRABALHAMOS_TITULO;
   protected readonly passos = PASSOS;
+  protected readonly ctaRotulo = RESERVA.cta.rotulo;
   protected readonly ctaHref = RESERVA.plataformaUrl;
 }

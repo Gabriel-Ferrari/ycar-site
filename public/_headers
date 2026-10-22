@@ -18,3 +18,10 @@
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# Painel: arquivos sem hash no nome → sem o cache imutável de /*.js e /*.css acima
+/admin/*
+  ! Cache-Control
+  Cache-Control: no-cache
+  X-Robots-Tag: noindex, nofollow
+  Content-Security-Policy: default-src 'self'; img-src 'self' blob:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'

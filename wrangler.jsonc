@@ -2,8 +2,22 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ycar-site",
   "compatibility_date": "2026-08-01",
+  // Só a API do painel passa pelo Worker; o resto é asset estático
+  "main": "worker/index.mjs",
   "assets": {
     "directory": "./dist/ycar-site/browser",
-    "not_found_handling": "404-page"
-  }
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "vars": {
+    "GITHUB_REPO": "Gabriel-Ferrari/ycar-site",
+    "GITHUB_BRANCH": "main"
+  },
+  "ratelimits": [
+    {
+      "name": "LIMITE_LOGIN",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ]
 }

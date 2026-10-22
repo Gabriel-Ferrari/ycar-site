@@ -1,0 +1,381 @@
+/* Painel do site — claro e com letra grande: quem usa não é desenvolvedor e pode estar no celular.
+   Cores da paleta bege do site (src/styles/_tokens.scss); contraste AA no fundo claro. */
+
+:root {
+  color-scheme: light;
+  --bg: #f6f1e7;
+  --surface: #fff;
+  --text: #14120f;
+  --text-2: #554e42;
+  --accent: #7a5c1e;
+  --accent-hover: #644b16;
+  --border: rgba(20, 18, 15, 0.18);
+  --erro: #a3261b;
+  --ok: #1d6b33;
+  --radius: 10px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 112.5%;
+  line-height: 1.5;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Rolagem até um campo (foco, aviso de erro) não pode parar atrás da barra fixa de publicar */
+html {
+  scroll-padding-block-end: 7rem;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin: 0 0 0.5rem;
+}
+
+/* ---- Topo ---- */
+
+.topo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
+  background: #050505;
+  color: #f5f1e8;
+}
+
+.topo img {
+  block-size: 2.5rem;
+  inline-size: auto;
+}
+
+.topo__nome {
+  margin-inline-end: auto;
+  font-weight: 600;
+}
+
+.topo__nome,
+.topo__link {
+  white-space: nowrap;
+}
+
+.topo__link {
+  min-block-size: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  background: none;
+  border: 0;
+  color: #f7e2b9;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- Telas ---- */
+
+.conteudo {
+  max-inline-size: 46rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+
+.carregando {
+  text-align: center;
+  color: var(--text-2);
+}
+
+.login {
+  display: grid;
+  gap: 0.5rem;
+  max-inline-size: 24rem;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.intro {
+  color: var(--text-2);
+  margin: 0 0 1.5rem;
+}
+
+/* ---- Seções (sanfona) ---- */
+
+.secao {
+  margin-block-end: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.secao > summary {
+  display: grid;
+  gap: 0.125rem;
+  padding: 1rem 3rem 1rem 1.25rem;
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+}
+
+.secao > summary::-webkit-details-marker {
+  display: none;
+}
+
+.secao > summary::after {
+  content: '+';
+  position: absolute;
+  inset-inline-end: 1.25rem;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.secao[open] > summary::after {
+  content: '−';
+}
+
+.secao__titulo {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.secao__descricao {
+  color: var(--text-2);
+  font-size: 0.9rem;
+}
+
+.secao__corpo {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0.25rem 1.25rem 1.5rem;
+  border-block-start: 1px solid var(--border);
+  padding-block-start: 1.25rem;
+}
+
+/* ---- Campos ---- */
+
+.campo {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.campo__rotulo,
+.login label {
+  font-weight: 600;
+}
+
+.campo__ajuda {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+input,
+textarea,
+select {
+  inline-size: 100%;
+  min-block-size: 48px;
+  padding: 0.625rem 0.75rem;
+  /* 16px ou mais: o iPhone não dá zoom ao tocar no campo */
+  font: inherit;
+  color: inherit;
+  background: #fff;
+  border: 1px solid rgba(20, 18, 15, 0.45);
+  border-radius: 8px;
+}
+
+textarea {
+  resize: vertical;
+  field-sizing: content;
+  min-block-size: 5.5rem;
+}
+
+input:user-invalid,
+textarea:user-invalid {
+  border-color: var(--erro);
+  box-shadow: 0 0 0 1px var(--erro);
+}
+
+/* ---- Listas (serviços, frota, passos…) ---- */
+
+.lista {
+  display: grid;
+  gap: 1rem;
+}
+
+.item {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.item__titulo {
+  padding: 0 0.375rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.item__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ---- Fotos ---- */
+
+.foto__previa {
+  inline-size: 100%;
+  max-inline-size: 16rem;
+  max-block-size: 16rem;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.campo--foto .botao {
+  justify-self: start;
+}
+
+.campo--foto:focus-within .botao {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.invisivel {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  min-block-size: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Botões ---- */
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 44px;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.botao:hover:not(:disabled) {
+  background: #f3e0bc;
+}
+
+.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.botao--principal {
+  min-block-size: 52px;
+  padding-inline: 1.5rem;
+  font-size: 1.05rem;
+  color: #fff;
+  background: var(--accent);
+}
+
+.botao--principal:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.botao--perigo {
+  color: var(--erro);
+  border-color: var(--erro);
+  margin-inline-start: auto;
+}
+
+.botao--perigo:hover:not(:disabled) {
+  background: #fbe9e7;
+}
+
+/* ---- Barra fixa de publicar ---- */
+
+.barra {
+  position: fixed;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-block-start: 1px solid var(--border);
+  box-shadow: 0 -4px 16px rgba(20, 18, 15, 0.08);
+}
+
+.barra__status {
+  flex: 1 1 14rem;
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-2);
+}
+
+.barra__status[data-tom='pendente'] {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.barra__status[data-tom='ok'] {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.barra__status[data-tom='erro'],
+.mensagem--erro {
+  color: var(--erro);
+  font-weight: 600;
+}
+
+.mensagem {
+  margin: 0;
+}
+
+.mensagem:empty {
+  display: none;
+}
+
+@media (max-width: 30em) {
+  .barra .botao--principal {
+    inline-size: 100%;
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "contato": {
+    "whatsapp": "5511965420041",
+    "mensagemWhatsapp": "Olá! Vim pelo site da YCAR EXECUTIVE e gostaria de fazer uma reserva.",
+    "instagram": "ycarexecutive",
+    "email": "contato@ycarexecutive.com.br",
+    "horario": "Todos os dias, com agendamento prévio",
+    "cidade": "São Paulo – SP",
+    "cnpj": ""
+  },
+  "reserva": {
+    "plataformaUrl": "https://ycarexecutive.youcanbook.me",
+    "botao": "Reserve Agora!",
+    "titulo": "Reserve Agora!",
+    "descricao": "Escolha o serviço, a data e o horário na nossa plataforma de agendamento. Você recebe a confirmação da reserva com todos os detalhes.",
+    "botaoPlataforma": "Fazer reserva online"
+  },
+  "menu": {
+    "inicio": "Início",
+    "servicos": "Serviços",
+    "quemSomos": "Quem Somos",
+    "comoTrabalhamos": "Como Trabalhamos",
+    "frota": "Frota de Veículos",
+    "redesSociais": "Mídias Sociais"
+  },
+  "inicio": {
+    "overline": "YCAR Executive · São Paulo",
+    "titulo": "Transporte Executivo com excelência, conforto e pontualidade.",
+    "subtitulo": "Motoristas profissionais, veículos de alto padrão e atendimento personalizado para uma experiência exclusiva."
+  },
+  "servicos": {
+    "titulo": "Encontre o Serviço Ideal para sua Viagem",
+    "descricao": "Sedans, SUVs, Blindados, MiniVans, Vans, Micro-Ônibus e Ônibus.",
+    "itens": [
+      {
+        "titulo": "Transfer Executivo",
+        "descricao": "Aeroportos, hotéis, empresas, noiva e casamentos, eventos, e viagens corporativas ou particulares.",
+        "icone": "briefcase",
+        "imagem": "/images/servicos/transfer-executivo.webp",
+        "recorte": "14%"
+      },
+      {
+        "titulo": "Receptivo Aeroporto",
+        "descricao": "Recepção personalizada nos aeroportos de São Paulo, com conforto e pontualidade.",
+        "icone": "plane",
+        "imagem": "/images/servicos/receptivo-aeroporto.webp",
+        "recorte": "6%"
+      },
+      {
+        "titulo": "Viagens",
+        "descricao": "Transporte Executivo para o interior, litoral e outros estados.",
+        "icone": "road",
+        "imagem": "/images/servicos/viagens.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Operação à Disposição",
+        "descricao": "Motorista Executivo à sua disposição para múltiplos compromissos ao longo do dia.",
+        "icone": "clock",
+        "imagem": "/images/servicos/operacao-disposicao.webp",
+        "recorte": "4%"
+      },
+      {
+        "titulo": "City Tour",
+        "descricao": "Passeios turísticos em São Paulo e diversos destinos, com conforto e segurança.",
+        "icone": "pin",
+        "imagem": "/images/servicos/city-tour.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Motoristas Bilíngues",
+        "descricao": "Atendimento em seu idioma para uma experiência mais confortável e tranquila.",
+        "icone": "globe",
+        "imagem": "/images/servicos/motoristas-bilingues.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Veículos Blindados",
+        "descricao": "Veículos blindados para deslocamentos com máxima segurança e discrição.",
+        "icone": "shield",
+        "imagem": "/images/servicos/veiculo-blindado.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Segurança Armada",
+        "descricao": "Escolta especializada com profissionais treinados e qualificados.",
+        "icone": "shield",
+        "imagem": "/images/servicos/seguranca-armada.webp",
+        "recorte": "4%"
+      },
+      {
+        "titulo": "Experiência Personalizada",
+        "descricao": "Transporte Executivo adaptado às suas necessidades e preferências.",
+        "icone": "star",
+        "imagem": "/images/servicos/experiencia-personalizada.webp",
+        "recorte": "18%"
+      }
+    ]
+  },
+  "quemSomos": {
+    "titulo": "Referência em Transporte Executivo em São Paulo",
+    "paragrafos": [
+      "Desde 2020, a YCAR EXECUTIVE é especializada em Transporte Executivo em São Paulo, atendendo clientes que valorizam conforto, segurança e discrição.",
+      "Com motoristas experientes e veículos de alto padrão, oferecemos atendimento personalizado, pontualidade e atenção aos detalhes em cada trajeto."
+    ],
+    "tagline": "Seu destino, nossa prioridade.",
+    "chamada": "Reserve agora e viaje com quem entende de Transporte Executivo."
+  },
+  "comoTrabalhamos": {
+    "titulo": "Da Reserva ao Destino",
+    "passos": [
+      {
+        "titulo": "Agendamento da Operação",
+        "descricao": "Agende seu serviço e receba a confirmação com os dados do motorista e veículo."
+      },
+      {
+        "titulo": "Embarque com Tranquilidade",
+        "descricao": "Seu motorista estará no local e horário combinados, pronto para recebê-lo e auxiliar com as bagagens."
+      },
+      {
+        "titulo": "Experiência Premium",
+        "descricao": "Veículos modernos com Wi-Fi, água com e sem gás, mimos de bordo e atendimento personalizado."
+      },
+      {
+        "titulo": "Pagamento Facilitado",
+        "descricao": "Pague via PIX, cartões de débito ou crédito e link de pagamento."
+      }
+    ]
+  },
+  "frota": {
+    "titulo": "Frota de Veículos",
+    "descricao": "Frota moderna e diversificada, com veículos selecionados para diferentes necessidades e ocasiões.",
+    "itens": [
+      {
+        "nome": "Sedã",
+        "lugares": "3 a 4 lugares",
+        "descricao": "Ideal para viagens individuais, casais e deslocamentos corporativos.",
+        "icone": "car",
+        "imagem": "/images/frota/sedan.webp"
+      },
+      {
+        "nome": "SUV",
+        "lugares": "4 a 6 lugares",
+        "descricao": "Mais espaço e versatilidade para famílias, pequenos grupos e viagens.",
+        "icone": "car",
+        "imagem": "/images/frota/suv.webp"
+      },
+      {
+        "nome": "MiniVan",
+        "lugares": "7 lugares",
+        "descricao": "Ideal para pequenos grupos, com amplo espaço interno e para bagagens.",
+        "icone": "van",
+        "imagem": "/images/frota/minivan.webp"
+      },
+      {
+        "nome": "Van",
+        "lugares": "10 a 18 lugares",
+        "descricao": "Ideal para grupos, eventos, turismo e traslados corporativos.",
+        "icone": "van",
+        "imagem": "/images/frota/van.webp"
+      },
+      {
+        "nome": "Micro-Ônibus",
+        "lugares": "20 a 30 lugares",
+        "descricao": "Amplo espaço para grupos maiores, eventos, transfers, passeios e viagens.",
+        "icone": "bus",
+        "imagem": "/images/frota/micro-onibus.webp"
+      },
+      {
+        "nome": "Ônibus",
+        "lugares": "Acima de 40 lugares",
+        "descricao": "Ideal para grandes grupos, excursões, eventos e viagens de longa distância.",
+        "icone": "bus",
+        "imagem": "/images/frota/onibus.webp"
+      },
+      {
+        "nome": "Blindados",
+        "lugares": "Blindados Sob Demanda",
+        "descricao": "Segurança reforçada e proteção adicional, com conforto e discrição.",
+        "icone": "shield",
+        "imagem": "/images/frota/blindado.webp"
+      }
+    ]
+  }
+}

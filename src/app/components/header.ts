@@ -36,7 +36,7 @@ import { Icon } from './icon';
           }
         </nav>
         <a class="btn btn--primary header__cta" [href]="reservaHref" target="_blank" rel="noopener">
-          <span class="header__cta-longo">Reserve Agora!</span>
+          <span class="header__cta-longo">{{ ctaRotulo }}</span>
           <span class="header__cta-curto">Reservar</span>
         </a>
         <button
@@ -91,7 +91,7 @@ import { Icon } from './icon';
 
         <div class="menu__rodape">
           <a class="btn btn--primary btn--lg menu__cta" [href]="reservaHref" target="_blank" rel="noopener">
-            Reserve Agora!
+            {{ ctaRotulo }}
           </a>
           <div class="menu__contatos">
             <a [href]="waHref" target="_blank" rel="noopener">
@@ -379,6 +379,7 @@ export class Header {
   protected readonly secoes = MENU.filter((item) => !item.externo);
   protected readonly contato = CONTATO;
   protected readonly reservaHref = RESERVA.plataformaUrl;
+  protected readonly ctaRotulo = RESERVA.cta.rotulo;
   protected readonly waHref = linkWhatsApp(MENSAGEM_PADRAO);
   protected readonly aberto = signal(false);
 
