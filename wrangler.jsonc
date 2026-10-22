@@ -9,6 +9,12 @@
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*"]
   },
+  // Custom Domains: a Cloudflare cria o DNS e o certificado; o www redireciona para a raiz
+  // por uma Redirect Rule no painel da zona
+  "routes": [
+    { "pattern": "ycarexecutive.com.br", "custom_domain": true },
+    { "pattern": "www.ycarexecutive.com.br", "custom_domain": true }
+  ],
   "vars": {
     "GITHUB_REPO": "Gabriel-Ferrari/ycar-site",
     "GITHUB_BRANCH": "main"
