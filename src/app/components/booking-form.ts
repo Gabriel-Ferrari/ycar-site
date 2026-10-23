@@ -58,6 +58,41 @@ import { Icon, IconName } from './icon';
         }
       </div>
 
+      @if (tipo() === 'ida-volta') {
+        <label class="reserva-form__check">
+          <input
+            type="checkbox"
+            [checked]="mesmoTrajeto()"
+            (change)="mesmoTrajeto.set($any($event.target).checked)"
+          />
+          {{ form.mesmoTrajeto }}
+        </label>
+        @if (!mesmoTrajeto()) {
+          <div class="reserva-form__linha">
+            <div class="campo">
+              <label class="campo__rotulo" for="reserva-embarque-volta">
+                {{ form.campos.embarqueVolta.rotulo }}
+              </label>
+              <app-campo-endereco
+                campoId="reserva-embarque-volta"
+                nome="embarqueVolta"
+                [placeholder]="form.campos.embarqueVolta.placeholder"
+              />
+            </div>
+            <div class="campo">
+              <label class="campo__rotulo" for="reserva-destino-volta">
+                {{ form.campos.destinoVolta.rotulo }}
+              </label>
+              <app-campo-endereco
+                campoId="reserva-destino-volta"
+                nome="destinoVolta"
+                [placeholder]="form.campos.destinoVolta.placeholder"
+              />
+            </div>
+          </div>
+        }
+      }
+
       <div class="reserva-form__linha reserva-form__linha--tres">
         <div class="campo">
           <label class="campo__rotulo" for="reserva-data">{{ form.campos.data.rotulo }}</label>
@@ -176,6 +211,24 @@ import { Icon, IconName } from './icon';
       }
     }
 
+    .reserva-form__check {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      min-height: 44px;
+      color: var(--color-text-2);
+      font-size: var(--text-small);
+      cursor: pointer;
+    }
+
+    .reserva-form__check input {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      flex: none;
+      accent-color: var(--color-accent);
+      cursor: pointer;
+    }
+
     .reserva-form__linha {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
@@ -243,6 +296,8 @@ export class BookingForm {
   protected readonly reserva = RESERVA;
   protected readonly hoje = dataLocalIso();
   protected readonly tipo = signal<TipoServicoId>('ida');
+  /** Ida e volta: por padrão a volta refaz o trajeto ao contrário e os campos ficam ocultos */
+  protected readonly mesmoTrajeto = signal(true);
 
   protected icone(nome: string): IconName {
     return nome as IconName;
@@ -263,6 +318,7 @@ export class BookingForm {
       `• Embarque: ${campo('embarque')}`,
       this.tipo() !== 'disposicao' ? `• Destino: ${campo('destino')}` : null,
       `• Data: ${dataBr(campo('data'))} às ${campo('hora')}`,
+      this.tipo() === 'ida-volta' ? `• Volta: ${this.volta(campo)}` : null,
       `• Passageiros: ${campo('passageiros')}`,
     ];
     const url = linkWhatsApp(linhas.filter((linha) => linha !== null).join('\n'));
@@ -272,6 +328,12 @@ export class BookingForm {
     const janela = window.open(url, '_blank');
     if (janela) janela.opener = null;
     else window.location.href = url;
+  }
+
+  private volta(campo: (nome: string) => string): string {
+    return this.mesmoTrajeto()
+      ? this.form.voltaMesmoTrajeto
+      : `${campo('embarqueVolta')} → ${campo('destinoVolta')}`;
   }
 }
 

@@ -171,11 +171,15 @@ export const RESERVA_FORM = {
   campos: {
     embarque: { rotulo: 'Embarque', placeholder: 'Endereço, aeroporto ou hotel' },
     destino: { rotulo: 'Destino', placeholder: 'Para onde vamos?' },
+    embarqueVolta: { rotulo: 'Embarque da volta', placeholder: 'Onde buscamos na volta?' },
+    destinoVolta: { rotulo: 'Destino da volta', placeholder: 'Para onde vamos na volta?' },
     data: { rotulo: 'Data' },
     hora: { rotulo: 'Horário' },
     passageiros: { rotulo: 'Passageiros' },
   },
   passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
+  mesmoTrajeto: 'A volta é pelo mesmo trajeto (do destino de volta ao embarque)',
+  voltaMesmoTrajeto: 'mesmo trajeto, do destino de volta ao embarque',
   aviso: 'O WhatsApp abre com os dados da reserva já preenchidos.',
   agendaLink: 'Prefere escolher o horário sozinho? Reserve pela agenda online',
   // Atribuição exigida pela licença dos dados (ODbL) ao mostrar resultados do OpenStreetMap
