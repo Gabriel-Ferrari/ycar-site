@@ -15,13 +15,20 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
           height="66"
           loading="lazy"
         />
-        <p class="footer__info">
-          @if (contato().cnpj) {
-            CNPJ {{ contato().cnpj }} ·
-          }
-          {{ contato().cidade }} · © {{ ano }} {{ marca.nomeCompleto }} — Todos os direitos
-          reservados
-        </p>
+        <div class="footer__info">
+          <p>
+            @if (contato().cnpj) {
+              <span class="footer__item">CNPJ {{ contato().cnpj }}</span>
+              <span class="footer__sep" aria-hidden="true"> · </span>
+            }
+            <span class="footer__item">{{ contato().cidade }}</span>
+          </p>
+          <p>
+            <span class="footer__item">© {{ ano }} {{ marca.nomeCompleto }}</span>
+            <span class="footer__sep" aria-hidden="true"> · </span>
+            <span class="footer__item">Todos os direitos reservados.</span>
+          </p>
+        </div>
         <nav class="footer__nav" aria-label="Links do rodapé">
           @for (item of menu(); track $index) {
             @if (item.externo) {
@@ -53,9 +60,31 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
       inline-size: auto;
     }
 
+    /* Computador: dados da empresa numa linha, copyright na outra.
+       Celular: um item por linha, sem "·" (quebrando, o ponto sobrava no fim da linha). */
     .footer__info {
+      display: grid;
+      gap: 0.25rem;
       color: var(--color-text-2);
       font-size: var(--text-small);
+    }
+
+    .footer__info p {
+      margin: 0;
+    }
+
+    .footer__item {
+      white-space: nowrap;
+    }
+
+    @media (max-width: 47.99em) {
+      .footer__item {
+        display: block;
+      }
+
+      .footer__sep {
+        display: none;
+      }
     }
 
     .footer__nav {
