@@ -84,7 +84,11 @@ import { Icon } from './icon';
       margin-block-end: var(--space-6);
     }
 
+    /* Camada acima dos contatos logo abaixo: .reveal usa transform, e cada bloco animado
+       vira um contexto de empilhamento — sem isso a lista de endereços ficava por baixo */
     .contato__acao {
+      position: relative;
+      z-index: 2;
       display: grid;
       gap: var(--space-2);
       inline-size: min(100%, 44rem);

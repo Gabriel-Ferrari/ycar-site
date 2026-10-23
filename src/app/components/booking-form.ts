@@ -6,6 +6,7 @@ import {
   TipoServicoId,
   linkWhatsApp,
 } from '../content/site-content';
+import { CampoEndereco } from './campo-endereco';
 import { Icon, IconName } from './icon';
 
 /**
@@ -15,7 +16,7 @@ import { Icon, IconName } from './icon';
 @Component({
   selector: 'app-booking-form',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, CampoEndereco],
   template: `
     <form class="reserva-form" (submit)="enviar($event)">
       <fieldset class="reserva-form__tipos">
@@ -39,23 +40,18 @@ import { Icon, IconName } from './icon';
       <div class="reserva-form__linha">
         <div class="campo">
           <label class="campo__rotulo" for="reserva-embarque">{{ form.campos.embarque.rotulo }}</label>
-          <input
-            id="reserva-embarque"
-            name="embarque"
-            required
-            autocomplete="street-address"
-            class="campo__controle"
+          <app-campo-endereco
+            campoId="reserva-embarque"
+            nome="embarque"
             [placeholder]="form.campos.embarque.placeholder"
           />
         </div>
         @if (tipo() !== 'disposicao') {
           <div class="campo">
             <label class="campo__rotulo" for="reserva-destino">{{ form.campos.destino.rotulo }}</label>
-            <input
-              id="reserva-destino"
-              name="destino"
-              required
-              class="campo__controle"
+            <app-campo-endereco
+              campoId="reserva-destino"
+              nome="destino"
               [placeholder]="form.campos.destino.placeholder"
             />
           </div>
@@ -202,35 +198,6 @@ import { Icon, IconName } from './icon';
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--color-text-2);
-    }
-
-    .campo__controle {
-      inline-size: 100%;
-      min-height: 48px;
-      padding: 0.75rem 1rem;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      color: var(--color-text);
-      font: inherit;
-      color-scheme: dark;
-      transition: border-color var(--duration-fast) var(--ease-out);
-    }
-
-    .campo__controle::placeholder {
-      color: var(--color-text-2);
-    }
-
-    .campo__controle:hover {
-      border-color: rgba(247, 226, 185, 0.35);
-    }
-
-    .campo__controle:focus {
-      border-color: var(--color-accent);
-    }
-
-    .campo__controle:user-invalid {
-      border-color: var(--color-error);
     }
 
     .reserva-form__enviar {

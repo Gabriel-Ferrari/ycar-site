@@ -178,6 +178,10 @@ export const RESERVA_FORM = {
   passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
   aviso: 'O WhatsApp abre com os dados da reserva já preenchidos.',
   agendaLink: 'Prefere escolher o horário sozinho? Reserve pela agenda online',
+  // Atribuição exigida pela licença dos dados (ODbL) ao mostrar resultados do OpenStreetMap
+  creditoEnderecos: 'Endereços: © OpenStreetMap',
+  sugestoesAnuncio: (total: number) =>
+    total === 1 ? '1 sugestão de endereço' : `${total} sugestões de endereço`,
 } as const;
 
 export const MARCA = {

@@ -16,7 +16,10 @@ que o dono da empresa usa para editar textos e fotos. O PRD completo está em [d
 - **SSG**: `outputMode: "static"`, uma única rota pré-renderizada em build, hidratada no cliente
 - **SCSS** com design tokens em [src/styles/\_tokens.scss](src/styles/_tokens.scss)
 - **Cloudflare Workers** servindo os assets estáticos e a API do painel ([wrangler.jsonc](wrangler.jsonc))
-- Fontes self-hosted (Inter e Fraunces) — nenhuma requisição a terceiros em runtime
+- Fontes self-hosted (Inter e Fraunces) — nenhuma requisição a terceiros ao carregar a página
+- Formulário de reserva resumido que monta a mensagem do WhatsApp; os campos de endereço sugerem
+  lugares pelo [Photon](https://photon.komoot.io) (OpenStreetMap, gratuito, sem chave), consultado
+  só quando a pessoa digita 3+ letras
 
 ## Como rodar
 

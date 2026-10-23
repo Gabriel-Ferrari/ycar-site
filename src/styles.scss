@@ -336,6 +336,36 @@ html.js .fab.fab--visivel {
   pointer-events: auto;
 }
 
+/* ---- Campos do formulário de reserva (booking-form e campo-endereco) ---- */
+.campo__controle {
+  inline-size: 100%;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font: inherit;
+  color-scheme: dark;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.campo__controle::placeholder {
+  color: var(--color-text-2);
+}
+
+.campo__controle:hover {
+  border-color: rgba(247, 226, 185, 0.35);
+}
+
+.campo__controle:focus {
+  border-color: var(--color-accent);
+}
+
+.campo__controle:user-invalid {
+  border-color: var(--color-error);
+}
+
 /* ---- Movimento reduzido: nada anima, tudo visível ---- */
 @media (prefers-reduced-motion: reduce) {
   html {
