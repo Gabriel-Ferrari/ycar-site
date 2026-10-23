@@ -16,13 +16,10 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
           loading="lazy"
         />
         <div class="footer__info">
-          <p>
-            @if (contato().cnpj) {
-              <span class="footer__item">CNPJ {{ contato().cnpj }}</span>
-              <span class="footer__sep" aria-hidden="true"> · </span>
-            }
-            <span class="footer__item">{{ contato().cidade }}</span>
-          </p>
+          @if (contato().cnpj) {
+            <p>CNPJ {{ contato().cnpj }}</p>
+          }
+          <p>{{ contato().cidade }}</p>
           <p>
             <span class="footer__item">© {{ ano }} {{ marca.nomeCompleto }}</span>
             <span class="footer__sep" aria-hidden="true"> · </span>
@@ -60,8 +57,8 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
       inline-size: auto;
     }
 
-    /* Computador: dados da empresa numa linha, copyright na outra.
-       Celular: um item por linha, sem "·" (quebrando, o ponto sobrava no fim da linha). */
+    /* CNPJ, endereço e copyright em linhas próprias. No celular o copyright também se
+       divide em duas, sem "·" (quebrando, o ponto sobrava no fim da linha). */
     .footer__info {
       display: grid;
       gap: 0.25rem;

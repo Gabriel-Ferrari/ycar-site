@@ -70,7 +70,7 @@ const SECOES = [
     titulo: 'WhatsApp e contato',
     descricao: 'Número, mensagem automática, link de reservas, Instagram e horário.',
     icone: 'whatsapp',
-    previa: { alvo: '.contato__canais', clique: '.contato__canais, .fab, .footer__info' },
+    previa: { alvo: '.contato__canais', clique: '.contato__canais, .fab' },
     campos: [
       {
         campo: 'contato.whatsapp',
@@ -106,13 +106,6 @@ const SECOES = [
         ajuda: 'Deixe vazio para não mostrar no site.',
       },
       { campo: 'contato.horario', rotulo: 'Horário de atendimento' },
-      { campo: 'contato.cidade', rotulo: 'Cidade', ajuda: 'Aparece no rodapé.' },
-      {
-        campo: 'contato.cnpj',
-        rotulo: 'CNPJ',
-        opcional: true,
-        ajuda: 'Aparece no rodapé. Deixe vazio para não mostrar.',
-      },
     ],
   },
   {
@@ -239,6 +232,25 @@ const SECOES = [
       { campo: 'reserva.titulo', rotulo: 'Título' },
       { campo: 'reserva.descricao', rotulo: 'Texto', tipo: 'texto-longo' },
       { campo: 'reserva.botaoPlataforma', rotulo: 'Texto do botão grande' },
+    ],
+  },
+  {
+    titulo: 'Rodapé',
+    descricao: 'CNPJ e endereço, no fim da página.',
+    icone: 'pin',
+    previa: { alvo: '.footer__info' },
+    campos: [
+      {
+        campo: 'contato.cnpj',
+        rotulo: 'CNPJ',
+        opcional: true,
+        ajuda: 'Ex.: 47.557.688/0001-79. Deixe vazio para não mostrar.',
+      },
+      {
+        campo: 'contato.cidade',
+        rotulo: 'Endereço ou cidade',
+        ajuda: 'Ex.: São Paulo – SP, ou o endereço completo.',
+      },
     ],
   },
 ];
