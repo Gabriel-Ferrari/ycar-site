@@ -151,7 +151,8 @@ export const RESERVA = computed(() => {
       rotulo: reserva.botao,
       mensagem: MENSAGEM_PADRAO(),
     },
-    plataformaUrl: reserva.plataformaUrl,
+    // Sem agenda online cadastrada no painel, todo botão de reserva abre o WhatsApp
+    plataformaUrl: reserva.plataformaUrl || linkWhatsApp(MENSAGEM_PADRAO()),
     plataformaRotulo: reserva.botaoPlataforma,
   };
 });

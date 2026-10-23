@@ -157,7 +157,7 @@ function validar(novo, modelo, caminho) {
   if (typeof novo !== 'string' || novo.length > TEXTO_MAX) return `texto inválido em ${caminho}`;
   if (caminho === 'contato.whatsapp' && !/^55\d{10,11}$/.test(novo)) return 'número de WhatsApp inválido';
   if (caminho === 'contato.instagram' && !/^[\w.]{1,30}$/.test(novo)) return 'usuário do Instagram inválido';
-  if (caminho === 'reserva.plataformaUrl' && !/^https:\/\/[^\s"<>]+$/.test(novo)) {
+  if (caminho === 'reserva.plataformaUrl' && novo && !/^https:\/\/[^\s"<>]+$/.test(novo)) {
     return 'o link de reservas precisa começar com https://';
   }
   if (caminho.endsWith('.imagem') && !CAMINHO_FOTO.test(novo)) return `foto inválida em ${caminho}`;

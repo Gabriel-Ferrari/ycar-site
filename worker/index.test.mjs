@@ -151,6 +151,10 @@ test('publicar recusa formato inválido e versão antiga', async () => {
   const fotoSolta = { '/images/frota/qualquer.webp': 'AAAA' };
   assert.equal((await publicar(copia(), { fotos: fotoSolta })).status, 400, 'foto que o conteúdo não usa');
 
+  const semAgenda = copia();
+  semAgenda.reserva.plataformaUrl = '';
+  assert.equal((await publicar(semAgenda)).status, 200, 'sem link de agenda (botões vão para o WhatsApp)');
+
   const antiga = await pedir(env, 'PUT', '/api/conteudo', { conteudo: copia(), versao: 'velha' }, cookie);
   assert.equal(antiga.status, 409);
 });

@@ -88,7 +88,9 @@ const SECOES = [
         campo: 'reserva.plataformaUrl',
         rotulo: 'Link da agenda de reservas',
         tipo: 'link',
-        ajuda: 'Para onde vão os botões de reserva. Começa com https://',
+        opcional: true,
+        ajuda:
+          'Deixe vazio para os botões de reserva abrirem o WhatsApp. Quando tiver uma agenda online (ex.: YouCanBook.me), cole o link aqui — começa com https://',
       },
       {
         campo: 'contato.instagram',
@@ -411,7 +413,7 @@ function normalizar(tipo, entrada) {
       .split(/[/?#]/)[0];
     if (!/^[\w.]{1,30}$/.test(resultado)) mensagem = 'Use só o nome do perfil, ex.: ycarexecutive';
   } else if (tipo === 'link') {
-    if (!/^https:\/\/\S+$/.test(valor)) mensagem = 'O link precisa começar com https://';
+    if (valor && !/^https:\/\/\S+$/.test(valor)) mensagem = 'O link precisa começar com https://';
   }
 
   entrada.setCustomValidity(mensagem);

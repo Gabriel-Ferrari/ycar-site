@@ -9,11 +9,11 @@
     "cnpj": "47.557.688/0001-79"
   },
   "reserva": {
-    "plataformaUrl": "https://ycarexecutive.youcanbook.me",
+    "plataformaUrl": "",
     "botao": "Reserve Agora!",
     "titulo": "Reserve Agora!",
-    "descricao": "Escolha o serviço, a data e o horário na nossa plataforma de agendamento. Você recebe a confirmação da reserva com todos os detalhes.",
-    "botaoPlataforma": "Fazer reserva online"
+    "descricao": "Fale com a gente pelo WhatsApp: informe o serviço, a data e o horário e receba a confirmação da reserva com todos os detalhes.",
+    "botaoPlataforma": "Reservar pelo WhatsApp"
   },
   "menu": {
     "inicio": "Início",
