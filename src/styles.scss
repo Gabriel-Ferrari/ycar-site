@@ -279,10 +279,13 @@ html.js .section-titulo.reveal.is-visible::after {
 }
 
 /* ---- Entrada do hero (CSS puro: sem JS não roda, com fill both termina visível) ---- */
+/* Sobe e clareia, mas começa visível: o h1 é o LCP e texto com opacity 0 não conta como
+   pintado — começando do zero o LCP esperava a última palavra (~2,3 s de atraso no PageSpeed
+   mobile). Sem máscara de overflow: cortada, a palavra aparecia só em pedaços no 1º quadro. */
 @keyframes hero-palavra-sobe {
   from {
-    opacity: 0;
-    transform: translateY(0.7em);
+    opacity: 0.2;
+    transform: translateY(0.35em);
   }
   to {
     opacity: 1;
@@ -303,7 +306,6 @@ html.js .section-titulo.reveal.is-visible::after {
 
 .hero-palavra {
   display: inline-block;
-  overflow: hidden;
   vertical-align: bottom;
 }
 
