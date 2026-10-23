@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { CONTATO, RESERVA, linkWhatsApp } from '../content/site-content';
+import { CONTATO, RESERVA, RESERVA_FORM, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
+import { BookingForm } from './booking-form';
 import { Icon } from './icon';
 
 @Component({
   selector: 'app-contact',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon, RevealOnScroll],
+  imports: [Icon, RevealOnScroll, BookingForm],
   template: `
     <section class="contato section" id="reserva" aria-labelledby="contato-titulo">
       <div class="container contato__inner">
@@ -17,14 +18,12 @@ import { Icon } from './icon';
         </div>
 
         <div class="contato__acao reveal" appReveal [revealDelay]="80">
-          <a
-            class="btn btn--primary btn--lg"
-            [href]="reserva().plataformaUrl"
-            target="_blank"
-            rel="noopener"
-          >
-            {{ reserva().plataformaRotulo }}
-          </a>
+          <app-booking-form />
+          @if (reserva().agendaOnline; as agenda) {
+            <a class="contato__agenda" [href]="agenda" target="_blank" rel="noopener">
+              {{ textoAgenda }}
+            </a>
+          }
         </div>
 
         <ul class="contato__canais reveal" appReveal>
@@ -87,9 +86,23 @@ import { Icon } from './icon';
 
     .contato__acao {
       display: grid;
-      justify-items: center;
       gap: var(--space-2);
+      inline-size: min(100%, 44rem);
       margin-block-end: var(--space-6);
+    }
+
+    .contato__agenda {
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      color: var(--color-text-2);
+      font-size: var(--text-small);
+      text-underline-offset: 3px;
+    }
+
+    .contato__agenda:hover {
+      color: var(--color-text);
     }
 
     .contato__canais {
@@ -132,5 +145,6 @@ import { Icon } from './icon';
 export class Contact {
   protected readonly contato = CONTATO;
   protected readonly reserva = RESERVA;
+  protected readonly textoAgenda = RESERVA_FORM.agendaLink;
   protected readonly waHref = computed(() => linkWhatsApp(RESERVA().cta.mensagem));
 }

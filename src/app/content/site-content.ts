@@ -153,9 +153,32 @@ export const RESERVA = computed(() => {
     },
     // Sem agenda online cadastrada no painel, todo botão de reserva abre o WhatsApp
     plataformaUrl: reserva.plataformaUrl || linkWhatsApp(MENSAGEM_PADRAO()),
+    agendaOnline: reserva.plataformaUrl,
     plataformaRotulo: reserva.botaoPlataforma,
   };
 });
+
+export type TipoServicoId = 'ida' | 'ida-volta' | 'disposicao';
+
+/** Formulário resumido da seção de reserva (monta a mensagem do WhatsApp). */
+export const RESERVA_FORM = {
+  tipoLegenda: 'Tipo de serviço',
+  tiposServico: [
+    { id: 'ida' as TipoServicoId, rotulo: 'Somente ida', icone: 'arrow-right' },
+    { id: 'ida-volta' as TipoServicoId, rotulo: 'Ida e volta', icone: 'swap' },
+    { id: 'disposicao' as TipoServicoId, rotulo: 'À disposição', icone: 'clock' },
+  ],
+  campos: {
+    embarque: { rotulo: 'Embarque', placeholder: 'Endereço, aeroporto ou hotel' },
+    destino: { rotulo: 'Destino', placeholder: 'Para onde vamos?' },
+    data: { rotulo: 'Data' },
+    hora: { rotulo: 'Horário' },
+    passageiros: { rotulo: 'Passageiros' },
+  },
+  passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
+  aviso: 'O WhatsApp abre com os dados da reserva já preenchidos.',
+  agendaLink: 'Prefere escolher o horário sozinho? Reserve pela agenda online',
+} as const;
 
 export const MARCA = {
   nomeCurto: 'YCar Executive',

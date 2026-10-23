@@ -225,13 +225,13 @@ const SECOES = [
   },
   {
     titulo: 'Seção de reserva',
-    descricao: 'O bloco final, com o botão grande da agenda.',
+    descricao: 'O bloco final, com o formulário de reserva pelo WhatsApp.',
     icone: 'document',
     previa: { alvo: '#reserva' },
     campos: [
       { campo: 'reserva.titulo', rotulo: 'Título' },
       { campo: 'reserva.descricao', rotulo: 'Texto', tipo: 'texto-longo' },
-      { campo: 'reserva.botaoPlataforma', rotulo: 'Texto do botão grande' },
+      { campo: 'reserva.botaoPlataforma', rotulo: 'Texto do botão do formulário' },
     ],
   },
   {
