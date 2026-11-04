@@ -6,26 +6,6 @@ do sedã ao ônibus, incluindo blindados e segurança armada.
 
 **No ar: <https://ycarexecutive.com.br>**
 
-## Para que serve
-
-O site transforma visita em reserva pelo WhatsApp. Quem chega pelo link — um cliente corporativo,
-uma agência de eventos ou um passageiro no aeroporto — entende os serviços e a frota em poucos
-segundos e fala com a empresa sem preencher cadastro:
-
-- Todo botão **Reserve Agora!** abre o WhatsApp da empresa com uma mensagem pronta.
-- O formulário da seção de reserva manda o pedido já organizado: tipo de serviço (somente ida, ida
-  e volta ou à disposição), embarque e destino com sugestões de endereço, data, horário e
-  passageiros.
-- O dono da empresa edita textos, fotos, telefone, menu, CNPJ e cartões de serviço e frota pelo
-  [painel `/admin`](#painel-admin), com prévia ao vivo, sem depender de desenvolvedor.
-
-O site não tem backend, banco nem cookies: o conteúdo é estático e pré-renderizado. A única parte
-dinâmica é a API do painel. O PRD completo está em [docs/PRD.md](docs/PRD.md).
-
-## Prints
-
-Topo e serviços no computador:
-
 ![Topo do site no computador: título "Transporte Executivo Blindado e Convencional com padrão premium", menu e botão Reserve Agora! sobre a foto de um motorista executivo](docs/prints/inicio-computador.webp)
 
 ![Seção de serviços: cartões de Transfer Executivo, Receptivo Aeroporto e Viagens, cada um com foto, descrição e botão Reserve Agora!](docs/prints/servicos-computador.webp)
