@@ -1,14 +1,50 @@
 # YCAR EXECUTIVE — site institucional
 
-Site de página única da YCar Executive, empresa de transporte executivo em São Paulo: transfers,
-receptivo em aeroportos, viagens, city tour e frota do sedã ao ônibus, incluindo blindados.
+Site da **YCAR EXECUTIVE**, empresa de transporte executivo em São Paulo: transfer executivo,
+receptivo em aeroportos, viagens, operação à disposição, city tour, motoristas bilíngues e frota
+do sedã ao ônibus, incluindo blindados e segurança armada.
 
-**Ver online: <https://ycar-site.ferrari-gabriel2002.workers.dev/>**
+**No ar: <https://ycarexecutive.com.br>**
 
-O objetivo do site é converter em WhatsApp: um decisor corporativo chega pelo link, confia na
-empresa em poucos segundos e abre uma conversa. O site não tem backend, banco nem cookies — todo o
-conteúdo é estático e pré-renderizado. A única parte dinâmica é o [painel `/admin`](#painel-admin),
-que o dono da empresa usa para editar textos e fotos. O PRD completo está em [docs/PRD.md](docs/PRD.md).
+## Para que serve
+
+O site transforma visita em reserva pelo WhatsApp. Quem chega pelo link — um cliente corporativo,
+uma agência de eventos ou um passageiro no aeroporto — entende os serviços e a frota em poucos
+segundos e fala com a empresa sem preencher cadastro:
+
+- Todo botão **Reserve Agora!** abre o WhatsApp da empresa com uma mensagem pronta.
+- O formulário da seção de reserva manda o pedido já organizado: tipo de serviço (somente ida, ida
+  e volta ou à disposição), embarque e destino com sugestões de endereço, data, horário e
+  passageiros.
+- O dono da empresa edita textos, fotos, telefone, menu, CNPJ e cartões de serviço e frota pelo
+  [painel `/admin`](#painel-admin), com prévia ao vivo, sem depender de desenvolvedor.
+
+O site não tem backend, banco nem cookies: o conteúdo é estático e pré-renderizado. A única parte
+dinâmica é a API do painel. O PRD completo está em [docs/PRD.md](docs/PRD.md).
+
+## Prints
+
+Topo e serviços no computador:
+
+![Topo do site no computador: título "Transporte Executivo Blindado e Convencional com padrão premium", menu e botão Reserve Agora! sobre a foto de um motorista executivo](docs/prints/inicio-computador.webp)
+
+![Seção de serviços: cartões de Transfer Executivo, Receptivo Aeroporto e Viagens, cada um com foto, descrição e botão Reserve Agora!](docs/prints/servicos-computador.webp)
+
+Formulário de reserva, com as sugestões de endereço abertas ao digitar "aeroporto cong":
+
+![Formulário de reserva com tipo de serviço, embarque, destino, data, horário e passageiros; a lista de sugestões mostra os endereços do Aeroporto de Congonhas](docs/prints/reserva-computador.webp)
+
+No celular, o topo e o menu:
+
+<p>
+  <img src="docs/prints/inicio-celular.webp" width="260" alt="Topo do site no celular, com título, texto de apresentação e botão Reserve Agora!">
+  <img src="docs/prints/menu-celular.webp" width="260" alt="Menu aberto no celular com as seções numeradas, botão Reserve Agora!, WhatsApp e Instagram">
+</p>
+
+Painel `/admin`: o formulário de edição à esquerda e a prévia ao vivo à direita. Clicar num cartão
+da prévia abre o campo correspondente:
+
+![Painel do site editando o veículo Sedã, com ícone e foto, ao lado da prévia em formato de celular com a etiqueta "Editar: Frota 1"](docs/prints/painel-computador.webp)
 
 ## Stack
 
@@ -42,15 +78,20 @@ baixa na hora):
 npm run build && npx wrangler deploy
 ```
 
-O runner de testes do Angular está configurado (`npm test`, Vitest), mas o site ainda não tem specs.
-A API do painel tem testes próprios, sem dependência: `node --test worker/index.test.mjs`.
+Testes:
+
+```bash
+npm test                              # specs do Angular (Vitest), ex.: sugestões de endereço
+node --test worker/index.test.mjs     # API do painel, sem dependência
+```
 
 ## Estrutura
 
 ```
 src/
   app/
-    components/     uma seção do site por arquivo (hero, services, fleet, about, …)
+    components/     uma seção do site por arquivo (hero, services, fleet, about, …),
+                    o formulário de reserva e o campo de endereço com sugestões
     content/        conteudo.json (textos editáveis) + site-content.ts (tipos e derivados)
     directives/     parallax, reveal-on-scroll, count-up
   styles/           design tokens
@@ -71,9 +112,11 @@ JSON, nunca no template de um componente. Como o painel também commita nesse ar
 
 ## Painel `/admin`
 
-Página com senha em `/admin/` para editar sem depender de desenvolvedor: WhatsApp e mensagem
-automática, link de reservas, Instagram, horário, textos de todas as seções, nomes do menu e os
-cartões de serviços e frota (adicionar, remover, reordenar e trocar foto).
+Página com senha em <https://ycarexecutive.com.br/admin/> para editar sem depender de
+desenvolvedor: WhatsApp e mensagem automática, Instagram, horário, textos de todas as seções, nomes
+do menu, CNPJ e endereço do rodapé e os cartões de serviços e frota (adicionar, remover, reordenar,
+trocar ícone e foto). O link da agenda de reservas é opcional: vazio, todos os botões de reserva
+abrem o WhatsApp.
 
 Ao lado do formulário fica uma **prévia ao vivo**: o próprio site num iframe (`/?previa=1`), que
 recebe o conteúdo em edição a cada tecla — inclusive fotos ainda não publicadas. Clicar num trecho
@@ -136,10 +179,26 @@ aeroporto. Algumas escolhas existem por causa disso:
   (latim com acentuação pt-BR e pontuação tipográfica), não o subset `latin` inteiro. Trocar uma
   fonte significa gerar o subset de novo, e um caractere fora do conjunto cai no fallback do
   sistema.
-- **Imagem do hero antes das fontes no `<head>`.** Ela é o elemento de LCP; a ordem dos `preload`
-  em [src/index.html](src/index.html) é intencional.
+- **Imagem do hero antes das fontes no `<head>`.** Ela cobre a tela inteira no primeiro quadro, e a
+  ordem dos `preload` em [src/index.html](src/index.html) é intencional. No PageSpeed o elemento de
+  LCP é o título (h1), não a foto.
 - **Tudo em WebP.** Nenhum PNG de conteúdo — só o ícone do iOS e a imagem de Open Graph, que não
   são baixados na renderização da página.
+
+No PageSpeed de outubro de 2026 o site tirou 95 no celular e 100 no computador em desempenho, e
+100 em acessibilidade, práticas recomendadas e SEO.
+
+## Domínio e hospedagem
+
+- O domínio `ycarexecutive.com.br` está registrado no Registro.br, com o DNS na Cloudflare.
+- `ycarexecutive.com.br` e `www.ycarexecutive.com.br` são Custom Domains do Worker (`routes` em
+  [wrangler.jsonc](wrangler.jsonc)). A Cloudflare cria o DNS e o certificado HTTPS.
+- Uma Redirect Rule da zona manda `www` para o domínio principal (301, mantendo a query string), e
+  **Sempre usar HTTPS** redireciona `http://` para `https://`.
+- O endereço `*.workers.dev` continua respondendo, mas o `canonical` aponta para o domínio.
+- No Google Search Console o domínio está verificado por um registro TXT
+  (`google-site-verification=…`) na Cloudflare. **Não apague esse registro**: sem ele a verificação
+  cai. O sitemap está enviado.
 
 ## Acessibilidade
 
