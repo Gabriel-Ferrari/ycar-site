@@ -8,11 +8,73 @@
  */
 
 import { computed, signal } from '@angular/core';
-import inicial from './conteudo.json';
+import pt from './conteudo.json';
+import en from './conteudo.en.json';
+import es from './conteudo.es.json';
+import { TEXTOS_UI } from './textos-ui';
 
-export type Conteudo = typeof inicial;
+export type Conteudo = typeof pt;
+export type Idioma = 'pt' | 'en' | 'es';
 
-const conteudo = signal<Conteudo>(inicial);
+/**
+ * Cada idioma é um build próprio (@angular/localize): / em português, /en/ e /es/.
+ * O build grava $localize.locale nos polyfills, que rodam antes deste módulo;
+ * sem ele (ng serve sem idioma, testes) fica o português.
+ */
+function idiomaDoBuild(): Idioma {
+  const locale = (globalThis as { $localize?: { locale?: string } }).$localize?.locale ?? '';
+  const codigo = locale.slice(0, 2);
+  return codigo === 'en' || codigo === 'es' ? codigo : 'pt';
+}
+
+export const IDIOMA = idiomaDoBuild();
+
+/** Tipado como Conteudo: EN ou ES fora do formato do português não compila. */
+const CONTEUDOS: Record<Idioma, Conteudo> = { pt, en, es };
+
+export interface OpcaoIdioma {
+  codigo: Idioma;
+  rotulo: string;
+  nome: string;
+  hreflang: string;
+  ogLocale: string;
+  /** Raiz do build desse idioma */
+  caminho: string;
+}
+
+export const IDIOMAS: readonly OpcaoIdioma[] = [
+  {
+    codigo: 'pt',
+    rotulo: 'PT',
+    nome: 'Português',
+    hreflang: 'pt-BR',
+    ogLocale: 'pt_BR',
+    caminho: '/',
+  },
+  {
+    codigo: 'en',
+    rotulo: 'EN',
+    nome: 'English',
+    hreflang: 'en',
+    ogLocale: 'en_US',
+    caminho: '/en/',
+  },
+  {
+    codigo: 'es',
+    rotulo: 'ES',
+    nome: 'Español',
+    hreflang: 'es',
+    ogLocale: 'es_ES',
+    caminho: '/es/',
+  },
+];
+
+export const IDIOMA_ATUAL = IDIOMAS.find((i) => i.codigo === IDIOMA)!;
+
+/** Textos fixos da interface no idioma do build. */
+export const UI = TEXTOS_UI[IDIOMA];
+
+const conteudo = signal<Conteudo>(CONTEUDOS[IDIOMA]);
 
 /** Prévia do painel /admin: mostra conteúdo ainda não publicado, só naquela aba. */
 export function aplicarPrevia(novo: Conteudo): void {
@@ -100,14 +162,14 @@ export const CONTATO = computed(() => {
   };
 });
 
+// Sem "Início": o logo já leva ao topo
 export const MENU = computed<ItemMenu[]>(() => {
   const menu = conteudo().menu;
   return [
-    { rotulo: menu.inicio, destino: '#inicio' },
+    { rotulo: menu.frota, destino: '#frota' },
     { rotulo: menu.servicos, destino: '#servicos' },
     { rotulo: menu.quemSomos, destino: '#quem-somos' },
     { rotulo: menu.comoTrabalhamos, destino: '#como-trabalhamos' },
-    { rotulo: menu.frota, destino: '#frota' },
     { rotulo: menu.redesSociais, destino: INSTAGRAM_URL(), externo: true },
   ];
 });
@@ -160,33 +222,22 @@ export const RESERVA = computed(() => {
 
 export type TipoServicoId = 'ida' | 'ida-volta' | 'disposicao';
 
+const FORM = UI.reservaForm;
+
 /** Formulário resumido da seção de reserva (monta a mensagem do WhatsApp). */
 export const RESERVA_FORM = {
-  tipoLegenda: 'Tipo de serviço',
+  ...FORM,
   tiposServico: [
-    { id: 'ida' as TipoServicoId, rotulo: 'Somente ida', icone: 'arrow-right' },
-    { id: 'ida-volta' as TipoServicoId, rotulo: 'Ida e volta', icone: 'swap' },
-    { id: 'disposicao' as TipoServicoId, rotulo: 'À disposição', icone: 'clock' },
+    { id: 'ida' as TipoServicoId, rotulo: FORM.tipos.ida, icone: 'arrow-right' },
+    { id: 'ida-volta' as TipoServicoId, rotulo: FORM.tipos.idaVolta, icone: 'swap' },
+    { id: 'disposicao' as TipoServicoId, rotulo: FORM.tipos.disposicao, icone: 'clock' },
   ],
-  campos: {
-    embarque: { rotulo: 'Embarque', placeholder: 'Endereço, aeroporto ou hotel' },
-    destino: { rotulo: 'Destino', placeholder: 'Para onde vamos?' },
-    embarqueVolta: { rotulo: 'Embarque da volta', placeholder: 'Onde buscamos na volta?' },
-    destinoVolta: { rotulo: 'Destino da volta', placeholder: 'Para onde vamos na volta?' },
-    data: { rotulo: 'Data' },
-    hora: { rotulo: 'Horário' },
-    passageiros: { rotulo: 'Passageiros' },
-  },
-  passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', '8 ou mais'],
-  mesmoTrajeto: 'A volta é pelo mesmo trajeto (do destino de volta ao embarque)',
-  voltaMesmoTrajeto: 'mesmo trajeto, do destino de volta ao embarque',
-  aviso: 'O WhatsApp abre com os dados da reserva já preenchidos.',
-  agendaLink: 'Prefere escolher o horário sozinho? Reserve pela agenda online',
-  // Atribuição exigida pela licença dos dados (ODbL) ao mostrar resultados do OpenStreetMap
-  creditoEnderecos: 'Endereços: © OpenStreetMap',
+  passageirosOpcoes: ['1', '2', '3', '4', '5', '6', '7', FORM.oitoOuMais],
   sugestoesAnuncio: (total: number) =>
-    total === 1 ? '1 sugestão de endereço' : `${total} sugestões de endereço`,
+    total === 1 ? FORM.sugestaoUma : `${total} ${FORM.sugestoesVarias}`,
 } as const;
+
+export const SEO = computed(() => conteudo().seo);
 
 export const MARCA = {
   nomeCurto: 'YCar Executive',
@@ -201,9 +252,9 @@ export function dadosEstruturados() {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: MARCA.nomeCompleto,
-    description:
-      'Transporte executivo em São Paulo: transfers, receptivo em aeroportos, viagens, city tour e frota do sedã ao ônibus, incluindo blindados.',
-    url: `${MARCA.dominio}/`,
+    description: SEO().descricao,
+    url: `${MARCA.dominio}${IDIOMA_ATUAL.caminho}`,
+    inLanguage: IDIOMA_ATUAL.hreflang,
     image: `${MARCA.dominio}/images/og-image.png`,
     telephone: contato.whatsappExibicao,
     ...(contato.email && { email: contato.email }),

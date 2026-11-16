@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { QUEM_SOMOS, RESERVA } from '../content/site-content';
+import { QUEM_SOMOS, RESERVA, UI } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
@@ -7,10 +7,10 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RevealOnScroll],
   template: `
-    <section class="sobre section section--alt" id="quem-somos" aria-labelledby="sobre-titulo">
+    <section class="sobre section" id="quem-somos" aria-labelledby="sobre-titulo">
       <div class="container sobre__inner">
         <div class="sobre__texto">
-          <p class="overline reveal" appReveal>Quem Somos</p>
+          <p class="overline reveal" appReveal>{{ ui.sobretitulo.quemSomos }}</p>
           <h2 class="section-titulo reveal" id="sobre-titulo" appReveal [revealDelay]="80">
             {{ quemSomos().titulo }}
           </h2>
@@ -31,7 +31,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
               /images/quem-somos.webp     1086w
             "
             sizes="(min-width: 64em) 30vw, calc(100vw - 2.5rem)"
-            alt="Profissional de terno escuro com braços cruzados e olhar confiante"
+            [alt]="ui.fotoQuemSomos"
             width="1086"
             height="1448"
             loading="lazy"
@@ -104,6 +104,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   `,
 })
 export class About {
+  protected readonly ui = UI;
   protected readonly quemSomos = QUEM_SOMOS;
   protected readonly reserva = RESERVA;
 }

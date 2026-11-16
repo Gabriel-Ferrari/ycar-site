@@ -630,6 +630,46 @@ textarea:user-invalid {
   font-weight: 600;
 }
 
+/* Abas de idioma: mesma pílula do seletor de aparelho, sobre o fundo claro do editor */
+.idiomas {
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(122, 92, 30, 0.12);
+}
+
+.idioma {
+  min-block-size: 40px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.idioma[aria-pressed='true'] {
+  background: var(--text);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.idioma-dica {
+  color: var(--text-2);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.campo__original {
+  margin: 0.375rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  overflow-wrap: anywhere;
+}
+
 .previa__aparelhos {
   display: inline-flex;
   padding: 3px;

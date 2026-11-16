@@ -11,7 +11,13 @@
     />
     <meta name="theme-color" content="#050505" />
 
+    <!-- Canonical, og:url, og:locale, título e descrições são trocados por idioma no pré-render (app.ts).
+         Caminhos de assets são absolutos: /en/ e /es/ usam <base href="/en/">. -->
     <link rel="canonical" href="https://ycarexecutive.com.br/" />
+    <link rel="alternate" hreflang="pt-BR" href="https://ycarexecutive.com.br/" />
+    <link rel="alternate" hreflang="en" href="https://ycarexecutive.com.br/en/" />
+    <link rel="alternate" hreflang="es" href="https://ycarexecutive.com.br/es/" />
+    <link rel="alternate" hreflang="x-default" href="https://ycarexecutive.com.br/" />
 
     <!-- Preview ao compartilhar (WhatsApp, Instagram, redes) — URLs absolutas obrigatórias. -->
     <meta property="og:type" content="website" />
@@ -34,15 +40,15 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Logo YCAR EXECUTIVE" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <!-- Ordem importa: a imagem do hero é o LCP e vem antes das fontes.
          As fontes do texto visível no primeiro quadro (Fraunces no h1, Inter 400 no corpo)
          são pré-carregadas para sair do caminho crítico; Inter 500 fica de fora por
          aparecer só em botões e legendas. -->
     <link
       rel="preload"
-      href="images/principal-horizontal.webp"
+      href="/images/principal-horizontal.webp"
       as="image"
       type="image/webp"
       media="(min-width: 48em)"
@@ -50,7 +56,7 @@
     />
     <link
       rel="preload"
-      href="images/principal-vertical.webp"
+      href="/images/principal-vertical.webp"
       as="image"
       type="image/webp"
       media="(max-width: 47.99em)"
@@ -58,14 +64,14 @@
     />
     <link
       rel="preload"
-      href="fonts/fraunces-latin-600-normal.woff2"
+      href="/fonts/fraunces-latin-600-normal.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="fonts/inter-latin-400-normal.woff2"
+      href="/fonts/inter-latin-400-normal.woff2"
       as="font"
       type="font/woff2"
       crossorigin

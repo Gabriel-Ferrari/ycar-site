@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { COMO_TRABALHAMOS_TITULO, PASSOS, RESERVA } from '../content/site-content';
+import { COMO_TRABALHAMOS_TITULO, PASSOS, RESERVA, UI } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 
 @Component({
@@ -7,9 +7,9 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RevealOnScroll],
   template: `
-    <section class="steps section" id="como-trabalhamos" aria-labelledby="steps-titulo">
+    <section class="steps section section--alt" id="como-trabalhamos" aria-labelledby="steps-titulo">
       <div class="container">
-        <p class="overline reveal" appReveal>Como Trabalhamos</p>
+        <p class="overline reveal" appReveal>{{ ui.sobretitulo.comoTrabalhamos }}</p>
         <h2 class="section-titulo reveal" id="steps-titulo" appReveal [revealDelay]="80">
           {{ titulo() }}
         </h2>
@@ -87,6 +87,7 @@ import { RevealOnScroll } from '../directives/reveal-on-scroll';
   `,
 })
 export class Steps {
+  protected readonly ui = UI;
   protected readonly titulo = COMO_TRABALHAMOS_TITULO;
   protected readonly passos = PASSOS;
   protected readonly reserva = RESERVA;

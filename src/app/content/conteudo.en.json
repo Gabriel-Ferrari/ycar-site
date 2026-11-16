@@ -1,0 +1,190 @@
+{
+  "contato": {
+    "whatsapp": "5511965420041",
+    "mensagemWhatsapp": "Hello! I found YCAR EXECUTIVE through the website and would like to make a booking.",
+    "instagram": "ycarexecutive",
+    "email": "contato@ycarexecutive.com.br",
+    "horario": "Every day, by prior booking.",
+    "cidade": "São Paulo | SP",
+    "cnpj": "47.557.688/0001-79"
+  },
+  "reserva": {
+    "plataformaUrl": "",
+    "botao": "Book Now",
+    "titulo": "Book Now",
+    "descricao": "Fill in your trip details and send them via WhatsApp. You will receive the booking confirmation with all the details.",
+    "botaoPlataforma": "Book via WhatsApp"
+  },
+  "menu": {
+    "servicos": "Services",
+    "quemSomos": "About Us",
+    "comoTrabalhamos": "How We Work",
+    "frota": "Our Fleet",
+    "redesSociais": "Social Media"
+  },
+  "inicio": {
+    "overline": "YCAR Executive · São Paulo",
+    "titulo": "Premium Armored and Standard Executive Transportation.",
+    "subtitulo": "Professional chauffeurs, high-end vehicles and personalized service for an exclusive experience."
+  },
+  "servicos": {
+    "titulo": "Find the Right Service for Your Trip",
+    "descricao": "Sedans, SUVs, Armored Vehicles, Minivans, Vans, Minibuses and Coaches.",
+    "itens": [
+      {
+        "titulo": "Executive Transfer",
+        "descricao": "Airports, hotels, companies, weddings, events, and business or private trips.",
+        "icone": "briefcase",
+        "imagem": "/images/servicos/transfer-executivo.webp",
+        "recorte": "14%"
+      },
+      {
+        "titulo": "Airport Meet & Greet",
+        "descricao": "Personalized reception at São Paulo airports, with comfort and punctuality.",
+        "icone": "plane",
+        "imagem": "/images/servicos/receptivo-aeroporto.webp",
+        "recorte": "6%"
+      },
+      {
+        "titulo": "Intercity Travel",
+        "descricao": "Executive transportation to the countryside, the coast and other states.",
+        "icone": "road",
+        "imagem": "/images/servicos/viagens.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Chauffeur at Your Disposal",
+        "descricao": "An executive chauffeur at your disposal for multiple appointments throughout the day.",
+        "icone": "clock",
+        "imagem": "/images/servicos/operacao-disposicao.webp",
+        "recorte": "4%"
+      },
+      {
+        "titulo": "City Tour",
+        "descricao": "Sightseeing tours in São Paulo and many other destinations, with comfort and safety.",
+        "icone": "pin",
+        "imagem": "/images/servicos/city-tour.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Bilingual Chauffeurs",
+        "descricao": "Service in your language for a more comfortable and relaxed experience.",
+        "icone": "globe",
+        "imagem": "/images/servicos/motoristas-bilingues.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Armored Vehicles",
+        "descricao": "Armored vehicles for trips with maximum security and discretion.",
+        "icone": "shield",
+        "imagem": "/images/servicos/veiculo-blindado.webp",
+        "recorte": ""
+      },
+      {
+        "titulo": "Armed Security",
+        "descricao": "Specialized escort by trained and qualified professionals.",
+        "icone": "shield",
+        "imagem": "/images/servicos/seguranca-armada.webp",
+        "recorte": "4%"
+      },
+      {
+        "titulo": "Personalized Experience",
+        "descricao": "Executive transportation tailored to your needs and preferences.",
+        "icone": "star",
+        "imagem": "/images/servicos/experiencia-personalizada.webp",
+        "recorte": "18%"
+      }
+    ]
+  },
+  "quemSomos": {
+    "titulo": "A Benchmark in Executive Transportation in São Paulo",
+    "paragrafos": [
+      "Since 2020, YCAR EXECUTIVE has specialized in executive transportation in São Paulo, serving clients who value comfort, safety and discretion.",
+      "With experienced chauffeurs and high-end vehicles, we offer personalized service, punctuality and attention to detail on every ride."
+    ],
+    "tagline": "Your destination, our priority.",
+    "chamada": "Book now and travel with experts in executive transportation."
+  },
+  "comoTrabalhamos": {
+    "titulo": "From Booking to Destination",
+    "passos": [
+      {
+        "titulo": "Booking Your Service",
+        "descricao": "Schedule your service and receive a confirmation with the chauffeur and vehicle details."
+      },
+      {
+        "titulo": "Stress-Free Pickup",
+        "descricao": "Your chauffeur will be at the agreed place and time, ready to greet you and help with your luggage."
+      },
+      {
+        "titulo": "Premium Experience",
+        "descricao": "Modern vehicles with Wi-Fi, still and sparkling water, onboard amenities and personalized service."
+      },
+      {
+        "titulo": "Easy Payment",
+        "descricao": "Pay via PIX, debit or credit card, or payment link."
+      }
+    ]
+  },
+  "frota": {
+    "titulo": "Our Fleet",
+    "descricao": "A modern, diverse fleet, with vehicles selected for different needs and occasions.",
+    "itens": [
+      {
+        "nome": "Armored",
+        "lugares": "Executive security",
+        "descricao": "Enhanced security and added protection, with comfort and discretion.",
+        "icone": "shield",
+        "imagem": "/images/frota/blindado.webp"
+      },
+      {
+        "nome": "Sedan",
+        "lugares": "3 to 4 seats",
+        "descricao": "Ideal for solo travelers, couples and business trips.",
+        "icone": "car",
+        "imagem": "/images/frota/sedan.webp"
+      },
+      {
+        "nome": "SUV",
+        "lugares": "4 to 6 seats",
+        "descricao": "More space and versatility for families, small groups and trips.",
+        "icone": "car",
+        "imagem": "/images/frota/suv.webp"
+      },
+      {
+        "nome": "Minivan",
+        "lugares": "7 seats",
+        "descricao": "Ideal for small groups, with plenty of room for passengers and luggage.",
+        "icone": "van",
+        "imagem": "/images/frota/minivan.webp"
+      },
+      {
+        "nome": "Van",
+        "lugares": "10 to 18 seats",
+        "descricao": "Ideal for groups, events, tourism and corporate transfers.",
+        "icone": "van",
+        "imagem": "/images/frota/van.webp"
+      },
+      {
+        "nome": "Minibus",
+        "lugares": "20 to 30 seats",
+        "descricao": "Plenty of space for larger groups, events, transfers, tours and trips.",
+        "icone": "bus",
+        "imagem": "/images/frota/micro-onibus.webp"
+      },
+      {
+        "nome": "Coach",
+        "lugares": "40+ seats",
+        "descricao": "Ideal for large groups, excursions, events and long-distance travel.",
+        "icone": "bus",
+        "imagem": "/images/frota/onibus.webp"
+      }
+    ]
+  },
+  "seo": {
+    "titulo": "Executive Transportation in São Paulo | YCAR EXECUTIVE",
+    "descricao": "Premium executive transportation in São Paulo: airport meet & greet, transfers, trips, city tours, bilingual chauffeurs and a fleet from sedans to coaches, including armored vehicles. Book via WhatsApp.",
+    "ogTitulo": "YCAR EXECUTIVE — Executive Transportation in São Paulo",
+    "ogDescricao": "Executive transportation with excellence, comfort and punctuality. Transfers, airports, trips and a fleet from sedans to coaches, including armored vehicles. Book via WhatsApp."
+  }
+}

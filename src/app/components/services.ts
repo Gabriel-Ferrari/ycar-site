@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import {
+  UI,
   RESERVA,
   SERVICOS,
   SERVICOS_INTRO,
@@ -14,9 +15,9 @@ import { Icon, IconName } from './icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon, RevealOnScroll],
   template: `
-    <section class="section" id="servicos" aria-labelledby="servicos-titulo">
+    <section class="section section--alt" id="servicos" aria-labelledby="servicos-titulo">
       <div class="container">
-        <p class="overline reveal" appReveal>Serviços</p>
+        <p class="overline reveal" appReveal>{{ ui.sobretitulo.servicos }}</p>
         <h2 class="section-titulo reveal" id="servicos-titulo" appReveal [revealDelay]="80">
           {{ intro().titulo }}
         </h2>
@@ -26,7 +27,7 @@ import { Icon, IconName } from './icon';
 
         <div class="cards">
           @for (servico of servicos(); track $index) {
-            <article class="card reveal" appReveal [revealDelay]="($index % 3) * 90">
+            <article class="card tema-escuro reveal" appReveal [revealDelay]="($index % 3) * 90">
               <img
                 class="card__foto"
                 [src]="servico.imagem"
@@ -84,6 +85,7 @@ import { Icon, IconName } from './icon';
       flex-direction: column;
       justify-content: flex-start;
       overflow: hidden;
+      background: var(--color-bg);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-md);
       transition: transform var(--duration-fast) var(--ease-out);
@@ -225,6 +227,7 @@ export class Services {
   protected readonly servicos = computed(() =>
     SERVICOS().map((servico) => ({ ...servico, srcset: srcsetCard(servico.imagem) })),
   );
+  protected readonly ui = UI;
   protected readonly intro = SERVICOS_INTRO;
   protected readonly sizes = SIZES_CARD;
   protected readonly reserva = RESERVA;

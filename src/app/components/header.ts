@@ -2,23 +2,26 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   DOCUMENT,
   ElementRef,
+  afterNextRender,
   inject,
   signal,
   viewChild,
 } from '@angular/core';
-import { CONTATO, MENSAGEM_PADRAO, MENU, RESERVA, linkWhatsApp } from '../content/site-content';
+import { CONTATO, MENSAGEM_PADRAO, MENU, RESERVA, UI, linkWhatsApp } from '../content/site-content';
 import { Icon } from './icon';
+import { SeletorIdioma } from './seletor-idioma';
 
 @Component({
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Icon],
+  imports: [Icon, SeletorIdioma],
   template: `
     <header class="header">
       <div class="container header__inner">
-        <a class="header__brand" href="#inicio" aria-label="YCar Executive — voltar ao início">
+        <a class="header__brand" href="#inicio" [attr.aria-label]="ui.voltarInicio">
           <img
             src="/images/logo-ycar-header.webp"
             alt="YCar Executive"
@@ -27,29 +30,32 @@ import { Icon } from './icon';
             fetchpriority="high"
           />
         </a>
-        <nav class="header__nav" aria-label="Seções do site">
+        <nav class="header__nav" [attr.aria-label]="ui.secoes">
           @for (item of menu(); track $index) {
             @if (item.externo) {
               <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
             } @else {
-              <a [href]="item.destino">{{ item.rotulo }}</a>
+              <a [href]="item.destino" [attr.aria-current]="ativa() === item.destino ? 'true' : null">
+                {{ item.rotulo }}
+              </a>
             }
           }
         </nav>
+        <app-seletor-idioma class="header__idiomas" />
         <a class="btn btn--primary header__cta" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
           <span class="header__cta-longo">{{ reserva().cta.rotulo }}</span>
-          <span class="header__cta-curto">Reservar</span>
+          <span class="header__cta-curto">{{ ui.reservarCurto }}</span>
         </a>
         <button
           type="button"
           class="header__menu-btn"
           aria-haspopup="dialog"
           aria-controls="menu-mobile"
+          [attr.aria-label]="ui.abrirMenu"
           [attr.aria-expanded]="aberto()"
           (click)="abrir()"
         >
-          <app-icon name="menu" [size]="22" />
-          <span>Menu</span>
+          <span class="burger" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
     </header>
@@ -58,52 +64,58 @@ import { Icon } from './icon';
       #menuDialogo
       id="menu-mobile"
       class="menu"
-      aria-label="Menu principal"
+      [attr.aria-label]="ui.menuPrincipal"
       (close)="aoFechar()"
     >
-      <div class="container menu__topo">
+      <!-- Mesma barra do cabeçalho: a folha desce a partir dela e só o ícone muda -->
+      <div class="container header__inner menu__topo">
         <a
           class="header__brand"
           href="#inicio"
-          aria-label="YCar Executive — voltar ao início"
+          [attr.aria-label]="ui.voltarInicio"
           (click)="irPara($event, '#inicio')"
         >
           <img src="/images/logo-ycar-header.webp" alt="YCar Executive" width="91" height="64" />
         </a>
-        <button type="button" class="header__menu-btn" autofocus (click)="fechar()">
-          <app-icon name="close" [size]="22" />
-          <span>Fechar</span>
+        <button
+          type="button"
+          class="header__menu-btn"
+          autofocus
+          aria-expanded="true"
+          [attr.aria-label]="ui.fecharMenu"
+          (click)="fechar()"
+        >
+          <span class="burger burger--x" aria-hidden="true"><span></span><span></span></span>
         </button>
       </div>
 
       <div class="container menu__corpo">
-        <nav aria-label="Seções do site">
-          <ol class="menu__lista">
+        <nav [attr.aria-label]="ui.secoes">
+          <ul class="menu__lista">
             @for (item of secoes(); track $index) {
-              <li [style.--i]="$index">
-                <a [href]="item.destino" (click)="irPara($event, item.destino)">
-                  <span class="menu__num" aria-hidden="true">0{{ $index + 1 }}</span>
-                  {{ item.rotulo }}
-                </a>
+              <li class="menu__entra" [style.--i]="$index">
+                <a [href]="item.destino" (click)="irPara($event, item.destino)">{{ item.rotulo }}</a>
               </li>
             }
-          </ol>
+          </ul>
         </nav>
 
-        <div class="menu__rodape">
-          <a class="btn btn--primary btn--lg menu__cta" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
-            {{ reserva().cta.rotulo }}
-          </a>
-          <div class="menu__contatos">
+        <div class="menu__rodape menu__entra" [style.--i]="secoes().length">
+          <div class="menu__grupo">
+            <span class="menu__rotulo">{{ ui.contato }}</span>
             <a [href]="waHref()" target="_blank" rel="noopener">
-              <app-icon name="whatsapp" [size]="20" />
+              <app-icon name="whatsapp" [size]="18" />
               {{ contato().whatsappExibicao }}
             </a>
             <a [href]="contato().instagramUrl" target="_blank" rel="noopener">
-              <app-icon name="instagram" [size]="20" />
+              <app-icon name="instagram" [size]="18" />
               {{ contato().instagramUsuario }}
             </a>
+            <app-seletor-idioma />
           </div>
+          <a class="btn btn--primary btn--lg menu__cta" [href]="reserva().plataformaUrl" target="_blank" rel="noopener">
+            {{ reserva().cta.rotulo }}
+          </a>
         </div>
       </div>
     </dialog>
@@ -141,7 +153,7 @@ import { Icon } from './icon';
 
     .header__nav {
       display: flex;
-      gap: var(--space-2);
+      gap: var(--space-3);
       margin-inline-start: auto;
     }
 
@@ -153,12 +165,18 @@ import { Icon } from './icon';
       display: inline-flex;
       align-items: center;
       min-height: 44px;
-      padding-inline: 0.25rem;
       transition: color var(--duration-fast) var(--ease-out);
     }
 
-    .header__nav a:hover {
+    .header__nav a:hover,
+    .header__nav a[aria-current] {
       color: var(--color-text);
+    }
+
+    .header__nav a[aria-current] {
+      text-decoration: underline;
+      text-decoration-color: var(--color-accent);
+      text-underline-offset: 0.5em;
     }
 
     .header__cta {
@@ -175,39 +193,81 @@ import { Icon } from './icon';
     .header__menu-btn {
       display: none;
       align-items: center;
-      gap: 0.375rem;
-      min-height: 44px;
-      padding: 0.5rem 0.75rem;
-      font: inherit;
-      font-size: var(--text-small);
-      font-weight: 500;
-      color: var(--color-text);
+      justify-content: center;
+      inline-size: 44px;
+      block-size: 44px;
+      padding: 0;
       background: transparent;
-      border: 1px solid rgba(247, 226, 185, 0.35);
+      border: 0;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: border-color var(--duration-fast) var(--ease-out);
     }
 
-    .header__menu-btn:hover {
-      border-color: var(--color-accent);
+    /* Duas linhas que se juntam no centro e giram até virar ✕ (e o contrário ao fechar) */
+    .burger {
+      position: relative;
+      inline-size: 20px;
+      block-size: 12px;
     }
 
-    .header__menu-btn app-icon {
-      color: var(--color-accent);
+    .burger span {
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: calc(50% - 0.75px);
+      block-size: 1.5px;
+      border-radius: 1px;
+      background: var(--color-text);
+      transition:
+        translate 160ms var(--ease-out) 160ms,
+        rotate 160ms var(--ease-out);
     }
 
-    /* Abaixo de 64em os links não cabem em linha: viram botão Menu com painel em tela cheia */
+    .burger span:first-child {
+      translate: 0 -4px;
+    }
+
+    .burger span:last-child {
+      translate: 0 4px;
+    }
+
+    .menu[open] .burger--x span {
+      translate: 0 0;
+      transition:
+        translate 160ms var(--ease-out),
+        rotate 160ms var(--ease-out) 160ms;
+    }
+
+    .menu[open] .burger--x span:first-child {
+      rotate: 45deg;
+    }
+
+    .menu[open] .burger--x span:last-child {
+      rotate: -45deg;
+    }
+
+    @starting-style {
+      .menu[open] .burger--x span:first-child {
+        translate: 0 -4px;
+        rotate: 0deg;
+      }
+
+      .menu[open] .burger--x span:last-child {
+        translate: 0 4px;
+        rotate: 0deg;
+      }
+    }
+
+    /* Abaixo de 64em os links não cabem em linha: viram ícone de menu com folha em tela cheia */
     @media (max-width: 63.99em) {
       .header__inner {
-        gap: var(--space-2);
+        gap: var(--space-1);
       }
 
       .header__nav {
         display: none;
       }
 
-      .header__cta {
+      .header__idiomas {
         margin-inline-start: auto;
       }
 
@@ -222,7 +282,7 @@ import { Icon } from './icon';
       }
 
       .header__cta {
-        padding-inline: 1rem;
+        padding-inline: 0.875rem;
       }
 
       .header__cta-longo {
@@ -234,6 +294,9 @@ import { Icon } from './icon';
       }
     }
 
+    /* Folha: nasce da barra do topo (a faixa de 4.5rem já aparece) e desce até cobrir a tela.
+       Ao fechar, os itens somem primeiro e a folha recolhe; display/overlay seguram o
+       <dialog> na tela até o fim. Navegador sem @starting-style abre e fecha sem animar. */
     .menu {
       position: fixed;
       inset: 0;
@@ -245,26 +308,39 @@ import { Icon } from './icon';
       padding: 0;
       border: 0;
       color: var(--color-text);
-      background: var(--color-bg);
+      background: rgba(5, 5, 5, 0.94);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      clip-path: inset(0 0 calc(100% - 4.5rem) 0);
+      transition:
+        clip-path 300ms var(--ease-apple) 120ms,
+        display 420ms allow-discrete,
+        overlay 420ms allow-discrete;
     }
 
     .menu[open] {
       display: flex;
       flex-direction: column;
-      animation: menu-entrada 200ms var(--ease-out);
+      clip-path: inset(0);
+      transition: clip-path 380ms var(--ease-apple);
+    }
+
+    @starting-style {
+      .menu[open] {
+        clip-path: inset(0 0 calc(100% - 4.5rem) 0);
+      }
     }
 
     .menu::backdrop {
-      background: var(--color-bg);
+      background: transparent;
     }
 
     .menu__topo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 4.5rem;
-      padding-block: 0.5rem;
       border-block-end: 1px solid var(--color-border);
+    }
+
+    .menu__topo .header__brand {
+      margin-inline-end: auto;
     }
 
     .menu__topo .header__menu-btn {
@@ -277,29 +353,23 @@ import { Icon } from './icon';
       flex-direction: column;
       justify-content: space-between;
       gap: var(--space-6);
+      padding-block-start: var(--space-4);
       overflow-y: auto;
     }
 
     .menu__lista {
       list-style: none;
-      margin: var(--space-3) 0 0;
+      margin: 0;
       padding: 0;
-    }
-
-    .menu__lista li {
-      border-block-end: 1px solid var(--color-border);
-      animation: menu-item 240ms var(--ease-out) both;
-      animation-delay: calc(var(--i) * 30ms + 40ms);
+      display: grid;
+      gap: var(--space-1);
     }
 
     .menu__lista a {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-2);
-      min-height: 3rem;
-      padding-block: 0.75rem;
+      display: block;
+      padding-block: 0.375rem;
       font-family: var(--font-display);
-      font-size: clamp(1.375rem, 5.5vw, 1.75rem);
+      font-size: clamp(1.75rem, 7vw, 2.25rem);
       line-height: 1.15;
       color: var(--color-text);
       text-decoration: none;
@@ -311,62 +381,81 @@ import { Icon } from './icon';
       color: var(--color-accent);
     }
 
-    .menu__num {
-      min-inline-size: 1.75rem;
-      font-family: var(--font-body);
-      font-size: var(--text-overline);
-      letter-spacing: 0.14em;
-      color: var(--color-accent);
+    /* Cascata de cima para baixo depois que a folha abre; saída rápida antes de ela recolher */
+    .menu__entra {
+      opacity: 0;
+      translate: 0 -8px;
+      transition:
+        opacity 120ms var(--ease-out),
+        translate 120ms var(--ease-out);
+    }
+
+    .menu[open] .menu__entra {
+      opacity: 1;
+      translate: 0 0;
+      transition:
+        opacity 320ms var(--ease-out) calc(150ms + var(--i) * 45ms),
+        translate 320ms var(--ease-out) calc(150ms + var(--i) * 45ms);
+    }
+
+    @starting-style {
+      .menu[open] .menu__entra {
+        opacity: 0;
+        translate: 0 -8px;
+      }
     }
 
     .menu__rodape {
       display: grid;
-      gap: var(--space-2);
-      padding-block: 0 max(var(--space-4), env(safe-area-inset-bottom));
+      gap: var(--space-3);
+      padding-block-end: max(var(--space-4), env(safe-area-inset-bottom));
+    }
+
+    .menu__grupo {
+      display: grid;
+      justify-items: start;
+    }
+
+    .menu__rotulo {
+      font-size: var(--text-overline);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-2);
+      margin-block-end: var(--space-1);
+    }
+
+    .menu__grupo > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      font-size: var(--text-small);
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .menu__grupo app-icon {
+      color: var(--color-accent);
+    }
+
+    /* Cada sigla é centrada num alvo de 2rem: recua para alinhar com os links acima */
+    .menu__grupo app-seletor-idioma {
+      margin-inline-start: -0.5rem;
     }
 
     .menu__cta {
       inline-size: 100%;
     }
 
-    .menu__contatos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0 var(--space-4);
-    }
-
-    .menu__contatos a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      min-height: 44px;
-      font-size: var(--text-small);
-      color: var(--color-text-2);
-      text-decoration: none;
-    }
-
-    .menu__contatos app-icon {
-      color: var(--color-accent);
-    }
-
-    @keyframes menu-entrada {
-      from {
-        opacity: 0;
-      }
-    }
-
-    @keyframes menu-item {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
+      .menu,
       .menu[open],
-      .menu__lista li {
-        animation: none;
+      .menu__entra,
+      .menu[open] .menu__entra,
+      .burger span {
+        transition-duration: 1ms;
+        transition-delay: 0ms;
+        translate: none;
       }
     }
   `,
@@ -376,12 +465,39 @@ export class Header {
   private readonly dialogo = viewChild.required<ElementRef<HTMLDialogElement>>('menuDialogo');
   private destinoPendente: string | null = null;
 
+  protected readonly ui = UI.cabecalho;
   protected readonly menu = MENU;
   protected readonly secoes = computed(() => MENU().filter((item) => !item.externo));
   protected readonly contato = CONTATO;
   protected readonly reserva = RESERVA;
   protected readonly waHref = computed(() => linkWhatsApp(MENSAGEM_PADRAO()));
   protected readonly aberto = signal(false);
+  /** Âncora da seção que cruza o meio da tela, marcada no menu do computador */
+  protected readonly ativa = signal<string | null>(null);
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      const visiveis = new Set<string>();
+      const io = new IntersectionObserver(
+        (entradas) => {
+          for (const e of entradas) {
+            const destino = `#${e.target.id}`;
+            if (e.isIntersecting) visiveis.add(destino);
+            else visiveis.delete(destino);
+          }
+          // Faixa fina no meio da tela: no máximo uma seção por vez
+          this.ativa.set(this.secoes().find((s) => visiveis.has(s.destino))?.destino ?? null);
+        },
+        { rootMargin: '-50% 0px -50% 0px' },
+      );
+      for (const { destino } of this.secoes()) {
+        const secao = this.documento.querySelector(destino);
+        if (secao) io.observe(secao);
+      }
+      destroyRef.onDestroy(() => io.disconnect());
+    });
+  }
 
   protected abrir(): void {
     this.dialogo().nativeElement.showModal();

@@ -2,6 +2,9 @@
 // publica tudo de uma vez (texto + fotos novas). O Worker transforma isso num commit
 // e o Cloudflare refaz o site. Todo texto entra no DOM via textContent/value, nunca HTML.
 //
+// Idiomas: o português é o modelo (fotos, ícones, ordem dos itens, contatos) e o que muda
+// nele é copiado para English e Español; nessas abas só aparecem os textos a traduzir.
+//
 // Prévia: o próprio site roda num iframe (/?previa=1, mesma origem) e recebe o conteúdo
 // em edição por window.ycarPrevia (ver src/main.ts). Clicar na prévia abre o campo certo;
 // focar um campo destaca o trecho na prévia.
@@ -130,7 +133,6 @@ const SECOES = [
     icone: 'menu',
     previa: { alvo: '.header', clique: '.header, .footer__nav' },
     campos: [
-      { campo: 'menu.inicio', rotulo: 'Link para o início' },
       { campo: 'menu.servicos', rotulo: 'Link para Serviços' },
       { campo: 'menu.quemSomos', rotulo: 'Link para Quem Somos' },
       { campo: 'menu.comoTrabalhamos', rotulo: 'Link para Como Trabalhamos' },
@@ -255,8 +257,22 @@ const SECOES = [
   },
 ];
 
+const IDIOMAS = { pt: 'Português', en: 'English', es: 'Español' };
+/** Iguais nos três idiomas (mesma lista do Worker): só aparecem, e só mudam, no português */
+const COMPARTILHADOS = new Set(['whatsapp', 'instagram', 'email', 'cnpj', 'plataformaUrl', 'icone', 'imagem', 'recorte']);
+const DICAS = {
+  pt: 'Fotos, ícones, ordem dos itens e contatos são editados aqui e valem para os três idiomas.',
+  traducao: 'Aqui você só traduz os textos. Embaixo de cada campo aparece o original em português.',
+};
+
 const estado = {
-  conteudo: null,
+  /** { pt, en, es } */
+  conteudos: null,
+  idioma: 'pt',
+  /** Conteúdo do idioma aberto no formulário e na prévia */
+  get conteudo() {
+    return this.conteudos?.[this.idioma] ?? null;
+  },
   versao: null,
   /** JSON do que está publicado, para saber se há alteração pendente */
   publicado: '',
@@ -283,9 +299,10 @@ async function iniciar() {
   const resposta = await api('GET', '/api/conteudo');
   if (resposta.status === 401) return mostrar('tela-login');
   if (resposta.erro) return erroGeral(resposta.erro);
-  estado.conteudo = resposta.conteudo;
+  estado.conteudos = resposta.conteudos;
   estado.versao = resposta.versao;
-  estado.publicado = JSON.stringify(resposta.conteudo);
+  estado.publicado = JSON.stringify(resposta.conteudos);
+  $('idioma-dica').textContent = DICAS.pt;
   desenharEditor();
   mostrar('editor-app');
   iniciarPrevia();
@@ -330,6 +347,39 @@ window.addEventListener('beforeunload', (evento) => {
   if (alterado()) evento.preventDefault();
 });
 
+// ---------- Idioma ----------
+
+const traduzindo = () => estado.idioma !== 'pt';
+
+for (const opcao of document.querySelectorAll('[data-idioma]')) {
+  opcao.addEventListener('click', () => trocarIdioma(opcao.dataset.idioma));
+}
+
+function trocarIdioma(idioma) {
+  if (idioma === estado.idioma) return;
+  estado.idioma = idioma;
+  for (const opcao of document.querySelectorAll('[data-idioma]')) {
+    opcao.setAttribute('aria-pressed', String(opcao.dataset.idioma === idioma));
+  }
+  $('idioma-dica').textContent = traduzindo() ? DICAS.traducao : DICAS.pt;
+  desenharEditor();
+  carregarPrevia();
+}
+
+/** Fotos, ícones e contatos editados no português valem para as traduções. */
+function espelharCompartilhados(origem, destino) {
+  for (const [chave, valor] of Object.entries(origem)) {
+    if (typeof valor === 'object' && valor !== null) espelharCompartilhados(valor, destino[chave]);
+    else if (COMPARTILHADOS.has(chave)) destino[chave] = valor;
+  }
+}
+
+/** Texto obrigatório vazio em algum ponto (item novo ainda sem tradução, por exemplo). */
+function temTextoVazio(valor, chave) {
+  if (typeof valor === 'string') return !COMPARTILHADOS.has(chave) && !valor.trim();
+  return Object.entries(valor).some(([k, v]) => temTextoVazio(v, k));
+}
+
 // ---------- Formulário ----------
 
 function desenharEditor() {
@@ -347,8 +397,10 @@ function desenharEditor() {
 
     const corpo = el('div', 'secao__corpo');
     for (const def of secao.campos) {
+      if (traduzindo() && COMPARTILHADOS.has(def.campo.split('.').pop())) continue;
       const [pai, chave] = separar(def.campo);
-      corpo.append(def.tipo === 'lista' ? criarLista(def, pai[chave]) : criarCampo(def, pai, chave));
+      const original = traduzindo() ? obter(estado.conteudos.pt, def.campo) : undefined;
+      corpo.append(def.tipo === 'lista' ? criarLista(def, pai[chave]) : criarCampo(def, pai, chave, original));
     }
     bloco.append(corpo);
     // "toggle" chega depois do foco: se um campo já foi focado (clique na prévia), ele manda
@@ -367,7 +419,13 @@ function separar(caminho) {
   return [chaves.reduce((objeto, k) => objeto[k], estado.conteudo), chave];
 }
 
-function criarCampo(def, alvo, chave) {
+/** obter(conteudo, 'frota.itens') → conteudo.frota.itens */
+function obter(objeto, caminho) {
+  return caminho.split('.').reduce((o, k) => o[k], objeto);
+}
+
+/** `original`: o texto em português, mostrado embaixo do campo nas abas de tradução. */
+function criarCampo(def, alvo, chave, original) {
   if (def.tipo === 'foto') return criarCampoFoto(def, alvo, chave);
   if (def.tipo === 'icone') return criarCampoIcone(def, alvo, chave);
 
@@ -397,13 +455,21 @@ function criarCampo(def, alvo, chave) {
   // Valida já o valor inicial (ex.: link antigo sem https)
   normalizar(def.tipo, entrada);
 
+  const descricoes = [];
   if (def.ajuda) {
     const ajuda = el('p', 'campo__ajuda', def.ajuda);
     ajuda.id = `${id}-ajuda`;
-    entrada.setAttribute('aria-describedby', ajuda.id);
+    descricoes.push(ajuda.id);
     bloco.append(ajuda);
   }
   bloco.append(entrada);
+  if (original !== undefined) {
+    const referencia = el('p', 'campo__original', `Em português: ${original}`);
+    referencia.id = `${id}-original`;
+    descricoes.push(referencia.id);
+    bloco.append(referencia);
+  }
+  if (descricoes.length) entrada.setAttribute('aria-describedby', descricoes.join(' '));
   return bloco;
 }
 
@@ -471,26 +537,35 @@ function criarCampoIcone(def, alvo, chave) {
 
 function criarLista(def, lista) {
   const bloco = el('div', 'lista');
+  const pt = obter(estado.conteudos.pt, def.campo);
+  // Adicionar, remover e mover valem para os três idiomas: as listas andam juntas
+  const todas = () => Object.values(estado.conteudos).map((conteudo) => obter(conteudo, def.campo));
 
   const desenhar = (foco) => {
     const itens = lista.map((item, i) => {
       const cartao = el('fieldset', 'item');
       cartao.dataset.item = i;
-      cartao.append(el('legend', 'item__titulo', `${maiuscula(def.rotuloItem)} ${i + 1}`));
+      const nomePt = traduzindo() ? (pt[i].titulo ?? pt[i].nome) : undefined;
+      cartao.append(el('legend', 'item__titulo', `${maiuscula(def.rotuloItem)} ${i + 1}${nomePt ? ` — ${nomePt}` : ''}`));
 
       if (def.campos) {
-        for (const sub of def.campos) cartao.append(criarCampo(sub, item, sub.campo));
+        for (const sub of def.campos) {
+          if (traduzindo() && COMPARTILHADOS.has(sub.campo)) continue;
+          cartao.append(criarCampo(sub, item, sub.campo, traduzindo() ? pt[i][sub.campo] : undefined));
+        }
       } else {
-        cartao.append(criarCampo({ rotulo: 'Texto', tipo: 'texto-longo' }, lista, i));
+        cartao.append(criarCampo({ rotulo: 'Texto', tipo: 'texto-longo' }, lista, i, traduzindo() ? pt[i] : undefined));
       }
 
+      // Ordem e quantidade de itens só mudam no português
+      if (traduzindo()) return cartao;
       const acoes = el('div', 'item__acoes');
       acoes.append(
         botao('↑ Subir', 'subir', i === 0, () => mover(i, i - 1)),
         botao('↓ Descer', 'descer', i === lista.length - 1, () => mover(i, i + 1)),
         botao(`Remover ${def.rotuloItem}`, 'remover', lista.length === 1, () => {
-          if (!confirm(`Remover ${def.rotuloItem} ${i + 1} do site?`)) return;
-          lista.splice(i, 1);
+          if (!confirm(`Remover ${def.rotuloItem} ${i + 1} do site, nos três idiomas?`)) return;
+          for (const l of todas()) l.splice(i, 1);
           desenhar({ indice: Math.max(0, i - 1), acao: 'adicionar' });
           atualizarStatus();
         }),
@@ -501,11 +576,11 @@ function criarLista(def, lista) {
     });
 
     const adicionar = botao(`+ Adicionar ${def.rotuloItem}`, 'adicionar', lista.length >= 30, () => {
-      lista.push(novoItem(lista[0]));
+      for (const l of todas()) l.push(novoItem(l[0]));
       desenhar({ indice: lista.length - 1, acao: 'primeiro-campo' });
       atualizarStatus();
     });
-    bloco.replaceChildren(...itens, adicionar);
+    bloco.replaceChildren(...itens, ...(traduzindo() ? [] : [adicionar]));
 
     // Depois de redesenhar, o foco volta para onde a pessoa estava
     if (!foco) return;
@@ -521,7 +596,7 @@ function criarLista(def, lista) {
   };
 
   const mover = (de, para) => {
-    lista.splice(para, 0, lista.splice(de, 1)[0]);
+    for (const l of todas()) l.splice(para, 0, l.splice(de, 1)[0]);
     desenhar({ indice: para, acao: para < de ? 'subir' : 'descer' });
     atualizarStatus();
   };
@@ -635,7 +710,7 @@ const frame = $('previa-frame');
 let esperaPrevia;
 
 function iniciarPrevia() {
-  frame.src = '/?previa=1';
+  carregarPrevia();
   new ResizeObserver(ajustarPalco).observe($('palco'));
   for (const opcao of document.querySelectorAll('[data-aparelho]')) {
     opcao.addEventListener('click', () => {
@@ -652,6 +727,12 @@ function iniciarPrevia() {
     $('fechar-previa').focus();
   });
   $('fechar-previa').addEventListener('click', () => fecharPreviaMovel($('abrir-previa')));
+}
+
+/** Cada idioma é um build próprio do site: a prévia abre o do idioma em edição. */
+function carregarPrevia() {
+  estado.previaPronta = false;
+  frame.src = `${traduzindo() ? `/${estado.idioma}/` : '/'}?previa=1`;
 }
 
 window.addEventListener('message', (evento) => {
@@ -822,8 +903,9 @@ $('editor').addEventListener('submit', async (evento) => {
   atualizarStatus('Publicando…');
 
   // Só vão as fotos que o conteúdo ainda usa (a pessoa pode ter trocado de novo ou removido o item)
+  const pt = estado.conteudos.pt;
   const usadas = new Set(
-    [...estado.conteudo.servicos.itens, ...estado.conteudo.frota.itens].map((item) =>
+    [...pt.servicos.itens, ...pt.frota.itens].map((item) =>
       item.imagem.replace(/\.\w+$/, ''),
     ),
   );
@@ -832,7 +914,7 @@ $('editor').addEventListener('submit', async (evento) => {
   );
 
   const resposta = await api('PUT', '/api/conteudo', {
-    conteudo: estado.conteudo,
+    conteudos: estado.conteudos,
     versao: estado.versao,
     fotos,
   });
@@ -846,32 +928,47 @@ $('editor').addEventListener('submit', async (evento) => {
   if (!resposta.ok) return atualizarStatus(resposta.erro, 'erro');
 
   estado.versao = resposta.versao;
-  estado.publicado = JSON.stringify(estado.conteudo);
+  estado.publicado = JSON.stringify(estado.conteudos);
   // estado.previas fica: até o build terminar, as fotos novas ainda não existem no servidor
   estado.fotos.clear();
   for (const aviso of document.querySelectorAll('.campo--foto [aria-live]')) aviso.textContent = '';
   atualizarStatus('Publicado! Em cerca de 2 minutos as mudanças aparecem no site.', 'ok');
 });
 
-/** Abre a seção do primeiro campo com problema e mostra o aviso do navegador nele. */
+/**
+ * Abre a seção do primeiro campo com problema e mostra o aviso do navegador nele.
+ * Só o idioma aberto está no formulário: texto vazio em outro idioma abre aquela aba primeiro.
+ */
 function validarTudo() {
-  const invalido = [...$('editor').elements].find((campo) => campo.willValidate && !campo.checkValidity());
-  if (!invalido) return true;
+  let invalido = [...$('editor').elements].find((campo) => campo.willValidate && !campo.checkValidity());
+  if (!invalido) {
+    const idioma = Object.keys(IDIOMAS).find((i) => i !== estado.idioma && temTextoVazio(estado.conteudos[i]));
+    if (!idioma) return true;
+    trocarIdioma(idioma);
+    invalido = [...$('editor').elements].find((campo) => campo.willValidate && !campo.checkValidity());
+    if (!invalido) return true;
+  }
   fecharPreviaMovel();
   invalido.closest('details').open = true;
   invalido.reportValidity();
   atualizarStatus(
-    invalido.type === 'file' ? 'Falta escolher uma foto.' : 'Tem um campo para corrigir antes de publicar.',
+    invalido.type === 'file'
+      ? 'Falta escolher uma foto.'
+      : traduzindo()
+        ? `Falta traduzir um campo para ${IDIOMAS[estado.idioma]}.`
+        : 'Tem um campo para corrigir antes de publicar.',
     'erro',
   );
   return false;
 }
 
 function alterado() {
-  return estado.conteudo !== null && JSON.stringify(estado.conteudo) !== estado.publicado;
+  return estado.conteudos !== null && JSON.stringify(estado.conteudos) !== estado.publicado;
 }
 
 function atualizarStatus(mensagem, tom) {
+  // Toda mudança passa por aqui: é o ponto de copiar fotos/ícones/contatos para as traduções
+  if (estado.conteudos) for (const idioma of ['en', 'es']) espelharCompartilhados(estado.conteudos.pt, estado.conteudos[idioma]);
   const sujo = alterado();
   const status = $('status');
   status.textContent =

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { FROTA, FROTA_INTRO, SIZES_CARD, srcsetCard } from '../content/site-content';
+import { FROTA, FROTA_INTRO, SIZES_CARD, UI, srcsetCard } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { Icon, IconName } from './icon';
 
@@ -8,9 +8,9 @@ import { Icon, IconName } from './icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Icon, RevealOnScroll],
   template: `
-    <section class="section section--alt" id="frota" aria-labelledby="frota-titulo">
+    <section class="section" id="frota" aria-labelledby="frota-titulo">
       <div class="container">
-        <p class="overline reveal" appReveal>Frota</p>
+        <p class="overline reveal" appReveal>{{ ui.sobretitulo.frota }}</p>
         <h2 class="section-titulo reveal" id="frota-titulo" appReveal [revealDelay]="80">
           {{ intro().titulo }}
         </h2>
@@ -175,9 +175,9 @@ import { Icon, IconName } from './icon';
       font-size: var(--text-small);
     }
 
-    /* Card órfão em linha própria: coluna de texto à esquerda, foto só no lado direito */
+    /* Total 3n+1: o 1º card (Blindados) vira destaque em linha própria e os demais fecham a grade; texto à esquerda, foto à direita */
     @media (min-width: 48em) {
-      .card:last-child:nth-child(3n + 1) {
+      .card:first-child:nth-last-child(3n + 1) {
         grid-column: 1 / -1;
         min-block-size: 26rem;
         display: flex;
@@ -189,7 +189,7 @@ import { Icon, IconName } from './icon';
         border-color: rgba(247, 226, 185, 0.35);
       }
 
-      .card:last-child:nth-child(3n + 1) .card__foto {
+      .card:first-child:nth-last-child(3n + 1) .card__foto {
         inset: 0 0 0 auto;
         inline-size: 68%;
         object-position: right 60%;
@@ -198,13 +198,13 @@ import { Icon, IconName } from './icon';
       }
 
       /* Badge entra no fluxo abaixo da descrição: no canto direito disputaria com o texto impresso na parede da foto */
-      .card:last-child:nth-child(3n + 1) .card__lugares {
+      .card:first-child:nth-last-child(3n + 1) .card__lugares {
         position: relative;
         inset: auto;
         order: 1;
       }
 
-      .card:last-child:nth-child(3n + 1)::before {
+      .card:first-child:nth-last-child(3n + 1)::before {
         background: linear-gradient(
           90deg,
           var(--color-bg) 32%,
@@ -213,7 +213,7 @@ import { Icon, IconName } from './icon';
         );
       }
 
-      .card:last-child:nth-child(3n + 1) .card__conteudo {
+      .card:first-child:nth-last-child(3n + 1) .card__conteudo {
         inline-size: min(100%, 26rem);
         padding: 0;
       }
@@ -240,6 +240,7 @@ export class Fleet {
   protected readonly frota = computed(() =>
     FROTA().map((categoria) => ({ ...categoria, srcset: srcsetCard(categoria.imagem) })),
   );
+  protected readonly ui = UI;
   protected readonly intro = FROTA_INTRO;
   protected readonly sizes = SIZES_CARD;
 

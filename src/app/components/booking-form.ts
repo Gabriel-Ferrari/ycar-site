@@ -311,15 +311,16 @@ export class BookingForm {
     const tipo = this.form.tiposServico.find((t) => t.id === this.tipo())!;
 
     // Sem emojis: o redirecionamento do wa.me corrompe caracteres fora do BMP.
+    const m = this.form.mensagem;
     const linhas = [
       MENSAGEM_PADRAO(),
       '',
-      `• Serviço: ${tipo.rotulo}`,
-      `• Embarque: ${campo('embarque')}`,
-      this.tipo() !== 'disposicao' ? `• Destino: ${campo('destino')}` : null,
-      `• Data: ${dataBr(campo('data'))} às ${campo('hora')}`,
-      this.tipo() === 'ida-volta' ? `• Volta: ${this.volta(campo)}` : null,
-      `• Passageiros: ${campo('passageiros')}`,
+      `• ${m.servico}: ${tipo.rotulo}`,
+      `• ${m.embarque}: ${campo('embarque')}`,
+      this.tipo() !== 'disposicao' ? `• ${m.destino}: ${campo('destino')}` : null,
+      `• ${m.data}: ${dataBr(campo('data'))} ${m.as} ${campo('hora')}`,
+      this.tipo() === 'ida-volta' ? `• ${m.volta}: ${this.volta(campo)}` : null,
+      `• ${m.passageiros}: ${campo('passageiros')}`,
     ];
     const url = linkWhatsApp(linhas.filter((linha) => linha !== null).join('\n'));
     // Webviews (Instagram/Facebook) bloqueiam window.open — cai para navegação direta.

@@ -2,12 +2,13 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "ycar-site",
   "compatibility_date": "2026-08-01",
-  // Só a API do painel passa pelo Worker; o resto é asset estático
+  // Passam pelo Worker a API do painel e a raiz "/" (escolhe o idioma); o resto é asset estático
   "main": "worker/index.mjs",
   "assets": {
     "directory": "./dist/ycar-site/browser",
+    "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*", "/"]
   },
   // Custom Domains: a Cloudflare cria o DNS e o certificado; o www redireciona para a raiz
   // por uma Redirect Rule no painel da zona

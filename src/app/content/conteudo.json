@@ -16,7 +16,6 @@
     "botaoPlataforma": "Reservar pelo WhatsApp"
   },
   "menu": {
-    "inicio": "Início",
     "servicos": "Serviços",
     "quemSomos": "Quem Somos",
     "comoTrabalhamos": "Como Trabalhamos",
@@ -132,6 +131,13 @@
     "descricao": "Frota moderna e diversificada, com veículos selecionados para diferentes necessidades e ocasiões.",
     "itens": [
       {
+        "nome": "Blindados",
+        "lugares": "Segurança executiva",
+        "descricao": "Segurança reforçada e proteção adicional, com conforto e discrição.",
+        "icone": "shield",
+        "imagem": "/images/frota/blindado.webp"
+      },
+      {
         "nome": "Sedã",
         "lugares": "3 a 4 lugares",
         "descricao": "Ideal para viagens individuais, casais e deslocamentos corporativos.",
@@ -172,14 +178,13 @@
         "descricao": "Ideal para grandes grupos, excursões, eventos e viagens de longa distância.",
         "icone": "bus",
         "imagem": "/images/frota/onibus.webp"
-      },
-      {
-        "nome": "Blindados",
-        "lugares": "Blindados Sob Demanda",
-        "descricao": "Segurança reforçada e proteção adicional, com conforto e discrição.",
-        "icone": "shield",
-        "imagem": "/images/frota/blindado.webp"
       }
     ]
+  },
+  "seo": {
+    "titulo": "Transporte Executivo em São Paulo | YCAR EXECUTIVE",
+    "descricao": "Transporte executivo com excelência, conforto e pontualidade. Transfers, receptivo em aeroportos, viagens, city tour e frota executiva do sedã ao ônibus, incluindo blindados. Reserve pelo WhatsApp.",
+    "ogTitulo": "YCAR EXECUTIVE — Transporte Executivo em São Paulo",
+    "ogDescricao": "Transporte executivo com excelência, conforto e pontualidade. Transfers, aeroportos, viagens e frota do sedã ao ônibus, incluindo blindados. Reserve pelo WhatsApp."
   }
 }

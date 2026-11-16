@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
-import { CONTATO, RESERVA, RESERVA_FORM, linkWhatsApp } from '../content/site-content';
+import { CONTATO, RESERVA, RESERVA_FORM, UI, linkWhatsApp } from '../content/site-content';
 import { RevealOnScroll } from '../directives/reveal-on-scroll';
 import { BookingForm } from './booking-form';
 import { Icon } from './icon';
@@ -12,7 +12,7 @@ import { Icon } from './icon';
     <section class="contato section" id="reserva" aria-labelledby="contato-titulo">
       <div class="container contato__inner">
         <div class="contato__intro reveal" appReveal>
-          <p class="overline">Reserva</p>
+          <p class="overline">{{ ui.sobretitulo.reserva }}</p>
           <h2 class="section-titulo" id="contato-titulo">{{ reserva().titulo }}</h2>
           <p class="contato__sub">{{ reserva().descricao }}</p>
         </div>
@@ -149,6 +149,7 @@ import { Icon } from './icon';
 export class Contact {
   protected readonly contato = CONTATO;
   protected readonly reserva = RESERVA;
+  protected readonly ui = UI;
   protected readonly textoAgenda = RESERVA_FORM.agendaLink;
   protected readonly waHref = computed(() => linkWhatsApp(RESERVA().cta.mensagem));
 }

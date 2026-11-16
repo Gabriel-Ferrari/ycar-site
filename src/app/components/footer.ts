@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
+import { CONTATO, MARCA, MENU, RESERVA, UI } from '../content/site-content';
 
 @Component({
   selector: 'app-footer',
@@ -23,10 +23,10 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
           <p>
             <span class="footer__item">© {{ ano }} {{ marca.nomeCompleto }}</span>
             <span class="footer__sep" aria-hidden="true"> · </span>
-            <span class="footer__item">Todos os direitos reservados.</span>
+            <span class="footer__item">{{ ui.rodape.direitos }}</span>
           </p>
         </div>
-        <nav class="footer__nav" aria-label="Links do rodapé">
+        <nav class="footer__nav" [attr.aria-label]="ui.rodape.links">
           @for (item of menu(); track $index) {
             @if (item.externo) {
               <a [href]="item.destino" target="_blank" rel="noopener">{{ item.rotulo }}</a>
@@ -113,6 +113,7 @@ import { CONTATO, MARCA, MENU, RESERVA } from '../content/site-content';
   `,
 })
 export class Footer {
+  protected readonly ui = UI;
   protected readonly marca = MARCA;
   protected readonly menu = MENU;
   protected readonly contato = CONTATO;

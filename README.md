@@ -29,9 +29,15 @@ da prévia abre o campo correspondente:
 ## Stack
 
 - **Angular 22** com componentes standalone, `ChangeDetectionStrategy.OnPush` e signals
-- **SSG**: `outputMode: "static"`, uma única rota pré-renderizada em build, hidratada no cliente
+- **SSG**: `outputMode: "static"`, uma página pré-renderizada por idioma, hidratada no cliente
+- **Idiomas**: português em `/`, inglês em `/en/` e espanhol em `/es/`, um build cada
+  (`@angular/localize`). Textos editoriais em `src/app/content/conteudo{,.en,.es}.json`; textos
+  fixos da interface em [textos-ui.ts](src/app/content/textos-ui.ts). Quem abre `/` vai para o
+  idioma do navegador (o Worker lê o `Accept-Language`); a troca no seletor PT · EN · ES fica
+  salva num cookie e vence a detecção
 - **SCSS** com design tokens em [src/styles/\_tokens.scss](src/styles/_tokens.scss)
-- **Cloudflare Workers** servindo os assets estáticos e a API do painel ([wrangler.jsonc](wrangler.jsonc))
+- **Cloudflare Workers** servindo os assets estáticos, a escolha de idioma em `/` e a API do painel
+  ([wrangler.jsonc](wrangler.jsonc))
 - Fontes self-hosted (Inter e Fraunces) — nenhuma requisição a terceiros ao carregar a página
 - Formulário de reserva resumido que monta a mensagem do WhatsApp; os campos de endereço sugerem
   lugares pelo [Photon](https://photon.komoot.io) (OpenStreetMap, gratuito, sem chave), consultado
@@ -41,7 +47,8 @@ da prévia abre o campo correspondente:
 
 ```bash
 npm install
-npm start          # http://localhost:4200
+npm start          # http://localhost:4200, em português
+npx ng serve -c en # inglês (ou -c es)
 ```
 
 Build de produção em `dist/ycar-site/browser`:
@@ -108,12 +115,15 @@ iframe com `?previa`) troca o valor.
 
 Como funciona:
 
-1. O painel ([public/admin](public/admin)) carrega o `conteudo.json` atual pela API do Worker
-   ([worker/index.mjs](worker/index.mjs)).
+1. O painel ([public/admin](public/admin)) carrega os três JSON (português, inglês e espanhol) pela
+   API do Worker ([worker/index.mjs](worker/index.mjs)). O português é o modelo: fotos, ícones,
+   contatos e a ordem dos itens só mudam nele e valem para os três; nas abas English e Español
+   aparecem só os textos, com o original embaixo. Item novo sem tradução trava a publicação.
 2. Fotos são reduzidas no navegador para 900/672/560/400 px (WebP, ou JPG onde não há encoder
    WebP), com nome novo a cada envio porque as imagens têm cache de 1 ano.
 3. "Salvar e publicar" envia tudo ao Worker, que valida o formato (mesmas chaves e tipos do JSON
-   atual) e faz **um commit** em `main` com o JSON e as fotos.
+   atual, traduções com a mesma estrutura e as mesmas fotos do português) e faz **um commit** em
+   `main` com os três JSON e as fotos.
 4. O Workers Builds refaz o site em ~2 min. Se o build falhar, o site continua na versão anterior.
    Para desfazer uma publicação, basta reverter o commit.
 

@@ -7,7 +7,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { MENSAGEM_PADRAO, linkWhatsApp } from '../content/site-content';
+import { MENSAGEM_PADRAO, UI, linkWhatsApp } from '../content/site-content';
 import { Icon } from './icon';
 
 @Component({
@@ -20,7 +20,7 @@ import { Icon } from './icon';
       [href]="waHref()"
       target="_blank"
       rel="noopener"
-      aria-label="Abrir conversa no WhatsApp"
+      [attr.aria-label]="rotulo"
     >
       <app-icon name="whatsapp" [size]="28" />
     </a>
@@ -39,7 +39,10 @@ import { Icon } from './icon';
       border-radius: var(--radius-pill);
       background: var(--color-accent);
       color: var(--color-bg);
-      box-shadow: var(--shadow-cta);
+      /* Anel escuro: sem ele o champagne some sobre as seções bege */
+      box-shadow:
+        0 0 0 3px var(--escuro-bg),
+        var(--shadow-cta);
     }
 
     .fab:hover {
@@ -52,6 +55,7 @@ import { Icon } from './icon';
   `,
 })
 export class WhatsappFab {
+  protected readonly rotulo = UI.whatsappFab;
   protected readonly waHref = computed(() => linkWhatsApp(MENSAGEM_PADRAO()));
 
   private readonly el = inject<ElementRef<HTMLElement>>(ElementRef);

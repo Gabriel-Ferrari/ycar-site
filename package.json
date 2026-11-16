@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node scripts/limpar-copias-idioma.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:ycar-site": "node dist/ycar-site/server/server.mjs"
@@ -28,6 +28,7 @@
     "@angular/build": "^22.0.8",
     "@angular/cli": "^22.0.8",
     "@angular/compiler-cli": "^22.0.0",
+    "@angular/localize": "^22.0.8",
     "@fontsource/fraunces": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
     "@types/express": "^5.0.1",

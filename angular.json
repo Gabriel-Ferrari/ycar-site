@@ -17,6 +17,13 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": { "code": "pt-BR", "subPath": "" },
+        "locales": {
+          "en": { "translation": [], "subPath": "en" },
+          "es": { "translation": [], "subPath": "es" }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -33,6 +40,7 @@
             "styles": ["src/styles.scss"],
             "server": "src/main.server.ts",
             "outputMode": "static",
+            "localize": true,
             "security": {
               "allowedHosts": []
             }
@@ -47,7 +55,7 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
+                  "maximumWarning": "5kB",
                   "maximumError": "8kB"
                 }
               ],
@@ -57,7 +65,9 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
-            }
+            },
+            "en": { "localize": ["en"] },
+            "es": { "localize": ["es"] }
           },
           "defaultConfiguration": "production"
         },
@@ -69,6 +79,12 @@
             },
             "development": {
               "buildTarget": "ycar-site:build:development"
+            },
+            "en": {
+              "buildTarget": "ycar-site:build:development,en"
+            },
+            "es": {
+              "buildTarget": "ycar-site:build:development,es"
             }
           },
           "defaultConfiguration": "development"
